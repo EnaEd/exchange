@@ -15,7 +15,7 @@ namespace Exchange.Web.DataAccess
             services.AddDbContext<AppContextDb>(options =>
                 options.UseSqlServer(configuration.GetConnectionString($"{nameof(ConnectionStringConfig.DefaultConnection)}")));
 
-            services.AddIdentityCore<User>()
+            services.AddIdentityCore<UserEntity>()
                .AddRoles<IdentityRole<long>>()
                .AddSignInManager()
                .AddDefaultTokenProviders()

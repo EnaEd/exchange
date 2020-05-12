@@ -1,4 +1,4 @@
-﻿namespace Exchange.Web.DataAccess.Entities
+﻿namespace Exchange.Web.DataAccess.Entities.Base
 {
     public class BaseEntity
     {

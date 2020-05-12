@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace Exchange.Web.DataAccess.ApplicationContext
 {
-    public class AppContextDb : IdentityDbContext<User, IdentityRole<long>, long>
+    public class AppContextDb : IdentityDbContext<UserEntity, IdentityRole<long>, long>
     {
         public AppContextDb(DbContextOptions<AppContextDb> options) : base(options)
         {
