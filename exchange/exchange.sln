@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Web.DataAccess", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Web.BusinessLogic", "Exchange.Web.BusinessLogic\Exchange.Web.BusinessLogic.csproj", "{3E21D1E4-3AB0-414B-8865-B98994ACA5EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Web.Shared", "Exchange.Web.Shared\Exchange.Web.Shared.csproj", "{4AE50DE5-32D0-4E33-A8EC-5361C681DCA3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{3E21D1E4-3AB0-414B-8865-B98994ACA5EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E21D1E4-3AB0-414B-8865-B98994ACA5EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E21D1E4-3AB0-414B-8865-B98994ACA5EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AE50DE5-32D0-4E33-A8EC-5361C681DCA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AE50DE5-32D0-4E33-A8EC-5361C681DCA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AE50DE5-32D0-4E33-A8EC-5361C681DCA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AE50DE5-32D0-4E33-A8EC-5361C681DCA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +43,7 @@ Global
 		{861D6ACF-7F2C-4004-97B4-357997DA6E4D} = {657DA94D-064D-46C2-801F-C2F58DD2E991}
 		{167ED2D0-EFCC-4D29-B919-5F80F8D2E849} = {657DA94D-064D-46C2-801F-C2F58DD2E991}
 		{3E21D1E4-3AB0-414B-8865-B98994ACA5EC} = {657DA94D-064D-46C2-801F-C2F58DD2E991}
+		{4AE50DE5-32D0-4E33-A8EC-5361C681DCA3} = {657DA94D-064D-46C2-801F-C2F58DD2E991}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BC131479-A3DA-44CF-9DEB-2860D18F4716}

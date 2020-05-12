@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace exchange.Web
+namespace Exchange.Web.Presentation
 {
     public class Program
     {

@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BusinessLogic = Exchange.Web.BusinessLogic;
 
-namespace exchange.Web
+namespace Exchange.Web.Presentation
 {
     public class Startup
     {
