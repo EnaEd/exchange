@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Exchange.Web.Presentation.Extensions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -31,7 +32,7 @@ namespace Exchange.Web.Presentation
             }
 
             app.UseRouting();
-
+            app.UseErrorHandler();
             //custom handler with logger
             //app.UseErrorHandler();
 
