@@ -1,6 +1,5 @@
 ﻿using Exchange.Web.BusinessLogic.Models;
 using Exchange.Web.BusinessLogic.Services.Interfaces;
-using System;
 using System.Threading.Tasks;
 
 namespace Exchange.Web.BusinessLogic.Services
@@ -14,9 +13,15 @@ namespace Exchange.Web.BusinessLogic.Services
             _userService = userService;
         }
 
-        public Task<UserModel> Registration(UserModel model)
+        public async Task<bool> IsUserExist(string phoneNumber)
         {
-            throw new NotImplementedException();
+            return await _userService.IsUserExists(phoneNumber);
+        }
+
+        public async Task<UserModel> RegistrationAsync(UserModel model)
+        {
+            //TODO EE:validation model
+            return await _userService.CreateUserAsync(model);
         }
     }
 }

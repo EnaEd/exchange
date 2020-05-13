@@ -11,6 +11,7 @@ namespace Exchange.Web.BusinessLogic.Models
         public string Country { get; set; }
         public string City { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
         public ICollection<PhotoModel> Photos { get; set; } = new List<PhotoModel>();
     }
 }

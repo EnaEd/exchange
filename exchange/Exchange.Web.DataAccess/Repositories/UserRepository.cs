@@ -52,6 +52,11 @@ namespace Exchange.Web.DataAccess.Repositories
             return await _userManager.FindByIdAsync(id.ToString());
         }
 
+        public async Task<UserEntity> GetOneByPhoneNumberAsync(string phoneNumber)
+        {
+            return await _userManager.Users.FirstOrDefaultAsync(x => x.Phone == phoneNumber);
+        }
+
         public async Task<UserEntity> UpdateAsync(UserEntity entity)
         {
             await _userManager.UpdateAsync(entity);

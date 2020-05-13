@@ -30,7 +30,7 @@ namespace Exchange.Web.Presentation
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors();
             app.UseRouting();
             app.UseErrorHandler();
             //custom handler with logger

@@ -10,5 +10,6 @@ namespace Exchange.Web.DataAccess.Repositories.Interfaces
         public Task<T> GetOneByEmailAsync(string mail);
         public Task<IdentityResult> CreateAsync(T entity, string password);
         public Task AddToRoleAsync(UserEntity admin, string role);
+        public Task<T> GetOneByPhoneNumberAsync(string phoneNumber);
     }
 }

@@ -8,7 +8,7 @@ namespace Exchange.Web.BusinessLogic.MapperProfiles
     {
         public UserProfile()
         {
-            CreateMap<UserModel, UserEntity>();
+            CreateMap<UserModel, UserEntity>().ForMember(dest => dest.UserName, opt => opt.MapFrom(source => source.Email));
             CreateMap<UserEntity, UserModel>();
         }
     }

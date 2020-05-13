@@ -1,5 +1,5 @@
 ﻿using Exchange.Web.BusinessLogic.Services.Interfaces;
-using Exchange.Web.Shared.Constants.Routes;
+using Exchange.Web.Shared.Constants;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -15,7 +15,7 @@ namespace Exchange.Web.Presentation.Controllers
             _userService = userService;
         }
 
-        [HttpGet(Constant.Route.GET_USERS)]
+        [HttpGet(Constant.Route.GET_USERS_ROUTE)]
         public async Task<IActionResult> GetUsers()
         {
             return Ok(await _userService.GetAllAsync());
