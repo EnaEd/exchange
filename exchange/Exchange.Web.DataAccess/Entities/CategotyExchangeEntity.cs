@@ -4,6 +4,6 @@ namespace Exchange.Web.DataAccess.Entities
 {
     public class CategotyExchangeEntity : BaseEntity
     {
-        public string Categories { get; set; }
+        public string Category { get; set; }
     }
 }

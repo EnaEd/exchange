@@ -38,6 +38,11 @@ namespace Exchange.Web.BusinessLogic.Services
             return _mapper.Map<IEnumerable<UserModel>>(await _userRepository.GetAllAsync());
         }
 
+        public async Task<UserModel> GetOneAsync(string phoneNUmber)
+        {
+            return _mapper.Map<UserModel>(await _userRepository.GetOneByPhoneNumberAsync(phoneNUmber));
+        }
+
         public async Task<bool> IsUserExists(string phoneNumber)
         {
             return !(await _userRepository.GetOneByPhoneNumberAsync(phoneNumber) is null);
