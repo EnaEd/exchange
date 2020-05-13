@@ -17,6 +17,7 @@ namespace Exchange.Web.BusinessLogic
             {
                 config.AddProfile(new UserProfile());
                 config.AddProfile(new PhotoProfile());
+                config.AddProfile(new FilterProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();

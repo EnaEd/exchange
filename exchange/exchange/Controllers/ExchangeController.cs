@@ -16,11 +16,11 @@ namespace Exchange.Web.Presentation.Controllers
             _exchangeService = exchangeService;
         }
 
-        [HttpGet(Constant.Route.SHOW_OFFER_ROUTE)]
-        public async Task<IActionResult> ShowOffer()
+        [HttpPost(Constant.Route.SHOW_OFFER_ROUTE)]
+        public async Task<IActionResult> ShowOffer([FromBody]FilterRequestModel model)
         {
 
-            return Ok(await _exchangeService.ShowOfferAsync(new LocationFilterModel()));
+            return Ok(await _exchangeService.ShowOfferAsync(model));
         }
 
         [HttpPost(Constant.Route.UPLOAD_OFFER_ROUTE)]

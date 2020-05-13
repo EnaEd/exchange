@@ -8,6 +8,7 @@ namespace Exchange.Web.DataAccess.ApplicationContext
 {
     public class AppContextDb : IdentityDbContext<UserEntity, IdentityRole<long>, long>
     {
+        public DbSet<CategotyExchangeEntity> ExchangeCategories { get; set; }
         public AppContextDb(DbContextOptions<AppContextDb> options) : base(options)
         {
         }

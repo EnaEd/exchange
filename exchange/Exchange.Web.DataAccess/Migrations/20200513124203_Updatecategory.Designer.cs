@@ -4,14 +4,16 @@ using Exchange.Web.DataAccess.ApplicationContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Exchange.Web.DataAccess.Migrations
 {
     [DbContext(typeof(AppContextDb))]
-    partial class AppContextDbModelSnapshot : ModelSnapshot
+    [Migration("20200513124203_Updatecategory")]
+    partial class Updatecategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,6 +29,9 @@ namespace Exchange.Web.DataAccess.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Test")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

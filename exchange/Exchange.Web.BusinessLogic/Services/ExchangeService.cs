@@ -2,10 +2,10 @@
 using Exchange.Web.BusinessLogic.Models;
 using Exchange.Web.BusinessLogic.Services.Interfaces;
 using Exchange.Web.DataAccess.Entities;
+using Exchange.Web.DataAccess.Models;
 using Exchange.Web.DataAccess.Repositories.Interfaces;
 using Exchange.Web.Shared.Common;
 using Exchange.Web.Shared.Constants;
-using System.Linq;
 using System.Threading.Tasks;
 using Enum = Exchange.Web.Shared.Enums.Enum;
 
@@ -24,9 +24,9 @@ namespace Exchange.Web.BusinessLogic.Services
             _mapper = mapper;
         }
 
-        public async Task<PhotoModel> ShowOfferAsync(LocationFilterModel model)
+        public async Task<PhotoModel> ShowOfferAsync(FilterRequestModel model)
         {
-            return _mapper.Map<PhotoModel>((await _photoRepository.GetAllAsync()).FirstOrDefault());
+            return _mapper.Map<PhotoModel>(await _photoRepository.GetOneByFilter(_mapper.Map<FilterModel>(model)));
         }
 
         public async Task UploadOfferAsync(OfferRequestModel model)
