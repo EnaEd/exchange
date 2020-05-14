@@ -4,9 +4,9 @@ using Xamarin.Forms.Xaml;
 namespace Exchange.Mobile.UI.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HomeView : MvxContentPage
+    public partial class RegistrationView : MvxContentPage
     {
-        public HomeView()
+        public RegistrationView()
         {
             InitializeComponent();
         }

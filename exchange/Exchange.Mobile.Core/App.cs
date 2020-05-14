@@ -12,7 +12,7 @@ namespace Exchange.Mobile.Core
                 .EndingWith("Service")
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
-            RegisterAppStart<HomeViewModel>();
+            RegisterAppStart<AuthViewModel>();
         }
     }
 }
