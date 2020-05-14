@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace Exchange.Mobile.iOS
+namespace Exchange.Mobile.UI.iOS
 {
     public class Application
     {

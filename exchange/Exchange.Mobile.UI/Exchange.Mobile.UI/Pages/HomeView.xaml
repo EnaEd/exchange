@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:MvxContentPage  xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms" xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Exchange.Mobile.UI.Pages.HomeView">
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout>
+                <Entry Text="{Binding Text, Mode=TwoWay}"></Entry>
+                <Button Text="Reset" Command="{Binding ResetTextCommand}"></Button>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</views:MvxContentPage>

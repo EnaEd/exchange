@@ -1,8 +1,6 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 
-namespace Exchange.Mobile
+namespace Exchange.Mobile.UI
 {
     public partial class App : Application
     {
@@ -10,7 +8,7 @@ namespace Exchange.Mobile
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            //MainPage = new MainPage();
         }
 
         protected override void OnStart()
