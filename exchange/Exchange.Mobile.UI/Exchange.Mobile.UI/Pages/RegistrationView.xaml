@@ -7,9 +7,25 @@
              x:Class="Exchange.Mobile.UI.Pages.RegistrationView">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to registration view"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Entry 
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Placeholder="FirstName"/>
+            <Entry 
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Placeholder="LastName"/>
+            <Entry 
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Placeholder="Email"/>
+            <Entry 
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Placeholder="Password"/>
+            <Button 
+                Text="Confirm"
+                Command="{Binding ConfirmRegistrationCommandAsync}"/>
         </StackLayout>
     </ContentPage.Content>
 </views:MvxContentPage>
