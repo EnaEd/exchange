@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace Exchange.Web.Presentation
 {
@@ -22,6 +23,9 @@ namespace Exchange.Web.Presentation
             BusinessLogic.Startup.Init(services, Configuration);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
+
+            services.AddSwaggerGen(c =>
+            c.SwaggerDoc(name: "v1", new OpenApiInfo { Title = "MyApi", Version = "v1" }));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -38,6 +42,10 @@ namespace Exchange.Web.Presentation
 
             app.UseAuthentication();
             //app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            c.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "My Api V1"));
 
             app.UseEndpoints(endpoints =>
             {

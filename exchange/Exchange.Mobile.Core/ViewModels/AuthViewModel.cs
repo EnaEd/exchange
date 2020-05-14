@@ -27,7 +27,8 @@ namespace Exchange.Mobile.Core.ViewModels
                     await _navigationService.Navigate<OfferViewModel>();
                     return;
                 }
-                await _navigationService.Navigate<RegistrationViewModel>();
+                //var model = new PhoneRequestModel { PhoneNumber = number };
+                await _navigationService.Navigate<RegistrationViewModel, string>(number);
 
             });
         }
