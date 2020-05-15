@@ -24,7 +24,7 @@ namespace Exchange.Web.DataAccess.ApplicationContext
         public AppContextDb CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<AppContextDb>();
-            builder.UseSqlServer("Server=DESKTOP-0R8765L\\SQLEXPRESS;Database=ExchangeOKDB;Trusted_Connection=True;");
+            builder.UseSqlServer("Server=ExchangeOKDB.mssql.somee.com;Database=ExchangeOKDB;user id=edena_SQLLogin_1;Password=rzapcr5511;MultipleActiveResultSets=true;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True");
             var context = new AppContextDb(builder.Options);
             return context;
         }

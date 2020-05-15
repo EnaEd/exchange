@@ -19,7 +19,8 @@ namespace Exchange.Mobile.Core.ViewModels
             _navigationService = navigationService;
             _deviceInfoService = Mvx.IoCProvider.Resolve<IDeviceInfoService>();
 
-            string number = _deviceInfoService.GetPhoneNumber();
+            //string number = _deviceInfoService.GetPhoneNumber();
+            string number = "111111111";
             Device.InvokeOnMainThreadAsync(async () =>
             {
                 if (await _authService.CheckUserPhone(number))

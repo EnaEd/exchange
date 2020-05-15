@@ -104,12 +104,12 @@ namespace Exchange.Mobile.Core.ViewModels
             user.Password = LastName;
             user.PhoneNumber = Phone;
 
-            //bool isRegistrationSuccess = await _authService.RegistrationAsync(user);
-            //if (isRegistrationSuccess)
-            //{
-            //    await _navigationService.Navigate<OfferViewModel>();
-            //    return;
-            //}
+            bool isRegistrationSuccess = await _authService.RegistrationAsync(user);
+            if (isRegistrationSuccess)
+            {
+                await _navigationService.Navigate<OfferViewModel>();
+                return;
+            }
             _displayAlertService.ShowToast("registration not successfull");
 
         }
