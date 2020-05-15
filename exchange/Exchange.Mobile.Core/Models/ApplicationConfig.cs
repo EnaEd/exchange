@@ -2,6 +2,6 @@
 {
     public static class ApplicationConfig
     {
-        public static string BaseUrl { get; set; } = "http://192.168.1.162:7979/";
+        public static string BaseUrl { get; set; } = "http://barterok.somee.com/";
     }
 }
