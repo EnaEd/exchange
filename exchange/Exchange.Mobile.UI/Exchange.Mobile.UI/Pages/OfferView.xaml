@@ -7,10 +7,18 @@
              x:Class="Exchange.Mobile.UI.Pages.OfferView">
     <ContentPage.Content>
         <Grid>
-            <StackLayout>
-                <Entry Text="{Binding Text, Mode=TwoWay}"></Entry>
-                <Button Text="Reset" Command="{Binding ResetTextCommand}"></Button>
-            </StackLayout>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.3*"/>
+            </Grid.RowDefinitions>
+            <Image
+                Grid.Row="0"
+               Source="{Binding Image}"
+                />
+            <Label
+                Grid.Row="1"
+                BackgroundColor="Gray"
+                Text="{Binding Description}"/>
         </Grid>
     </ContentPage.Content>
 </views:MvxContentPage>

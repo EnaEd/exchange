@@ -28,8 +28,8 @@ namespace Exchange.Mobile.Core.Services
         public async Task<bool> RegistrationAsync(User data)
         {
             var response = await _apiService.ExecutePostAsync($"{ ApplicationConfig.BaseUrl}api/account/registration", data);
-
-            return JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync()) is User;
+            var test = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
+            return test is User;
 
         }
     }

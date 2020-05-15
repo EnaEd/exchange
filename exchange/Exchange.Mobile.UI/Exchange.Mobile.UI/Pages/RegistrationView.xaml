@@ -10,19 +10,23 @@
             <Entry 
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
-                Placeholder="FirstName"/>
+                Placeholder="FirstName"
+                Text="{Binding FirstName}"/>
             <Entry 
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
-                Placeholder="LastName"/>
+                Placeholder="LastName"
+                Text="{Binding LastName}"/>
             <Entry 
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
-                Placeholder="Email"/>
+                Placeholder="Email"
+                Text="{Binding Email}"/>
             <Entry 
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
-                Placeholder="Password"/>
+                Placeholder="Password"
+                Text="{Binding Password}"/>
             <Button 
                 Text="Confirm"
                 Command="{Binding ConfirmRegistrationCommandAsync}"/>

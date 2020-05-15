@@ -101,8 +101,8 @@ namespace Exchange.Mobile.Core.ViewModels
             user.Email = Email;
             user.FirstName = FirstName;
             user.LastName = LastName;
-            user.Password = LastName;
-            user.PhoneNumber = Phone;
+            user.Password = Password;
+            user.Phone = Phone;
 
             bool isRegistrationSuccess = await _authService.RegistrationAsync(user);
             if (isRegistrationSuccess)
