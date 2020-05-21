@@ -1,24 +1,66 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<views:MvxContentPage  xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms" xmlns="http://xamarin.com/schemas/2014/forms"
+<views:MvxContentPage  xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             x:Class="Exchange.Mobile.UI.Pages.OfferView">
+                       xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                       xmlns:swipeCardView="clr-namespace:MLToolkit.Forms.SwipeCardView;assembly=MLToolkit.Forms.SwipeCardView"
+                       mc:Ignorable="d"
+             x:Class="Exchange.Mobile.UI.Pages.OfferView"
+                       x:TypeArguments="viewModels:OfferViewModel">
     <ContentPage.Content>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="0.3*"/>
-            </Grid.RowDefinitions>
-            <Image
+            <swipeCardView:SwipeCardView
+                ItemsSource="{Binding Offers}"
+                VerticalOptions="FillAndExpand"
+                Swiped="SwipeCardView_Swiped"
+                Dragging="SwipeCardView_Dragging">
+                <swipeCardView:SwipeCardView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="0.3*"/>
+                            </Grid.RowDefinitions>
+                            <Image
                 Grid.Row="0"
-               Source="{Binding Image}"
-                />
-            <Label
+               Source="{Binding OfferImage}"
+                        />
+                            <Label
                 Grid.Row="1"
                 BackgroundColor="Gray"
                 Text="{Binding Description}"/>
+                        </Grid>
+                    </DataTemplate>
+                </swipeCardView:SwipeCardView.ItemTemplate>
+            </swipeCardView:SwipeCardView>
+            <!--<Frame
+                x:Name="imageFrame"
+                CornerRadius="10"
+                HasShadow="True"
+                BackgroundColor="LightGray"
+                Margin="10">
+                <Frame.GestureRecognizers>
+                    <SwipeGestureRecognizer Direction="Left" Swiped="SwipeGestureRecognizer_Swiped_Left"/>
+                    <SwipeGestureRecognizer Direction="Right" Swiped="SwipeGestureRecognizer_Swiped_Right"/>
+                </Frame.GestureRecognizers>
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.3*"/>
+                    </Grid.RowDefinitions>
+                    <Image
+                Grid.Row="0"
+               Source="{Binding Image}"
+                        BindingContextChanged="Image_BindingContextChanged"
+                        PropertyChanged="Image_PropertyChanged"/>
+                    <Label
+                Grid.Row="1"
+                BackgroundColor="Gray"
+                Text="{Binding Description}"/>
+                </Grid>
+            </Frame>-->
         </Grid>
     </ContentPage.Content>
 </views:MvxContentPage>

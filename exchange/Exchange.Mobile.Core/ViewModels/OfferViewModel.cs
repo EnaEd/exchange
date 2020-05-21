@@ -1,9 +1,11 @@
 ﻿using Exchange.Mobile.Core.Helpers.Interface;
+using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Models.RequestModels;
 using Exchange.Mobile.Core.Services.Interfaces;
 using MvvmCross.Commands;
 using MvvmCross.ViewModels;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,6 +36,7 @@ namespace Exchange.Mobile.Core.ViewModels
         public IMvxCommand SwipeRightCommandAsync => new MvxCommand(SwipeRigth);
 
         public IMvxCommand SwipeLeftCommandAsync => new MvxCommand(SwipeLeft);
+        public IMvxCommand SwipedCommand => new MvxCommand(SwipeLeft);
 
         #endregion Commands
 
@@ -56,8 +59,15 @@ namespace Exchange.Mobile.Core.ViewModels
             model.City = City;
             model.Country = Country;
             var response = await _offerService.ShowOfferAsync(model);
-            Description = response.Description;
-            ImageBase64 = response.PhotoSource;
+
+            //Description = response.Description;
+            //ImageBase64 = response.PhotoSource;
+            Offers.Add(new OfferCardModel
+            {
+                Description = response.Description,
+                OfferImage = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(response.PhotoSource)))
+            });
+            await RaisePropertyChanged(nameof(Offers));
         }
 
         private async Task GetLocationDataAsync()
@@ -77,6 +87,8 @@ namespace Exchange.Mobile.Core.ViewModels
         #endregion Functionality
 
         #region Properties
+
+        public ObservableCollection<OfferCardModel> Offers { get; set; } = new ObservableCollection<OfferCardModel>();
 
         private string _city;
         public string City
