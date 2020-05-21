@@ -1,4 +1,5 @@
 ﻿using Exchange.Web.BusinessLogic.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Exchange.Web.BusinessLogic.Services.Interfaces
@@ -7,5 +8,6 @@ namespace Exchange.Web.BusinessLogic.Services.Interfaces
     {
         public Task UploadOfferAsync(OfferRequestModel model);
         public Task<PhotoModel> ShowOfferAsync(FilterRequestModel model);
+        public Task<IEnumerable<CategoryExchangeModel>> GetOfferCategoriesAsync();
     }
 }

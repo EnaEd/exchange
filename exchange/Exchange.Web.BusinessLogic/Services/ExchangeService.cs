@@ -6,6 +6,7 @@ using Exchange.Web.DataAccess.Models;
 using Exchange.Web.DataAccess.Repositories.Interfaces;
 using Exchange.Web.Shared.Common;
 using Exchange.Web.Shared.Constants;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Enum = Exchange.Web.Shared.Enums.Enum;
 
@@ -16,12 +17,20 @@ namespace Exchange.Web.BusinessLogic.Services
         private readonly IPhotoRepository<PhotoEntity> _photoRepository;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly ICategoryRepository<CategotyExchangeEntity> _categoryRepository;
 
-        public ExchangeService(IPhotoRepository<PhotoEntity> photoRepository, IUserService userService, IMapper mapper)
+        public ExchangeService(IPhotoRepository<PhotoEntity> photoRepository, IUserService userService, IMapper mapper,
+            ICategoryRepository<CategotyExchangeEntity> categoryRepository)
         {
             _photoRepository = photoRepository;
             _userService = userService;
             _mapper = mapper;
+            _categoryRepository = categoryRepository;
+        }
+
+        public async Task<IEnumerable<CategoryExchangeModel>> GetOfferCategoriesAsync()
+        {
+            return _mapper.Map<IEnumerable<CategoryExchangeModel>>(await _categoryRepository.GetAllAsync());
         }
 
         public async Task<PhotoModel> ShowOfferAsync(FilterRequestModel model)

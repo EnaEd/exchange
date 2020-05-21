@@ -16,6 +16,12 @@ namespace Exchange.Web.Presentation.Controllers
             _exchangeService = exchangeService;
         }
 
+        [HttpGet(Constant.Route.GET_OFFER_CATEGORIES_ROUTE)]
+        public async Task<IActionResult> GetCategories()
+        {
+            return Ok(await _exchangeService.GetOfferCategoriesAsync());
+        }
+
         [HttpPost(Constant.Route.SHOW_OFFER_ROUTE)]
         public async Task<IActionResult> ShowOffer([FromBody]FilterRequestModel model)
         {

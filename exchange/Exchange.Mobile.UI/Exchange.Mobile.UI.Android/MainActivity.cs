@@ -17,6 +17,9 @@ namespace Exchange.Mobile.UI.Droid
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+
+            Rg.Plugins.Popup.Popup.Init(this, bundle);
+
             CrossCurrentActivity.Current.Init(this, bundle);
         }
 

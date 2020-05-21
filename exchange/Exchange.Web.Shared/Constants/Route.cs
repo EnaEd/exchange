@@ -17,6 +17,7 @@
             //exchange controller routes
             public const string SHOW_OFFER_ROUTE = "showoffer";
             public const string UPLOAD_OFFER_ROUTE = "uploadoffer";
+            public const string GET_OFFER_CATEGORIES_ROUTE = "getoffercategories";
         }
     }
 }

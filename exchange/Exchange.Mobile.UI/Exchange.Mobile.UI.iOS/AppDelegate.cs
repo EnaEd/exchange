@@ -1,6 +1,7 @@
 ﻿
 using Foundation;
 using MvvmCross.Forms.Platforms.Ios.Core;
+using UIKit;
 
 namespace Exchange.Mobile.UI.iOS
 {
@@ -17,12 +18,14 @@ namespace Exchange.Mobile.UI.iOS
         //
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
-        //public override bool FinishedLaunching(UIApplication app, NSDictionary options)
-        //{
-        //    global::Xamarin.Forms.Forms.Init();
-        //    LoadApplication(new App());
+        public override bool FinishedLaunching(UIApplication app, NSDictionary options)
+        {
+            Rg.Plugins.Popup.Popup.Init();
 
-        //    return base.FinishedLaunching(app, options);
-        //}
+            global::Xamarin.Forms.Forms.Init();
+            LoadApplication(new App());
+
+            return base.FinishedLaunching(app, options);
+        }
     }
 }

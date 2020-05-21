@@ -28,9 +28,13 @@ namespace Exchange.Mobile.Core.ViewModels
 
             Device.InvokeOnMainThreadAsync(async () =>
             {
-                await ShowOfferAsync();
+                await GetOfferCategories();
+
+                //await ShowOfferAsync();
             });
         }
+
+
 
         #region Commands
         public IMvxCommand SwipeRightCommandAsync => new MvxCommand(SwipeRigth);
@@ -42,6 +46,12 @@ namespace Exchange.Mobile.Core.ViewModels
 
         #region Functionality
 
+        private async Task GetOfferCategories()
+        {
+            OfferCategories = new ObservableCollection<OfferCategory>(await _offerService.GetOfferCategoryAsync());
+            await RaisePropertyChanged(nameof(OfferCategories));
+        }
+
         private void SwipeRigth()
         {
             _displayAlertService.ShowToast("swipe right");
@@ -52,12 +62,16 @@ namespace Exchange.Mobile.Core.ViewModels
             _displayAlertService.ShowToast("swipe left");
         }
 
-        public async Task ShowOfferAsync()
+        public async Task ShowOfferAsync(object offerCategory = null)
         {
             await GetLocationDataAsync();
             FilterRequestModel model = new FilterRequestModel();
             model.City = City;
             model.Country = Country;
+            if (offerCategory is OfferCategory category)
+            {
+                model.CategoryId = (int)category.Id;
+            }
             var response = await _offerService.ShowOfferAsync(model);
 
             //Description = response.Description;
@@ -87,7 +101,7 @@ namespace Exchange.Mobile.Core.ViewModels
         #endregion Functionality
 
         #region Properties
-
+        public ObservableCollection<OfferCategory> OfferCategories { get; set; } = new ObservableCollection<OfferCategory>();
         public ObservableCollection<OfferCardModel> Offers { get; set; } = new ObservableCollection<OfferCardModel>();
 
         private string _city;
