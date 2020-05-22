@@ -38,13 +38,21 @@ namespace Exchange.Mobile.Core.ViewModels
 
         #region Commands
         public IMvxCommand SwipeRightCommandAsync => new MvxCommand(SwipeRigth);
-
         public IMvxCommand SwipeLeftCommandAsync => new MvxCommand(SwipeLeft);
         public IMvxCommand SwipedCommand => new MvxCommand(SwipeLeft);
+        public IMvxCommand SelectedCommandAsync => new MvxAsyncCommand<object>(SelectedItem);
+
+
+
 
         #endregion Commands
 
         #region Functionality
+
+        private async Task SelectedItem(object category)
+        {
+            await ShowOfferAsync(category);
+        }
 
         private async Task GetOfferCategories()
         {
@@ -74,8 +82,6 @@ namespace Exchange.Mobile.Core.ViewModels
             }
             var response = await _offerService.ShowOfferAsync(model);
 
-            //Description = response.Description;
-            //ImageBase64 = response.PhotoSource;
             Offers.Add(new OfferCardModel
             {
                 Description = response.Description,

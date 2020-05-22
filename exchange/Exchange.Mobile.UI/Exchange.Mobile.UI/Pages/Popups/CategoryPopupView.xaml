@@ -3,35 +3,68 @@
                    xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             x:Class="Exchange.Mobile.UI.Pages.Popups.CategoryPopupView"
-             BindingContext="OfferViewModel">
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                  xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core"
+                  mc:Ignorable="d"
+             x:Class="Exchange.Mobile.UI.Pages.Popups.CategoryPopupView" 
+             x:Name="CategoryPopup">
     <StackLayout
-        HorizontalOptions="Center"
-        VerticalOptions="Center">
+        VerticalOptions="Center"
+        HorizontalOptions="Center">
         <Frame
             CornerRadius="15"
-            BackgroundColor="Blue">
+            BackgroundColor="LightCyan"
+            Margin="50,200,50,200"
+            HasShadow="True">
             <StackLayout>
-                <Label Text="Select Category"/>
-                <ListView
+                <Frame
+                    CornerRadius="15"
+                    HasShadow="True">
+                    <Label Text="Select Category"
+                       HorizontalOptions="Center"/>
+                </Frame>
+                <CollectionView 
+                    ItemsSource="{Binding OfferCategories}"
+                    SelectionMode="None"
+                    ItemSizingStrategy="MeasureAllItems">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="5">
+                                <Button 
+                                    x:Name="ButtonCategory"
+                                    Text="{Binding Category}" 
+                                    HorizontalOptions="Fill"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="White"
+                                    BorderWidth="1"
+                                CornerRadius="15"
+                                Command="{Binding BindingContext.SelectedCommandAsync, Source={x:Reference CategoryPopup}}"
+                                CommandParameter="{Binding .}"
+                                Clicked="Button_Clicked"
+                                BorderColor="Black"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <!--<ListView
                 ItemsSource="{Binding OfferCategories}"
-                    ItemSelected="ListView_ItemSelected">
+                    ItemSelected="ListView_ItemSelected"
+                    SeparatorVisibility="None">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout
-                               >
+                                <Grid Margin="3">
+                                    <Frame CornerRadius="15"/>
                                     <Label
-                            Text="{Binding Category}"/>
-                                </StackLayout>
+                                        Text="{Binding Category}"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Center"/>
+                                </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                </ListView>
+                </ListView>-->
             </StackLayout>
         </Frame>
-
     </StackLayout>
 </pages:PopupPage>

@@ -18,15 +18,12 @@ namespace Exchange.Mobile.UI.Pages.Popups
         {
             InitializeComponent();
             _viewModel = viewModel;
-            BindingContext = viewModel;
+            BindingContext = _viewModel;
         }
 
-        private async void ListView_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+        private async void Button_Clicked(object sender, System.EventArgs e)
         {
-            await DisplayAlert("you selected", $" select {e.SelectedItem}", "Ok");
-            await _viewModel.ShowOfferAsync(e.SelectedItem as object);
             await PopupNavigation.Instance.PopAsync();
-
         }
     }
 }
