@@ -172,7 +172,18 @@ namespace Exchange.Mobile.Core.ViewModels
             set => SetProperty(ref _description, value);
         }
 
-
+        private OfferCardModel _currentOfferCard;
+        public OfferCardModel CurrentOfferCard
+        {
+            get => _currentOfferCard;
+            set => SetProperty(ref _currentOfferCard, value);
+        }
+        private ImageSource _uploadedImage;
+        public ImageSource UploadedImage
+        {
+            get => _uploadedImage;
+            set => SetProperty(ref _uploadedImage, value);
+        }
         #endregion Properties
     }
 }

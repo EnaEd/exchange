@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<page:PopupPage  xmlns:page="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+                 xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:Exchange.Mobile.UI.Controls" xmlns:ffiamgeloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+                 xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+                 xmlns:converters="clr-namespace:Exchange.Mobile.UI.Converters"
+                 mc:Ignorable="d"
+             x:Class="Exchange.Mobile.UI.Pages.Popups.SetOfferPopupView">
+    <page:PopupPage.Resources>
+        <converters:SetDefaultImageIfNeededConverter x:Key="DefaultImageConverter"/>
+    </page:PopupPage.Resources>
+        <local:GradientStack
+        StartColor="LightGray"
+        EndColor="BlueViolet"
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill"
+            Margin="50,100,50,100">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.8*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                </Grid.ColumnDefinitions>
+                <ffiamgeloading:CachedImage
+                Grid.Row="1" Grid.Column="1"
+                Aspect="AspectFit"
+                Source="{Binding CurrentOfferCard.OfferImage}">
+                    <ffiamgeloading:CachedImage.Transformations>
+                        <fftransformations:RoundedTransformation/>
+                        <fftransformations:GrayscaleTransformation/>
+                    </ffiamgeloading:CachedImage.Transformations>
+                </ffiamgeloading:CachedImage>
+                <ffiamgeloading:CachedImage
+                Grid.Row="1" Grid.Column="3"
+                DownsampleToViewSize="True"
+                Aspect="AspectFit"
+                Source="{Binding UploadedImage,Converter={StaticResource DefaultImageConverter}}">
+                    <ffiamgeloading:CachedImage.Transformations>
+                        <fftransformations:RoundedTransformation/>
+                    </ffiamgeloading:CachedImage.Transformations>
+                </ffiamgeloading:CachedImage>
+                <Frame
+                Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"
+                BackgroundColor="LightCyan"
+                CornerRadius="15">
+                    <Editor 
+                    Text="{Binding UploadedDescription}" 
+                    Placeholder=" Add description to your offer"
+                />
+                </Frame>
+            </Grid>
+        </local:GradientStack>
+</page:PopupPage>

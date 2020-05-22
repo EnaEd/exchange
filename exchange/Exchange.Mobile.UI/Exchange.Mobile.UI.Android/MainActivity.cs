@@ -19,7 +19,7 @@ namespace Exchange.Mobile.UI.Droid
             base.OnCreate(bundle);
 
             Rg.Plugins.Popup.Popup.Init(this, bundle);
-
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
             CrossCurrentActivity.Current.Init(this, bundle);
         }
 
