@@ -3,7 +3,6 @@ using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Models.RequestModels;
 using Exchange.Mobile.Core.Services.Interfaces;
 using MvvmCross.Commands;
-using MvvmCross.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -14,7 +13,7 @@ using Xamarin.Forms;
 
 namespace Exchange.Mobile.Core.ViewModels
 {
-    public class OfferViewModel : MvxViewModel
+    public class OfferViewModel : BaseViewModel
     {
         private readonly IDisplayAlertService _displayAlertService;
         private readonly IOfferService _offerService;
@@ -56,8 +55,21 @@ namespace Exchange.Mobile.Core.ViewModels
 
         private async Task GetOfferCategories()
         {
-            OfferCategories = new ObservableCollection<OfferCategory>(await _offerService.GetOfferCategoryAsync());
-            await RaisePropertyChanged(nameof(OfferCategories));
+            if (!IsBusy)
+            {
+                IsBusy = true;
+                try
+                {
+                    OfferCategories = new ObservableCollection<OfferCategory>(await _offerService.GetOfferCategoryAsync());
+                    await RaisePropertyChanged(nameof(OfferCategories));
+                }
+                finally
+                {
+                    IsBusy = false;
+                }
+            }
+
+
         }
 
         private void SwipeRigth()
@@ -72,22 +84,34 @@ namespace Exchange.Mobile.Core.ViewModels
 
         public async Task ShowOfferAsync(object offerCategory = null)
         {
-            await GetLocationDataAsync();
-            FilterRequestModel model = new FilterRequestModel();
-            model.City = City;
-            model.Country = Country;
-            if (offerCategory is OfferCategory category)
+            if (!IsBusy)
             {
-                model.CategoryId = (int)category.Id;
-            }
-            var response = await _offerService.ShowOfferAsync(model);
+                IsBusy = true;
 
-            Offers.Add(new OfferCardModel
-            {
-                Description = response.Description,
-                OfferImage = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(response.PhotoSource)))
-            });
-            await RaisePropertyChanged(nameof(Offers));
+                try
+                {
+                    await GetLocationDataAsync();
+                    FilterRequestModel model = new FilterRequestModel();
+                    model.City = City;
+                    model.Country = Country;
+                    if (offerCategory is OfferCategory category)
+                    {
+                        model.CategoryId = (int)category.Id;
+                    }
+                    var response = await _offerService.ShowOfferAsync(model);
+
+                    Offers.Add(new OfferCardModel
+                    {
+                        Description = response.Description,
+                        OfferImage = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(response.PhotoSource)))
+                    });
+                    await RaisePropertyChanged(nameof(Offers));
+                }
+                finally
+                {
+                    IsBusy = false;
+                }
+            }
         }
 
         private async Task GetLocationDataAsync()

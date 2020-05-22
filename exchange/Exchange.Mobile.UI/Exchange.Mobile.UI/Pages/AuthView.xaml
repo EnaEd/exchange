@@ -6,10 +6,9 @@
              mc:Ignorable="d"
              x:Class="Exchange.Mobile.UI.Pages.AuthView">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="U at  auth view"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <!--TODO EE:add image to loader-->
+        <Grid>
+            <ActivityIndicator IsRunning="True" IsVisible="True" HorizontalOptions="Center" VerticalOptions="Center"/>
+        </Grid>
     </ContentPage.Content>
 </views:MvxContentPage>

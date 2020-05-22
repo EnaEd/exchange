@@ -1,5 +1,6 @@
 ﻿using Exchange.Mobile.Core.ViewModels;
 using Exchange.Mobile.UI.Pages.Popups;
+using MLToolkit.Forms.SwipeCardView.Core;
 using MvvmCross.Forms.Views;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms.Xaml;
@@ -16,6 +17,14 @@ namespace Exchange.Mobile.UI.Pages
 
         private async void SwipeCardView_Swiped(object sender, MLToolkit.Forms.SwipeCardView.Core.SwipedCardEventArgs e)
         {
+            if (e.Direction == SwipeCardDirection.Right)
+            {
+                //TODO EE:set offer for change
+            }
+            if (e.Direction == SwipeCardDirection.Up)
+            {
+                //TODO EE:Add to favorite
+            }
 
             await DisplayAlert("swipe event", e.Direction.ToString(), "OK");
         }

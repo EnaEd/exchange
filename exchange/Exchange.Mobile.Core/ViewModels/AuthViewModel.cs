@@ -2,12 +2,11 @@
 using Exchange.Mobile.Core.Services.Interfaces;
 using MvvmCross;
 using MvvmCross.Navigation;
-using MvvmCross.ViewModels;
 using Xamarin.Forms;
 
 namespace Exchange.Mobile.Core.ViewModels
 {
-    public class AuthViewModel : MvxViewModel
+    public class AuthViewModel : BaseViewModel
     {
         private readonly IAuthService<User> _authService;
         private readonly IMvxNavigationService _navigationService;

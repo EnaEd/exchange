@@ -13,6 +13,7 @@
         HorizontalOptions="Center">
         <Frame
             CornerRadius="15"
+            BackgroundColor="LightBlue"
             Margin="50,200,50,200"
             HasShadow="True">
             <StackLayout>

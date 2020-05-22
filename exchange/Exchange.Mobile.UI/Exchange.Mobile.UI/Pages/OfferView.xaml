@@ -11,30 +11,35 @@
                        x:TypeArguments="viewModels:OfferViewModel">
     <ContentPage.Content>
         <Grid>
-            <swipeCardView:SwipeCardView
+            <Grid>
+                <swipeCardView:SwipeCardView
                 ItemsSource="{Binding Offers}"
                 VerticalOptions="FillAndExpand"
                 Swiped="SwipeCardView_Swiped"
                 Dragging="SwipeCardView_Dragging">
-                <swipeCardView:SwipeCardView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="0.3*"/>
-                            </Grid.RowDefinitions>
-                            <Image
+                    <swipeCardView:SwipeCardView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="0.3*"/>
+                                </Grid.RowDefinitions>
+                                <Image
                 Grid.Row="0"
                Source="{Binding OfferImage}"
                         />
-                            <Label
+                                <Label
                 Grid.Row="1"
                 BackgroundColor="Gray"
                 Text="{Binding Description}"/>
-                        </Grid>
-                    </DataTemplate>
-                </swipeCardView:SwipeCardView.ItemTemplate>
-            </swipeCardView:SwipeCardView>
+                            </Grid>
+                        </DataTemplate>
+                    </swipeCardView:SwipeCardView.ItemTemplate>
+                </swipeCardView:SwipeCardView>
+            </Grid>
+            <Grid IsVisible="{Binding IsBusy}">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Grid>
         </Grid>
     </ContentPage.Content>
 </views:MvxContentPage>
