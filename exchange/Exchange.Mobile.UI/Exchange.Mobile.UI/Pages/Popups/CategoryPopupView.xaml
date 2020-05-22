@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-                  xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core"
+                  xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core" xmlns:local="clr-namespace:Exchange.Mobile.UI.Controls"
                   mc:Ignorable="d"
              x:Class="Exchange.Mobile.UI.Pages.Popups.CategoryPopupView" 
              x:Name="CategoryPopup">
@@ -13,7 +13,6 @@
         HorizontalOptions="Center">
         <Frame
             CornerRadius="15"
-            BackgroundColor="LightCyan"
             Margin="50,200,50,200"
             HasShadow="True">
             <StackLayout>
