@@ -23,6 +23,7 @@ namespace Exchange.Mobile.UI.iOS
             Rg.Plugins.Popup.Popup.Init();
 
             global::Xamarin.Forms.Forms.Init();
+            Forms9Patch.iOS.Settings.Initialize(this);
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

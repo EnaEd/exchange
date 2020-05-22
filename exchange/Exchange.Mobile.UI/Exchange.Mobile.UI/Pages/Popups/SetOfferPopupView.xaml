@@ -11,53 +11,63 @@
     <page:PopupPage.Resources>
         <converters:SetDefaultImageIfNeededConverter x:Key="DefaultImageConverter"/>
     </page:PopupPage.Resources>
-        <local:GradientStack
+    <local:GradientStack
         StartColor="LightGray"
         EndColor="BlueViolet"
         HorizontalOptions="Fill"
         VerticalOptions="Fill"
-            Margin="50,100,50,100">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.3*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="0.8*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.1*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="0.5*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="0.1*"/>
-                </Grid.ColumnDefinitions>
-                <ffiamgeloading:CachedImage
+            Margin="50,150,50,150">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label VerticalOptions="Center"
+                   Grid.Row="0" Grid.Column="3"
+                   FontSize="30" 
+                   WidthRequest="30"
+                   TextColor="White"  
+                   HorizontalOptions="End"
+                   Text="&#xf142;"
+                   FontFamily="{StaticResource FontAwesomeSolid}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="KebabMenuTapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+            <ffiamgeloading:CachedImage
                 Grid.Row="1" Grid.Column="1"
                 Aspect="AspectFit"
                 Source="{Binding CurrentOfferCard.OfferImage}">
-                    <ffiamgeloading:CachedImage.Transformations>
-                        <fftransformations:RoundedTransformation/>
-                        <fftransformations:GrayscaleTransformation/>
-                    </ffiamgeloading:CachedImage.Transformations>
-                </ffiamgeloading:CachedImage>
-                <ffiamgeloading:CachedImage
+                <ffiamgeloading:CachedImage.Transformations>
+                    <fftransformations:RoundedTransformation/>
+                    <fftransformations:GrayscaleTransformation/>
+                </ffiamgeloading:CachedImage.Transformations>
+            </ffiamgeloading:CachedImage>
+            <Label 
+                Grid.Row="1" Grid.Column="2"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Text="&#xf362;"
+                   FontFamily="{StaticResource FontAwesomeSolid}"
+                FontSize="25"/>
+            <ffiamgeloading:CachedImage
                 Grid.Row="1" Grid.Column="3"
                 DownsampleToViewSize="True"
                 Aspect="AspectFit"
                 Source="{Binding UploadedImage,Converter={StaticResource DefaultImageConverter}}">
-                    <ffiamgeloading:CachedImage.Transformations>
-                        <fftransformations:RoundedTransformation/>
-                    </ffiamgeloading:CachedImage.Transformations>
-                </ffiamgeloading:CachedImage>
-                <Frame
-                Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"
-                BackgroundColor="LightCyan"
-                CornerRadius="15">
-                    <Editor 
-                    Text="{Binding UploadedDescription}" 
-                    Placeholder=" Add description to your offer"
-                />
-                </Frame>
-            </Grid>
-        </local:GradientStack>
+                <ffiamgeloading:CachedImage.Transformations>
+                    <fftransformations:RoundedTransformation/>
+                </ffiamgeloading:CachedImage.Transformations>
+            </ffiamgeloading:CachedImage>
+        </Grid>
+    </local:GradientStack>
 </page:PopupPage>

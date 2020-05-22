@@ -1,5 +1,4 @@
-﻿
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Exchange.Mobile.Core.Services.Interfaces;
@@ -20,6 +19,7 @@ namespace Exchange.Mobile.UI.Droid
 
             Rg.Plugins.Popup.Popup.Init(this, bundle);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
+            Forms9Patch.Droid.Settings.Initialize(this);
             CrossCurrentActivity.Current.Init(this, bundle);
         }
 
