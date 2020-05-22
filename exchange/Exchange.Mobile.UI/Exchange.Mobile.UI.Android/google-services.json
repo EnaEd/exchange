@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "112674263723",
+    "firebase_url": "https://exchange-277012.firebaseio.com",
+    "project_id": "exchange-277012",
+    "storage_bucket": "exchange-277012.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:112674263723:android:c0796c097762e204931dee",
+        "android_client_info": {
+          "package_name": "com.companyname.exchange.mobile.ui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "112674263723-rma0eiinvmg24585p0h1g5h3jvl08jht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPNwzkY4h-EsNmJgomh9AMpoOF2BsuBG0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "112674263723-rma0eiinvmg24585p0h1g5h3jvl08jht.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

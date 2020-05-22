@@ -21,6 +21,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.3*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="0.3*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.1*"/>
@@ -68,6 +69,19 @@
                     <fftransformations:RoundedTransformation/>
                 </ffiamgeloading:CachedImage.Transformations>
             </ffiamgeloading:CachedImage>
+
+            <Label VerticalOptions="Center"
+                   Grid.Row="2" Grid.Column="3"
+                   FontSize="30" 
+                   TextColor="White"  
+                   HorizontalOptions="End"
+                   Text="&#xf1d8;"
+                   FontFamily="{StaticResource FontAwesomeSolid}">
+                <!--<Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="SendOfferCommandAsync"/>
+                </Label.GestureRecognizers>-->
+            </Label>
+
         </Grid>
     </local:GradientStack>
 </page:PopupPage>

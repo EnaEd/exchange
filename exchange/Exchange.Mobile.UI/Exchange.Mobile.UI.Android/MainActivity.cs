@@ -1,7 +1,9 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Exchange.Mobile.Core.Helpers.Interface;
 using Exchange.Mobile.Core.Services.Interfaces;
+using Exchange.Mobile.UI.Droid.Helpers;
 using Exchange.Mobile.UI.Droid.Services;
 using MvvmCross;
 using MvvmCross.Forms.Platforms.Android.Core;
@@ -27,6 +29,7 @@ namespace Exchange.Mobile.UI.Droid
         {
             Mvx.IoCProvider.RegisterSingleton<IDeviceInfoService>(() => new DeviceInfoService());
             Mvx.IoCProvider.RegisterSingleton<IDisplayAlertService>(() => new DisplayAlertService());
+            Mvx.IoCProvider.RegisterSingleton<INotification>(() => new NotificationHelper());
 
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)

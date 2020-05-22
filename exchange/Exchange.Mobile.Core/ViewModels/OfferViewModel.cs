@@ -41,12 +41,20 @@ namespace Exchange.Mobile.Core.ViewModels
         public IMvxCommand SwipedCommand => new MvxCommand(SwipeLeft);
         public IMvxCommand SelectedCommandAsync => new MvxAsyncCommand<object>(SelectedItem);
 
+        public IMvxCommand SendOfferCommandAsync => new MvxAsyncCommand(SendOfferAsync);
+
+
 
 
 
         #endregion Commands
 
         #region Functionality
+
+        private async Task SendOfferAsync()
+        {
+            throw new NotImplementedException();
+        }
 
         private async Task SelectedItem(object category)
         {
