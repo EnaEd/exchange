@@ -19,7 +19,6 @@ namespace Exchange.Mobile.Core.Services
         public async Task<Offer> ShowOfferAsync(FilterRequestModel model = null)
         {
             var response = await ExecutePostAsync($"{ApplicationConfig.BaseUrl}api/exchange/showoffer", model);
-
             return JsonConvert.DeserializeObject<Offer>(await response.Content.ReadAsStringAsync());
 
         }

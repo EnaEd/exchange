@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Com.OneSignal" Version="3.8.2" />
     <PackageReference Include="Forms9Patch" Version="2.2.6" />
     <PackageReference Include="MLToolkit.Forms.SwipeCardView" Version="2.1.0" />
     <PackageReference Include="MvvmCross.Forms" Version="6.4.2" />

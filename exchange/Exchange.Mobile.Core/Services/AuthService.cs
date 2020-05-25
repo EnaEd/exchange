@@ -25,6 +25,11 @@ namespace Exchange.Mobile.Core.Services
             return Convert.ToBoolean(JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync()));
         }
 
+        public async Task UpdatePushIdIfNeededAsync(string pushId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> RegistrationAsync(User data)
         {
             var response = await _apiService.ExecutePostAsync($"{ ApplicationConfig.BaseUrl}api/account/registration", data);

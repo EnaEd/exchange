@@ -111,7 +111,8 @@ namespace Exchange.Mobile.Core.ViewModels
                     Offers.Add(new OfferCardModel
                     {
                         Description = response.Description,
-                        OfferImage = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(response.PhotoSource)))
+                        OfferImage = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(response.PhotoSource))),
+                        OwnerId = response.UserId
                     });
                     await RaisePropertyChanged(nameof(Offers));
                 }

@@ -1,6 +1,8 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Com.OneSignal;
+using Com.OneSignal.Abstractions;
 using Exchange.Mobile.Core.Helpers.Interface;
 using Exchange.Mobile.Core.Services.Interfaces;
 using Exchange.Mobile.UI.Droid.Helpers;
@@ -9,6 +11,7 @@ using MvvmCross;
 using MvvmCross.Forms.Platforms.Android.Core;
 using MvvmCross.Forms.Platforms.Android.Views;
 using Plugin.CurrentActivity;
+using System.Collections.Generic;
 
 namespace Exchange.Mobile.UI.Droid
 {
@@ -23,6 +26,17 @@ namespace Exchange.Mobile.UI.Droid
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
             Forms9Patch.Droid.Settings.Initialize(this);
             CrossCurrentActivity.Current.Init(this, bundle);
+
+            OneSignal.Current.StartInit("YOUR_ONESIGNAL_APP_ID")
+            .Settings(new Dictionary<string, bool>() {
+               { IOSSettings.kOSSettingsKeyAutoPrompt, false },
+               { IOSSettings.kOSSettingsKeyInAppLaunchURL, false } })
+            .InFocusDisplaying(OSInFocusDisplayOption.Notification)
+            .EndInit();
+
+
+            // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 7)
+            OneSignal.Current.RegisterForPushNotifications();
         }
 
         public override void InitializeForms(Bundle bundle)
