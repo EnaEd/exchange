@@ -95,14 +95,16 @@ namespace Exchange.Mobile.Core.ViewModels
 
             await GetLocationData();
             //TODO validate registration fields
-            User user = new User();
-            user.City = City;
-            user.Country = Country;
-            user.Email = Email;
-            user.FirstName = FirstName;
-            user.LastName = LastName;
-            user.Password = Password;
-            user.Phone = Phone;
+            User user = new User
+            {
+                City = City,
+                Country = Country,
+                Email = Email,
+                FirstName = FirstName,
+                LastName = LastName,
+                Password = Password,
+                Phone = Phone
+            };
 
             bool isRegistrationSuccess = await _authService.RegistrationAsync(user);
             if (isRegistrationSuccess)

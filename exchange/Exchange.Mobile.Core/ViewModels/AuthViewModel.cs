@@ -4,8 +4,6 @@ using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Services.Interfaces;
 using MvvmCross;
 using MvvmCross.Navigation;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Xamarin.Forms;
 
 namespace Exchange.Mobile.Core.ViewModels
@@ -42,7 +40,7 @@ namespace Exchange.Mobile.Core.ViewModels
             if (await _authService.CheckUserPhone(number))
             {
 
-                await _authService.UpdatePushIdIfNeededAsync(pushId);
+                //await _authService.UpdatePushIdIfNeededAsync(pushId);
                 await _navigationService.Navigate<OfferViewModel>();
                 return;
             }
@@ -52,29 +50,5 @@ namespace Exchange.Mobile.Core.ViewModels
         });
         }
 
-        private static void OneSignalSetExternalUserId(Dictionary<string, object> results)
-        {
-            // The results will contain push and email success statuses
-            Debug.WriteLine("External user id updated with results: " + Json.Serialize(results));
-            // Push can be expected in almost every situation with a success status, but
-            // as a pre-caution its good to verify it exists
-            if (results.ContainsKey("push"))
-            {
-                Dictionary<string, object> pushStatusDict = results["push"] as Dictionary<string, object>;
-                if (pushStatusDict.ContainsKey("success"))
-                {
-                    Debug.WriteLine("External user id updated for push with results: " + pushStatusDict["success"] as string);
-                }
-            }
-            // Verify the email is set or check that the results have an email success status
-            if (results.ContainsKey("email"))
-            {
-                Dictionary<string, object> emailStatusDict = results["email"] as Dictionary<string, object>;
-                if (emailStatusDict.ContainsKey("success"))
-                {
-                    Debug.WriteLine("External user id updated for email with results: " + emailStatusDict["success"] as string);
-                }
-            }
-        }
     }
 }

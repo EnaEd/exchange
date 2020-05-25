@@ -99,9 +99,11 @@ namespace Exchange.Mobile.Core.ViewModels
                 try
                 {
                     await GetLocationDataAsync();
-                    FilterRequestModel model = new FilterRequestModel();
-                    model.City = City;
-                    model.Country = Country;
+                    FilterRequestModel model = new FilterRequestModel
+                    {
+                        City = City,
+                        Country = Country
+                    };
                     if (offerCategory is OfferCategory category)
                     {
                         model.CategoryId = (int)category.Id;

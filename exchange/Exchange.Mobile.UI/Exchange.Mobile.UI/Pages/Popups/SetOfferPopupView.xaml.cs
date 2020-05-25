@@ -14,7 +14,7 @@ namespace Exchange.Mobile.UI.Pages.Popups
         {
             InitializeComponent();
         }
-        public SetOfferPopupView(OfferViewModel viewModel, object item)
+        public SetOfferPopupView(OfferViewModel viewModel)
         {
             InitializeComponent();
             ViewModel = viewModel;
@@ -23,9 +23,6 @@ namespace Exchange.Mobile.UI.Pages.Popups
 
         private void KebabMenuTapped(object sender, System.EventArgs e)
         {
-            var element = sender as VisualElement;
-
-            //var point = _locationFetcherService.GetCoordinates(element);
 
             SetUpToolTip();
 

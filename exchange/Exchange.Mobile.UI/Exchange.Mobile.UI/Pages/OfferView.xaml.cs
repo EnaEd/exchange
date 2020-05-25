@@ -22,7 +22,7 @@ namespace Exchange.Mobile.UI.Pages
             {
                 //TODO EE:set offer for change
                 ViewModel.CurrentOfferCard = e.Item as OfferCardModel;
-                await PopupNavigation.Instance.PushAsync(new SetOfferPopupView(ViewModel, e.Item));
+                await PopupNavigation.Instance.PushAsync(new SetOfferPopupView(ViewModel));
             }
             if (e.Direction == SwipeCardDirection.Up)
             {

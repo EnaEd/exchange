@@ -18,8 +18,10 @@ namespace Exchange.Mobile.Core.Services
 
         public async Task<bool> CheckUserPhone(string phoneNumber)
         {
-            PhoneRequestModel model = new PhoneRequestModel();
-            model.PhoneNumber = phoneNumber;
+            PhoneRequestModel model = new PhoneRequestModel
+            {
+                PhoneNumber = phoneNumber
+            };
             var response = await _apiService.ExecutePostAsync($"{ApplicationConfig.BaseUrl}api/account/checkuserexists", model);
 
             return Convert.ToBoolean(JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync()));
