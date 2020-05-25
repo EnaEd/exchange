@@ -4,6 +4,7 @@ using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Services.Interfaces;
 using MvvmCross;
 using MvvmCross.Navigation;
+using System.Diagnostics;
 using Xamarin.Forms;
 
 namespace Exchange.Mobile.Core.ViewModels
@@ -28,12 +29,7 @@ namespace Exchange.Mobile.Core.ViewModels
             {
                 pushId = id;
             }));
-            //var notification = new Dictionary<string, object>();
-            //notification["contents"] = new Dictionary<string, string>() { { "en", "Test message" } };
-            //notification["include_external_user_ids"] = new List<string>() { "6" };
-            //OneSignal.Current.PostNotification(notification,
-            //    (responseSuccess) => { Debug.WriteLine("success"); },
-            //    (responseFailure) => { Debug.WriteLine($"{Json.Serialize(responseFailure)}"); });
+
 
             Device.InvokeOnMainThreadAsync(async () =>
             {
@@ -43,7 +39,7 @@ namespace Exchange.Mobile.Core.ViewModels
                     if (await _authService.CheckUserPhone(number))
                     {
 
-                        await _authService.UpdatePushIdIfNeededAsync(pushId);
+                        await _authService.UpdatePushIdIfNeededAsync(number, pushId);
                         await _navigationService.Navigate<OfferViewModel>();
                         return;
                     }
@@ -52,7 +48,7 @@ namespace Exchange.Mobile.Core.ViewModels
                 }
                 catch (System.Exception ex)
                 {
-
+                    Debug.WriteLine(ex.Message);
                     //TODO EE:handle expetion
                 }
 

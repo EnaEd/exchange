@@ -1,10 +1,14 @@
-﻿using Exchange.Mobile.Core.Helpers.Interface;
+﻿using Com.OneSignal;
+using Com.OneSignal.Abstractions;
+using Exchange.Mobile.Core.Helpers.Interface;
 using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Models.RequestModels;
 using Exchange.Mobile.Core.Services.Interfaces;
 using MvvmCross.Commands;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,13 +21,16 @@ namespace Exchange.Mobile.Core.ViewModels
     {
         private readonly IDisplayAlertService _displayAlertService;
         private readonly IOfferService _offerService;
+        private readonly IAuthService<User> _authService;
         //TODO EE: get location from auth view Model
         private readonly ILocationHelper _locationHelper;
-        public OfferViewModel(IDisplayAlertService displayAlertService, IOfferService offerService, ILocationHelper locationHelper)
+        public OfferViewModel(IDisplayAlertService displayAlertService, IOfferService offerService, ILocationHelper locationHelper,
+            IAuthService<User> authService)
         {
             _displayAlertService = displayAlertService;
             _offerService = offerService;
             _locationHelper = locationHelper;
+            _authService = authService;
 
             Device.InvokeOnMainThreadAsync(async () =>
             {
@@ -53,7 +60,15 @@ namespace Exchange.Mobile.Core.ViewModels
 
         private async Task SendOfferAsync()
         {
-            throw new NotImplementedException();
+            //string number = _deviceInfoService.GetPhoneNumber();
+            var user = await _authService.GetUserByIdAsync(CurrentOfferCard.OwnerId ?? default);
+
+            var notification = new Dictionary<string, object>();
+            notification["contents"] = new Dictionary<string, string>() { { "en", "Test message" } };
+            notification["include_player_ids"] = new List<string>() { user.OneSignalId };
+            OneSignal.Current.PostNotification(notification,
+                (responseSuccess) => { Debug.WriteLine("success"); },
+                (responseFailure) => { Debug.WriteLine($"{Json.Serialize(responseFailure)}"); });
         }
 
         private async Task SelectedItem(object category)
@@ -110,6 +125,12 @@ namespace Exchange.Mobile.Core.ViewModels
                     }
                     var response = await _offerService.ShowOfferAsync(model);
 
+                    if (response is null)
+                    {
+                        IsBusy = false;
+                        return;
+                    }
+
                     Offers.Add(new OfferCardModel
                     {
                         Description = response.Description,
@@ -128,14 +149,23 @@ namespace Exchange.Mobile.Core.ViewModels
         private async Task GetLocationDataAsync()
         {
             var position = await _locationHelper.GetPositionAsync(TimeSpan.FromMilliseconds(10000));
-            var placemarks = await Geocoding.GetPlacemarksAsync(position.Latitude, position.Longitude);
-            var placemark = placemarks?.FirstOrDefault();
-            if (placemark is null)
+            try
             {
-                _displayAlertService.ShowToast("location fail");
+                var placemarks = await Geocoding.GetPlacemarksAsync(position.Latitude, position.Longitude);
+                var placemark = placemarks?.FirstOrDefault();
+                if (placemark is null)
+                {
+                    _displayAlertService.ShowToast("location fail");
+                }
+                City = placemark.Locality;
+                Country = placemark.CountryName;
             }
-            City = placemark.Locality;
-            Country = placemark.CountryName;
+            catch (Exception ex)
+            {
+
+                Debug.WriteLine(ex.Message);
+            }
+
 
         }
 

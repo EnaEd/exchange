@@ -16,6 +16,12 @@ namespace Exchange.Web.Presentation.Controllers
             _userService = userService;
         }
 
+        [HttpGet(Constant.Route.GET_USER_BY_ID_ROUTE)]
+        public async Task<IActionResult> GetUser(long id)
+        {
+            return Ok(await _userService.GetOneAsync(id));
+        }
+
         [HttpGet(Constant.Route.GET_USERS_ROUTE)]
         public async Task<IActionResult> GetUsers()
         {

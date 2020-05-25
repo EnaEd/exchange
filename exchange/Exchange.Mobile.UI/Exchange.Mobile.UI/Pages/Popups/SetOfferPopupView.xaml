@@ -77,9 +77,9 @@
                    HorizontalOptions="End"
                    Text="&#xf1d8;"
                    FontFamily="{StaticResource FontAwesomeSolid}">
-                <!--<Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="SendOfferCommandAsync"/>
-                </Label.GestureRecognizers>-->
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SendOfferCommandAsync}"/>
+                </Label.GestureRecognizers>
             </Label>
 
         </Grid>

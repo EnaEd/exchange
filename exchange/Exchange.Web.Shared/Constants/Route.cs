@@ -10,6 +10,7 @@
             //user controller routes
             public const string GET_USERS_ROUTE = "getusers";
             public const string GET_USER_ROUTE = "getuser";
+            public const string GET_USER_BY_ID_ROUTE = "{id}";
 
             //account controller routes
             public const string REGISTRATION_ROUTE = "registration";

@@ -43,6 +43,11 @@ namespace Exchange.Web.BusinessLogic.Services
             return _mapper.Map<UserModel>(await _userRepository.GetOneByPhoneNumberAsync(phoneNUmber));
         }
 
+        public async Task<UserModel> GetOneAsync(long id)
+        {
+            return _mapper.Map<UserModel>(await _userRepository.GetOneByIdAsync(id));
+        }
+
         public async Task<bool> IsUserExists(string phoneNumber)
         {
             return !(await _userRepository.GetOneByPhoneNumberAsync(phoneNumber) is null);

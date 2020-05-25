@@ -6,6 +6,7 @@ namespace Exchange.Mobile.Core.Services.Interfaces
     {
         Task<bool> CheckUserPhone(string phoneNumber);
         Task<bool> RegistrationAsync(T data);
-        Task UpdatePushIdIfNeededAsync(string pushId);
+        Task<T> UpdatePushIdIfNeededAsync(string phoneNumber, string pushId);
+        Task<T> GetUserByIdAsync(long id);
     }
 }
