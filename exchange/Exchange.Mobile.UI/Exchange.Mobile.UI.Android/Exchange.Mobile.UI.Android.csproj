@@ -87,7 +87,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\NotificationHelper.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\GradientFrameRenderer.cs" />
     <Compile Include="Renderers\GradientStackRenderer.cs" />
@@ -126,6 +125,7 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Helpers\" />
     <Folder Include="Resources\Raw\" />
   </ItemGroup>
   <ItemGroup>

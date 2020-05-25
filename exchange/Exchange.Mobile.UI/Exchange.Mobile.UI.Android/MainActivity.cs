@@ -41,7 +41,6 @@ namespace Exchange.Mobile.UI.Droid
         {
             Mvx.IoCProvider.RegisterSingleton<IDeviceInfoService>(() => new DeviceInfoService());
             Mvx.IoCProvider.RegisterSingleton<IDisplayAlertService>(() => new DisplayAlertService());
-            //Mvx.IoCProvider.RegisterSingleton<INotification>(() => new NotificationHelper());
 
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
