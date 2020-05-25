@@ -10,5 +10,6 @@ namespace Exchange.Web.BusinessLogic.Services.Interfaces
         public Task<UserModel> CreateUserAsync(UserModel userModel);
         public Task<bool> IsUserExists(string phoneNumber);
         public Task<UserModel> GetOneAsync(string phoneNUmber);
+        public Task<UserModel> UpdateUserAsync(UserModel userModel);
     }
 }

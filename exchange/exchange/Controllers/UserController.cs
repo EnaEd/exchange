@@ -1,4 +1,5 @@
-﻿using Exchange.Web.BusinessLogic.Services.Interfaces;
+﻿using Exchange.Web.BusinessLogic.Models;
+using Exchange.Web.BusinessLogic.Services.Interfaces;
 using Exchange.Web.Shared.Constants;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -20,5 +21,12 @@ namespace Exchange.Web.Presentation.Controllers
         {
             return Ok(await _userService.GetAllAsync());
         }
+
+        [HttpPost(Constant.Route.GET_USER_ROUTE)]
+        public async Task<IActionResult> GetUserByPhone([FromBody] PhoneRequestModel model)
+        {
+            return Ok(await _userService.GetOneAsync(model.PhoneNumber));
+        }
+
     }
 }

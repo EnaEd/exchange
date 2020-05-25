@@ -9,10 +9,12 @@
 
             //user controller routes
             public const string GET_USERS_ROUTE = "getusers";
+            public const string GET_USER_ROUTE = "getuser";
 
             //account controller routes
             public const string REGISTRATION_ROUTE = "registration";
             public const string CHECK_USER_EXISTS_ROUTE = "checkuserexists";
+            public const string UPDATE_USER_ROUTE = "updateuser";
 
             //exchange controller routes
             public const string SHOW_OFFER_ROUTE = "showoffer";

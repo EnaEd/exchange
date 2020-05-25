@@ -47,5 +47,10 @@ namespace Exchange.Web.BusinessLogic.Services
         {
             return !(await _userRepository.GetOneByPhoneNumberAsync(phoneNumber) is null);
         }
+
+        public async Task<UserModel> UpdateUserAsync(UserModel userModel)
+        {
+            return _mapper.Map<UserModel>(await _userRepository.UpdateAsync(_mapper.Map<UserEntity>(userModel)));
+        }
     }
 }

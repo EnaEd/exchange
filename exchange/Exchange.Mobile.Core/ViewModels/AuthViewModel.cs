@@ -36,18 +36,27 @@ namespace Exchange.Mobile.Core.ViewModels
             //    (responseFailure) => { Debug.WriteLine($"{Json.Serialize(responseFailure)}"); });
 
             Device.InvokeOnMainThreadAsync(async () =>
-        {
-            if (await _authService.CheckUserPhone(number))
             {
 
-                //await _authService.UpdatePushIdIfNeededAsync(pushId);
-                await _navigationService.Navigate<OfferViewModel>();
-                return;
-            }
-            //var model = new PhoneRequestModel { PhoneNumber = number };
-            await _navigationService.Navigate<RegistrationViewModel, string>(number);
+                try
+                {
+                    if (await _authService.CheckUserPhone(number))
+                    {
 
-        });
+                        await _authService.UpdatePushIdIfNeededAsync(pushId);
+                        await _navigationService.Navigate<OfferViewModel>();
+                        return;
+                    }
+                    //var model = new PhoneRequestModel { PhoneNumber = number };
+                    await _navigationService.Navigate<RegistrationViewModel, string>(number);
+                }
+                catch (System.Exception ex)
+                {
+
+                    //TODO EE:handle expetion
+                }
+
+            });
         }
 
     }

@@ -28,5 +28,11 @@ namespace Exchange.Web.Presentation.Controllers
         {
             return Ok(await _accountService.IsUserExist(requestModel.PhoneNumber));
         }
+
+        [HttpPost(Constant.Route.UPDATE_USER_ROUTE)]
+        public async Task<IActionResult> UpdateUser([FromBody] UserModel model)
+        {
+            return Ok(await _accountService.UpdateUserIfNeeded(model));
+        }
     }
 }

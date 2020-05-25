@@ -7,5 +7,6 @@ namespace Exchange.Web.BusinessLogic.Services.Interfaces
     {
         public Task<UserModel> RegistrationAsync(UserModel model);
         public Task<bool> IsUserExist(string phoneNumber);
+        public Task<UserModel> UpdateUserIfNeeded(UserModel model);
     }
 }

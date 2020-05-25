@@ -59,8 +59,21 @@ namespace Exchange.Web.DataAccess.Repositories
 
         public async Task<UserEntity> UpdateAsync(UserEntity entity)
         {
-            await _userManager.UpdateAsync(entity);
-            return entity;
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Phone == entity.Phone);
+            if (user is null)
+            {
+                return entity;
+            }
+            user.City = entity.City;
+            user.Country = entity.Country;
+            user.Email = entity.Email;
+            user.FirstName = entity.FirstName;
+            user.LastName = entity.LastName;
+            user.OneSignalId = entity.OneSignalId;
+            user.Phone = entity.Phone;
+            user.Photos = entity.Photos;
+            await _userManager.UpdateAsync(user);
+            return user;
         }
     }
 }
