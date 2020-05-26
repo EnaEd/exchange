@@ -22,7 +22,7 @@ namespace Exchange.Mobile.Core.ViewModels
             _deviceInfoService = Mvx.IoCProvider.Resolve<IDeviceInfoService>();
 
             //string number = _deviceInfoService.GetPhoneNumber();
-            string number = "111111111";
+            string number = "0123456789";
             string pushId = string.Empty;
 
             OneSignal.Current.IdsAvailable(new IdsAvailableCallback((id, token) =>
@@ -40,7 +40,7 @@ namespace Exchange.Mobile.Core.ViewModels
                     {
 
                         await _authService.UpdatePushIdIfNeededAsync(number, pushId);
-                        await _navigationService.Navigate<OfferViewModel>();
+                        await _navigationService.Navigate<MainTabbedViewModel>();
                         return;
                     }
                     //var model = new PhoneRequestModel { PhoneNumber = number };

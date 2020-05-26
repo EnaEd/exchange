@@ -2,6 +2,7 @@
 using Exchange.Mobile.Core.ViewModels;
 using Exchange.Mobile.UI.Pages.Popups;
 using MLToolkit.Forms.SwipeCardView.Core;
+using MvvmCross.Forms.Presenters.Attributes;
 using MvvmCross.Forms.Views;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms.Xaml;
@@ -9,6 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace Exchange.Mobile.UI.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
+    [MvxTabbedPagePresentation(TabbedPosition.Tab)]
     public partial class OfferView : MvxContentPage<OfferViewModel>
     {
         public OfferView()

@@ -8,7 +8,8 @@
                        xmlns:swipeCardView="clr-namespace:MLToolkit.Forms.SwipeCardView;assembly=MLToolkit.Forms.SwipeCardView"
                        mc:Ignorable="d"
              x:Class="Exchange.Mobile.UI.Pages.OfferView"
-                       x:TypeArguments="viewModels:OfferViewModel">
+                       x:TypeArguments="viewModels:OfferViewModel"
+                       Title="offerForExchange">
     <ContentPage.Content>
         <Grid>
             <Grid>

@@ -12,7 +12,6 @@ namespace Exchange.Mobile.Core
                 .EndingWith("Service")
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
-            RegisterAppStart<RegistrationViewModel>();
 
             CreatableTypes()
                .EndingWith("Helper")
