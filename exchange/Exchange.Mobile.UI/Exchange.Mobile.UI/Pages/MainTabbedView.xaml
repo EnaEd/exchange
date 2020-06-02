@@ -5,10 +5,12 @@
                       xmlns:d="http://xamarin.com/schemas/2014/forms/design"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core"
+                      xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
                       mc:Ignorable="d"
                       x:Class="Exchange.Mobile.UI.Pages.MainTabbedView"
                       x:TypeArguments="viewModels:MainTabbedViewModel"
-                      BackgroundColor="Aqua">
+                      BackgroundColor="{StaticResource buttonSolidColor}"
+                      android:TabbedPage.ToolbarPlacement="Bottom">
     <!--Pages can be added as references or inline-->
 
 </views:MvxTabbedPage>

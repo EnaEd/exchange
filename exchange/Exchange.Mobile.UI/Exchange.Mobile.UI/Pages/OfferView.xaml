@@ -1,16 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:MvxContentPage  xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
                        xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:d="http://xamarin.com/schemas/2014/forms/design"
                        xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                        xmlns:swipeCardView="clr-namespace:MLToolkit.Forms.SwipeCardView;assembly=MLToolkit.Forms.SwipeCardView"
                        mc:Ignorable="d"
-             x:Class="Exchange.Mobile.UI.Pages.OfferView"
-                       x:TypeArguments="viewModels:OfferViewModel"
-                       Title="offerForExchange">
-    <ContentPage.Content>
+                       BackgroundColor="{StaticResource mainColor}"
+                       x:Class="Exchange.Mobile.UI.Pages.OfferView"
+                       x:TypeArguments="viewModels:OfferViewModel">
+    
+    <views:MvxContentPage.IconImageSource>
+        <FontImageSource  FontFamily="{StaticResource FontAwesomeSolid}" Glyph="" />
+    </views:MvxContentPage.IconImageSource>
+<ContentPage.Content>
         <Grid>
             <Grid>
                 <swipeCardView:SwipeCardView

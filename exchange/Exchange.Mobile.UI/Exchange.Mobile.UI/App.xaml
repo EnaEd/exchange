@@ -7,6 +7,7 @@
              x:Class="Exchange.Mobile.UI.App">
     <Application.Resources>
         <ResourceDictionary>
+            <!--font awesome-->
             <OnPlatform x:TypeArguments="x:String" 
                 x:Key="FontAwesomeBrands">
                 <On Platform="Android" 
@@ -30,6 +31,14 @@
                 <On Platform="iOS" 
           Value="FontAwesome5Free-Regular" />
             </OnPlatform>
+
+            <!--colors-->
+            <Color x:Key="mainColor">#EAF5FB</Color>
+            <Color x:Key="secondColor">#FFFFFF</Color>
+            <Color x:Key="borderColor">#DCEAF3</Color>
+            <Color x:Key="buttonSolidColor">#3C5A98</Color>
+            <Color x:Key="buttonBorderColor">#406290</Color>
+            <Color x:Key="textColor">#032E73</Color>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
