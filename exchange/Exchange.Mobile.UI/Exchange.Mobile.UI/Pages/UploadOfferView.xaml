@@ -8,7 +8,8 @@
     xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core"
     mc:Ignorable="d"
     x:Class="Exchange.Mobile.UI.Pages.UploadOfferView"
-    x:TypeArguments="viewModels:UploadOfferViewModel">
+    x:TypeArguments="viewModels:UploadOfferViewModel"
+    >
     <views:MvxContentPage.IconImageSource>
         <FontImageSource FontFamily="{StaticResource FontAwesomeSolid}" Glyph=""/>
     </views:MvxContentPage.IconImageSource>

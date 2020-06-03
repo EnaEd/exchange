@@ -43,5 +43,11 @@ namespace Exchange.Mobile.UI.Pages
             await PopupNavigation.Instance.PushAsync(new CategoryPopupView(ViewModel));
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow();
+            return true;
+        }
+
     }
 }

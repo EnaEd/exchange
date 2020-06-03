@@ -9,6 +9,7 @@
                       mc:Ignorable="d"
                       x:Class="Exchange.Mobile.UI.Pages.MainTabbedView"
                       x:TypeArguments="viewModels:MainTabbedViewModel"
+                      NavigationPage.HasNavigationBar="false"
                       BackgroundColor="{StaticResource buttonSolidColor}"
                       android:TabbedPage.ToolbarPlacement="Bottom">
     <!--Pages can be added as references or inline-->

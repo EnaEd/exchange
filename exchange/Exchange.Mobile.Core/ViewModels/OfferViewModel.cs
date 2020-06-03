@@ -64,9 +64,11 @@ namespace Exchange.Mobile.Core.ViewModels
             //string number = _deviceInfoService.GetPhoneNumber();
             var user = await _authService.GetUserByIdAsync(CurrentOfferCard.OwnerId ?? default);
 
-            var notification = new Dictionary<string, object>();
-            notification["contents"] = new Dictionary<string, string>() { { "en", "Test message" } };
-            notification["include_player_ids"] = new List<string>() { user.OneSignalId };
+            var notification = new Dictionary<string, object>
+            {
+                ["contents"] = new Dictionary<string, string>() { { "en", "Test message" } },
+                ["include_player_ids"] = new List<string>() { user.OneSignalId }
+            };
             OneSignal.Current.PostNotification(notification,
                 (responseSuccess) => { Debug.WriteLine("success"); },
                 (responseFailure) => { Debug.WriteLine($"{Json.Serialize(responseFailure)}"); });

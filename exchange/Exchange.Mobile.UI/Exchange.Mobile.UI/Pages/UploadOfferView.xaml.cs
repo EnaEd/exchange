@@ -13,5 +13,11 @@ namespace Exchange.Mobile.UI.Pages
         {
             InitializeComponent();
         }
+        protected override bool OnBackButtonPressed()
+        {
+            System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow();
+            return true;
+        }
+
     }
 }
