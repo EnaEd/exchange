@@ -1,19 +1,29 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<pages:PopupPage  xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-                   xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-                  xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core" xmlns:local="clr-namespace:Exchange.Mobile.UI.Controls"
-                  mc:Ignorable="d"
-             x:Class="Exchange.Mobile.UI.Pages.Popups.CategoryPopupView" 
-             x:Name="CategoryPopup">
+<pages:PopupPage  
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core" 
+    xmlns:local="clr-namespace:Exchange.Mobile.UI.Controls" 
+    xmlns:converters="clr-namespace:Exchange.Mobile.Core.Converters;assembly=Exchange.Mobile.Core"
+    mc:Ignorable="d"
+    x:Class="Exchange.Mobile.UI.Pages.Popups.CategoryPopupView" 
+    x:Name="CategoryPopup">
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <converters:StringToIconConverter x:Key="IconConverter"/>
+            <converters:ExcludeConverter x:Key="ExcludeConverter"/>
+        </ResourceDictionary>
+
+    </pages:PopupPage.Resources>
     <StackLayout
         VerticalOptions="Center"
         HorizontalOptions="Center">
         <Frame
             CornerRadius="15"
-            BackgroundColor="LightBlue"
+            BackgroundColor="{StaticResource mainColor}"
             Margin="50,200,50,200"
             HasShadow="True">
             <StackLayout>
@@ -29,41 +39,43 @@
                     ItemSizingStrategy="MeasureAllItems">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Padding="5">
-                                <Button 
-                                    x:Name="ButtonCategory"
-                                    Text="{Binding Category}" 
-                                    HorizontalOptions="Fill"
-                                    VerticalOptions="Center"
-                                    BackgroundColor="White"
-                                    BorderWidth="1"
-                                CornerRadius="15"
-                                Command="{Binding BindingContext.SelectedCommandAsync, Source={x:Reference CategoryPopup}}"
-                                CommandParameter="{Binding .}"
-                                Clicked="Button_Clicked"
-                                BorderColor="Black"/>
+                            <Grid Padding="5" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.3*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label 
+                                        Grid.Column="0"
+                                        HorizontalOptions="Center"
+                                        Padding="0"
+                                        Margin="0"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        Text="{Binding Category, Converter={StaticResource IconConverter}}"
+                                        FontSize="Large"
+                                        />
+                                <Label 
+                                        Grid.Column="1"
+                                        HorizontalOptions="Start"
+                                        Text="{Binding Category}"
+                                        FontSize="Small"
+                                        />
+                                <BoxView 
+                                    Grid.Column="1" Grid.ColumnSpan="1"
+                                    HeightRequest="1"
+                                    Margin="0,3,0,0"
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="End"
+                                    BackgroundColor="{StaticResource borderColor}"/>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                            Command="{Binding BindingContext.SelectedCommandAsync, Source={x:Reference CategoryPopup}}"
+                                            CommandParameter="{Binding .}"
+                                            Tapped="Button_Clicked"/>
+                                </Grid.GestureRecognizers>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-                <!--<ListView
-                ItemsSource="{Binding OfferCategories}"
-                    ItemSelected="ListView_ItemSelected"
-                    SeparatorVisibility="None">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid Margin="3">
-                                    <Frame CornerRadius="15"/>
-                                    <Label
-                                        Text="{Binding Category}"
-                                        VerticalOptions="Center"
-                                        HorizontalOptions="Center"/>
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>-->
             </StackLayout>
         </Frame>
     </StackLayout>

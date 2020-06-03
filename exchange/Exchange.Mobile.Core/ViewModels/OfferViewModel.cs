@@ -1,5 +1,6 @@
 ﻿using Com.OneSignal;
 using Com.OneSignal.Abstractions;
+using Exchange.Mobile.Core.Enums;
 using Exchange.Mobile.Core.Helpers.Interface;
 using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Models.RequestModels;
@@ -83,7 +84,8 @@ namespace Exchange.Mobile.Core.ViewModels
                 IsBusy = true;
                 try
                 {
-                    OfferCategories = new ObservableCollection<OfferCategory>(await _offerService.GetOfferCategoryAsync());
+                    OfferCategories = new ObservableCollection<OfferCategory>((await _offerService.GetOfferCategoryAsync()).
+                        Where(x => x.Category != CategoryEnum.Money.ToString()));
                     await RaisePropertyChanged(nameof(OfferCategories));
                 }
                 finally

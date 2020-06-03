@@ -39,6 +39,11 @@
             <Color x:Key="buttonSolidColor">#3C5A98</Color>
             <Color x:Key="buttonBorderColor">#406290</Color>
             <Color x:Key="textColor">#032E73</Color>
+            
+            <!--styles-->
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource textColor}"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

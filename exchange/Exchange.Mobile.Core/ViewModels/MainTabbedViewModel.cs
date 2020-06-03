@@ -10,7 +10,9 @@ namespace Exchange.Mobile.Core.ViewModels
         {
             var tasks = new List<Task>
             {
-                NavigationService.Navigate<OfferViewModel>()
+                NavigationService.Navigate<UploadOfferViewModel>(),
+                NavigationService.Navigate<OfferViewModel>(),
+                NavigationService.Navigate<OfferDiscussViewModel>(),
             };
             return Task.WhenAll(tasks);
         }
