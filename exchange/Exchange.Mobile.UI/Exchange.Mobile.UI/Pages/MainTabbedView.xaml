@@ -11,7 +11,8 @@
                       x:TypeArguments="viewModels:MainTabbedViewModel"
                       NavigationPage.HasNavigationBar="false"
                       BackgroundColor="{StaticResource buttonSolidColor}"
-                      android:TabbedPage.ToolbarPlacement="Bottom">
+                      android:TabbedPage.ToolbarPlacement="Bottom"
+                      android:TabbedPage.IsSwipePagingEnabled="False">
     <!--Pages can be added as references or inline-->
 
 </views:MvxTabbedPage>

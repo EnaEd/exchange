@@ -1,6 +1,8 @@
-﻿using Exchange.Mobile.Core.Models;
+﻿using Exchange.Mobile.Core.Constants;
+using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.ViewModels;
 using Exchange.Mobile.UI.Pages.Popups;
+using MLToolkit.Forms.SwipeCardView;
 using MLToolkit.Forms.SwipeCardView.Core;
 using MvvmCross.Forms.Presenters.Attributes;
 using MvvmCross.Forms.Views;
@@ -18,29 +20,34 @@ namespace Exchange.Mobile.UI.Pages
             InitializeComponent();
         }
 
-        private async void SwipeCardView_Swiped(object sender, MLToolkit.Forms.SwipeCardView.Core.SwipedCardEventArgs e)
+        private async void SwipeCardView_Swiped(object sender, MLToolkit.Forms.SwipeCardView.Core.SwipedCardEventArgs args)
         {
-            if (e.Direction == SwipeCardDirection.Right)
+            if (await ViewModel.CheckIsLastOffer(args.Item as OfferCardModel))
+            {
+                await ViewModel.ShowOfferAsync(ViewModel.CurrentCategory);
+            }
+
+
+            if (args.Direction == SwipeCardDirection.Right)
             {
                 //TODO EE:set offer for change
-                ViewModel.CurrentOfferCard = e.Item as OfferCardModel;
+                ViewModel.CurrentOfferCard = args.Item as OfferCardModel;
                 await PopupNavigation.Instance.PushAsync(new SetOfferPopupView(ViewModel));
             }
-            if (e.Direction == SwipeCardDirection.Up)
+            if (args.Direction == SwipeCardDirection.Up)
             {
                 //TODO EE:Add to favorite
             }
-        }
 
-        private async void SwipeCardView_Dragging(object sender, MLToolkit.Forms.SwipeCardView.Core.DraggingCardEventArgs e)
-        {
-            await ViewModel.ShowOfferAsync();
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await PopupNavigation.Instance.PushAsync(new CategoryPopupView(ViewModel));
+            if (ViewModel.CurrentCategory is null)
+            {
+                await PopupNavigation.Instance.PushAsync(new CategoryPopupView(ViewModel));
+            }
         }
 
         protected override bool OnBackButtonPressed()
@@ -49,5 +56,12 @@ namespace Exchange.Mobile.UI.Pages
             return true;
         }
 
+        private void SwipeCardView_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName.Equals(Constant.Shared.TOP_ITEM))
+            {
+                ViewModel.CurrentOfferCard = (sender as SwipeCardView).TopItem as OfferCardModel;
+            }
+        }
     }
 }

@@ -89,5 +89,11 @@ namespace Exchange.Mobile.UI.Pages.Popups
 
         }
 
+        protected override void OnDisappearing()
+        {
+            ViewModel.UploadedImage = null;
+            base.OnDisappearing();
+        }
+
     }
 }

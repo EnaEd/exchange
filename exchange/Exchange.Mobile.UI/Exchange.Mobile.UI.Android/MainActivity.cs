@@ -20,6 +20,8 @@ namespace Exchange.Mobile.UI.Droid
         {
             base.OnCreate(bundle);
 
+
+            Xamarin.Essentials.Platform.Init(this, bundle);
             Rg.Plugins.Popup.Popup.Init(this, bundle);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
             Forms9Patch.Droid.Settings.Initialize(this);

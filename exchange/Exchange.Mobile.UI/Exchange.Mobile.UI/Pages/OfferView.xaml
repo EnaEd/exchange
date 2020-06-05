@@ -10,39 +10,53 @@
                        BackgroundColor="{StaticResource mainColor}"
                        x:Class="Exchange.Mobile.UI.Pages.OfferView"
                        x:TypeArguments="viewModels:OfferViewModel">
-    
+
     <views:MvxContentPage.IconImageSource>
         <FontImageSource  FontFamily="{StaticResource FontAwesomeSolid}" Glyph="" />
     </views:MvxContentPage.IconImageSource>
-<ContentPage.Content>
-        <Grid>
-            <Grid>
+    <ContentPage.Content>
+        <Grid BackgroundColor="{StaticResource mainColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.4*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid
+                Grid.Row="0"
+                Margin="50,30,50,10"
+                >
+                <Frame
+                    BackgroundColor="{StaticResource secondColor}"/>
+                <Label
+                    Margin="10"
+                    BackgroundColor="{StaticResource secondColor}"
+                    IsEnabled="False"
+                    Text="{Binding CurrentOfferCard.Description}"/>
+            </Grid>
+            <Grid 
+                Grid.Row="1"
+                Margin="20"
+                >
+                <Frame
+                    BackgroundColor="{StaticResource secondColor}"
+                    BorderColor="{StaticResource textColor}"/>
                 <swipeCardView:SwipeCardView
+                    Margin="25"
                 ItemsSource="{Binding Offers}"
                 VerticalOptions="FillAndExpand"
                 Swiped="SwipeCardView_Swiped"
-                Dragging="SwipeCardView_Dragging">
+                PropertyChanged="SwipeCardView_PropertyChanged"
+                >
                     <swipeCardView:SwipeCardView.ItemTemplate>
                         <DataTemplate>
-                            <Grid >
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="0.3*"/>
-                                </Grid.RowDefinitions>
-                                <Image
-                Grid.Row="0"
-               Source="{Binding OfferImage}"
-                        />
-                                <Label
-                Grid.Row="1"
-                BackgroundColor="Gray"
-                Text="{Binding Description}"/>
-                            </Grid>
+                            <Image
+                                    Margin="5"
+                                    Source="{Binding OfferImage}"
+                                    />
                         </DataTemplate>
                     </swipeCardView:SwipeCardView.ItemTemplate>
                 </swipeCardView:SwipeCardView>
             </Grid>
-            <Grid IsVisible="{Binding IsBusy}">
+            <Grid IsVisible="{Binding IsBusy}" Grid.Row="0" Grid.RowSpan="2">
                 <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center"/>
             </Grid>
         </Grid>

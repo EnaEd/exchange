@@ -4,23 +4,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:Exchange.Mobile.UI.Controls" xmlns:ffiamgeloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
-                 xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
-                 xmlns:converters="clr-namespace:Exchange.Mobile.UI.Converters"
-                 mc:Ignorable="d"
-             x:Class="Exchange.Mobile.UI.Pages.Popups.SetOfferPopupView">
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+             xmlns:converters="clr-namespace:Exchange.Mobile.UI.Converters"
+             mc:Ignorable="d"
+             x:Class="Exchange.Mobile.UI.Pages.Popups.SetOfferPopupView"
+            >
     <page:PopupPage.Resources>
         <converters:SetDefaultImageIfNeededConverter x:Key="DefaultImageConverter"/>
     </page:PopupPage.Resources>
-    <local:GradientStack
-        StartColor="LightGray"
-        EndColor="BlueViolet"
-        HorizontalOptions="Fill"
-        VerticalOptions="Fill"
-            Margin="50,150,50,150">
+    <Frame
+        VerticalOptions="Center"
+        HorizontalOptions="FillAndExpand"
+        BorderColor="{StaticResource textColor}"
+        BackgroundColor="{StaticResource mainColor}"
+        CornerRadius="10"
+        Margin="50,0,50,0">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="0.01*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="0.5*"/>
                 <RowDefinition Height="0.3*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -31,7 +34,7 @@
                 <ColumnDefinition Width="0.1*"/>
             </Grid.ColumnDefinitions>
 
-            <Label VerticalOptions="Center"
+            <!--<Label VerticalOptions="Center"
                    Grid.Row="0" Grid.Column="3"
                    FontSize="30" 
                    WidthRequest="30"
@@ -42,7 +45,7 @@
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="KebabMenuTapped"/>
                 </Label.GestureRecognizers>
-            </Label>
+            </Label>-->
 
             <ffiamgeloading:CachedImage
                 Grid.Row="1" Grid.Column="1"
@@ -60,28 +63,60 @@
                 Text="&#xf362;"
                    FontFamily="{StaticResource FontAwesomeSolid}"
                 FontSize="25"/>
+            <!---->
+            <Label 
+                Grid.Row="1" Grid.Column="3"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Text="&#xf382;"
+                   FontFamily="{StaticResource FontAwesomeSolid}"
+                FontSize="25">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding Source={x:Reference uploadImage}, Path=Source}" Value="{x:Null}">
+                        <Setter Property="IsVisible" Value="True"/>
+                    </DataTrigger>
+                </Label.Triggers>
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding UploadImageCommandAsync}" />
+                </Label.GestureRecognizers>
+            </Label>
             <ffiamgeloading:CachedImage
+                x:Name="uploadImage"
                 Grid.Row="1" Grid.Column="3"
                 DownsampleToViewSize="True"
                 Aspect="AspectFit"
-                Source="{Binding UploadedImage,Converter={StaticResource DefaultImageConverter}}">
+                IsVisible="False"
+                Source="{Binding UploadedImage}">
                 <ffiamgeloading:CachedImage.Transformations>
                     <fftransformations:RoundedTransformation/>
                 </ffiamgeloading:CachedImage.Transformations>
+                <ffiamgeloading:CachedImage.Triggers>
+                    <DataTrigger TargetType="ffiamgeloading:CachedImage" Binding="{Binding Source={x:Reference uploadImage}, Path=Source}" Value="{x:Null}">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </ffiamgeloading:CachedImage.Triggers>
+                <ffiamgeloading:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding UploadImageCommandAsync}" />
+                </ffiamgeloading:CachedImage.GestureRecognizers>
             </ffiamgeloading:CachedImage>
 
+            <Editor 
+                Grid.Row="2"
+                Grid.Column="1" Grid.ColumnSpan="3"
+                BackgroundColor="{StaticResource secondColor}"
+                    Placeholder="Description"/>
+
             <Label VerticalOptions="Center"
-                   Grid.Row="2" Grid.Column="3"
-                   FontSize="30" 
-                   TextColor="White"  
-                   HorizontalOptions="End"
-                   Text="&#xf1d8;"
-                   FontFamily="{StaticResource FontAwesomeSolid}">
+                   Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5"
+                   FontSize="Small" 
+                   HorizontalOptions="Center"
+                   Text="Send"
+                   TextColor="{StaticResource textColor}">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding SendOfferCommandAsync}"/>
                 </Label.GestureRecognizers>
             </Label>
 
         </Grid>
-    </local:GradientStack>
+    </Frame>
 </page:PopupPage>

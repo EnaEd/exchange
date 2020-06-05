@@ -1,11 +1,14 @@
 ﻿using Com.OneSignal;
 using Com.OneSignal.Abstractions;
+using Exchange.Mobile.Core.Constants;
 using Exchange.Mobile.Core.Enums;
 using Exchange.Mobile.Core.Helpers.Interface;
 using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Models.RequestModels;
 using Exchange.Mobile.Core.Services.Interfaces;
 using MvvmCross.Commands;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -44,20 +47,36 @@ namespace Exchange.Mobile.Core.ViewModels
 
 
         #region Commands
-        public IMvxCommand SwipeRightCommandAsync => new MvxCommand(SwipeRigth);
-        public IMvxCommand SwipeLeftCommandAsync => new MvxCommand(SwipeLeft);
-        public IMvxCommand SwipedCommand => new MvxCommand(SwipeLeft);
         public IMvxCommand SelectedCommandAsync => new MvxAsyncCommand<object>(SelectedItem);
 
         public IMvxCommand SendOfferCommandAsync => new MvxAsyncCommand(SendOfferAsync);
 
-
-
-
+        public IMvxCommand UploadImageCommandAsync => new MvxAsyncCommand(UploadImageAsync);
 
         #endregion Commands
 
         #region Functionality
+
+        private async Task UploadImageAsync()
+        {
+            if (!CrossMedia.Current.IsCameraAvailable && !CrossMedia.Current.IsTakePhotoSupported)
+            {
+                return;
+            }
+            MediaFile file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+            {
+                SaveToAlbum = true,
+                Directory = Constant.Shared.MEDIA_DIRECTORY,
+                Name = $"{DateTime.Now.ToString(Constant.Shared.IMAGE_SAVING_FORMAT)}{Constant.Shared.IMAGE_EXTENSION}"
+            });
+
+            if (!(file is null))
+            {
+                UploadedImage = ImageSource.FromFile(file.Path);
+            }
+
+        }
+
 
         private async Task SendOfferAsync()
         {
@@ -99,18 +118,9 @@ namespace Exchange.Mobile.Core.ViewModels
 
         }
 
-        private void SwipeRigth()
-        {
-            _displayAlertService.ShowToast("swipe right");
-        }
-
-        private void SwipeLeft()
-        {
-            _displayAlertService.ShowToast("swipe left");
-        }
-
         public async Task ShowOfferAsync(object offerCategory = null)
         {
+            CurrentCategory = offerCategory as OfferCategory;
             if (!IsBusy)
             {
                 IsBusy = true;
@@ -121,12 +131,9 @@ namespace Exchange.Mobile.Core.ViewModels
                     FilterRequestModel model = new FilterRequestModel
                     {
                         City = City,
-                        Country = Country
+                        Country = Country,
+                        CategoryId = (int)(CurrentCategory?.Id ?? null)
                     };
-                    if (offerCategory is OfferCategory category)
-                    {
-                        model.CategoryId = (int)category.Id;
-                    }
                     var response = await _offerService.ShowOfferAsync(model);
 
                     if (response is null)
@@ -173,11 +180,28 @@ namespace Exchange.Mobile.Core.ViewModels
 
         }
 
+        public async Task<bool> CheckIsLastOffer(OfferCardModel offerCard)
+        {
+            var lastItem = Offers.LastOrDefault();
+            return
+                offerCard.Description.Equals(lastItem?.Description) &&
+                offerCard.OfferImage.Equals(lastItem?.OfferImage) &&
+                offerCard.OwnerId.Equals(lastItem?.OwnerId);
+
+        }
+
         #endregion Functionality
 
         #region Properties
         public ObservableCollection<OfferCategory> OfferCategories { get; set; } = new ObservableCollection<OfferCategory>();
         public ObservableCollection<OfferCardModel> Offers { get; set; } = new ObservableCollection<OfferCardModel>();
+
+        private OfferCategory _currentCategory;
+        public OfferCategory CurrentCategory
+        {
+            get => _currentCategory;
+            set => SetProperty(ref _currentCategory, value);
+        }
 
         private string _city;
         public string City
