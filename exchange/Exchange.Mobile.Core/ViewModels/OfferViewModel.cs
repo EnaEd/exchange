@@ -1,8 +1,6 @@
 ﻿using Com.OneSignal;
 using Com.OneSignal.Abstractions;
 using Exchange.Mobile.Core.Constants;
-using Exchange.Mobile.Core.Enums;
-using Exchange.Mobile.Core.Helpers.Interface;
 using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Models.RequestModels;
 using Exchange.Mobile.Core.Services.Interfaces;
@@ -16,29 +14,24 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Exchange.Mobile.Core.ViewModels
 {
     public class OfferViewModel : BaseViewModel
     {
-        private readonly IDisplayAlertService _displayAlertService;
+
         private readonly IOfferService _offerService;
         private readonly IAuthService<User> _authService;
-        //TODO EE: get location from auth view Model
-        private readonly ILocationHelper _locationHelper;
-        public OfferViewModel(IDisplayAlertService displayAlertService, IOfferService offerService, ILocationHelper locationHelper,
-            IAuthService<User> authService)
+
+        public OfferViewModel(IOfferService offerService, IAuthService<User> authService)
         {
-            _displayAlertService = displayAlertService;
             _offerService = offerService;
-            _locationHelper = locationHelper;
             _authService = authService;
 
             Device.InvokeOnMainThreadAsync(async () =>
             {
-                await GetOfferCategories();
+                await GetOfferCategories(_offerService);
 
                 //await ShowOfferAsync();
             });
@@ -98,25 +91,7 @@ namespace Exchange.Mobile.Core.ViewModels
             await ShowOfferAsync(category);
         }
 
-        private async Task GetOfferCategories()
-        {
-            if (!IsBusy)
-            {
-                IsBusy = true;
-                try
-                {
-                    OfferCategories = new ObservableCollection<OfferCategory>((await _offerService.GetOfferCategoryAsync()).
-                        Where(x => x.Category != CategoryEnum.Money.ToString()));
-                    await RaisePropertyChanged(nameof(OfferCategories));
-                }
-                finally
-                {
-                    IsBusy = false;
-                }
-            }
 
-
-        }
 
         public async Task ShowOfferAsync(object offerCategory = null)
         {
@@ -157,28 +132,7 @@ namespace Exchange.Mobile.Core.ViewModels
             }
         }
 
-        private async Task GetLocationDataAsync()
-        {
-            var position = await _locationHelper.GetPositionAsync(TimeSpan.FromMilliseconds(10000));
-            try
-            {
-                var placemarks = await Geocoding.GetPlacemarksAsync(position.Latitude, position.Longitude);
-                var placemark = placemarks?.FirstOrDefault();
-                if (placemark is null)
-                {
-                    _displayAlertService.ShowToast("location fail");
-                }
-                City = placemark.Locality;
-                Country = placemark.CountryName;
-            }
-            catch (Exception ex)
-            {
 
-                Debug.WriteLine(ex.Message);
-            }
-
-
-        }
 
         public async Task<bool> CheckIsLastOffer(OfferCardModel offerCard)
         {
@@ -193,7 +147,7 @@ namespace Exchange.Mobile.Core.ViewModels
         #endregion Functionality
 
         #region Properties
-        public ObservableCollection<OfferCategory> OfferCategories { get; set; } = new ObservableCollection<OfferCategory>();
+
         public ObservableCollection<OfferCardModel> Offers { get; set; } = new ObservableCollection<OfferCardModel>();
 
         private OfferCategory _currentCategory;
@@ -201,20 +155,6 @@ namespace Exchange.Mobile.Core.ViewModels
         {
             get => _currentCategory;
             set => SetProperty(ref _currentCategory, value);
-        }
-
-        private string _city;
-        public string City
-        {
-            get => _city;
-            set => SetProperty(ref _city, value);
-        }
-
-        private string _country;
-        public string Country
-        {
-            get => _country;
-            set => SetProperty(ref _country, value);
         }
 
         private string _imageBase64;
@@ -227,6 +167,7 @@ namespace Exchange.Mobile.Core.ViewModels
                 Image = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(_imageBase64)));
             }
         }
+
         private ImageSource _image;
         public ImageSource Image
         {
@@ -247,6 +188,7 @@ namespace Exchange.Mobile.Core.ViewModels
             get => _currentOfferCard;
             set => SetProperty(ref _currentOfferCard, value);
         }
+
         private ImageSource _uploadedImage;
         public ImageSource UploadedImage
         {

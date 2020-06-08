@@ -2,7 +2,6 @@
 using Com.OneSignal.Abstractions;
 using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Services.Interfaces;
-using MvvmCross;
 using MvvmCross.Navigation;
 using System.Diagnostics;
 using Xamarin.Forms;
@@ -13,16 +12,13 @@ namespace Exchange.Mobile.Core.ViewModels
     {
         private readonly IAuthService<User> _authService;
         private readonly IMvxNavigationService _navigationService;
-        private readonly IDeviceInfoService _deviceInfoService;
+
 
         public AuthViewModel(IAuthService<User> authService, IMvxNavigationService navigationService)
         {
             _authService = authService;
             _navigationService = navigationService;
-            _deviceInfoService = Mvx.IoCProvider.Resolve<IDeviceInfoService>();
 
-            //string number = _deviceInfoService.GetPhoneNumber();
-            string number = "0123456789";
             string pushId = string.Empty;
 
             OneSignal.Current.IdsAvailable(new IdsAvailableCallback((id, token) =>
@@ -36,15 +32,15 @@ namespace Exchange.Mobile.Core.ViewModels
 
                 try
                 {
-                    if (await _authService.CheckUserPhone(number))
+                    if (await _authService.CheckUserPhone(PhoneNumber))
                     {
 
-                        await _authService.UpdatePushIdIfNeededAsync(number, pushId);
+                        await _authService.UpdatePushIdIfNeededAsync(PhoneNumber, pushId);
                         await _navigationService.Navigate<MainTabbedViewModel>();
                         return;
                     }
                     //var model = new PhoneRequestModel { PhoneNumber = number };
-                    await _navigationService.Navigate<RegistrationViewModel, string>(number);
+                    await _navigationService.Navigate<RegistrationViewModel, string>(PhoneNumber);
                 }
                 catch (System.Exception ex)
                 {

@@ -22,5 +22,11 @@ namespace Exchange.Mobile.Core.Services
             return JsonConvert.DeserializeObject<Offer>(await response.Content.ReadAsStringAsync());
 
         }
+
+        public async Task<string> UploadOfferAsync(UploadOfferRequestModel model)
+        {
+            var response = await ExecutePostAsync($"{ApplicationConfig.BaseUrl}api/exchange/uploadoffer", model);
+            return JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
+        }
     }
 }

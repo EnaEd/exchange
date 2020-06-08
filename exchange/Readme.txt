@@ -1,0 +1,1 @@
+add ban to upload image without categoryID

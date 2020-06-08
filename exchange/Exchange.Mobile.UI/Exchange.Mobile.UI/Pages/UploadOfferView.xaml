@@ -5,7 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core"
+    xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core" 
+    xmlns:ffiamgeloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
     mc:Ignorable="d"
     x:Class="Exchange.Mobile.UI.Pages.UploadOfferView"
     x:TypeArguments="viewModels:UploadOfferViewModel"
@@ -14,10 +16,126 @@
         <FontImageSource FontFamily="{StaticResource FontAwesomeSolid}" Glyph=""/>
     </views:MvxContentPage.IconImageSource>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
+        <Grid
+            BackgroundColor="{StaticResource mainColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--Page description-->
+            <Label Text="Please upload your image"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+
+            <!--Upload image-->
+            <Label 
+                Grid.Row="1" 
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Text="&#xf382;"
+                   FontFamily="{StaticResource FontAwesomeSolid}"
+                FontSize="25">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding Source={x:Reference uploadImage}, Path=Source}" Value="{x:Null}">
+                        <Setter Property="IsVisible" Value="True"/>
+                    </DataTrigger>
+                </Label.Triggers>
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding UploadImageCommandAsync}" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <!--Uploaded Image-->
+            <ffiamgeloading:CachedImage
+                x:Name="uploadImage"
+                Grid.Row="1" 
+                DownsampleToViewSize="True"
+                Aspect="AspectFit"
+                IsVisible="False"
+                Source="{Binding UploadedImageSource}">
+                <ffiamgeloading:CachedImage.Transformations>
+                    <fftransformations:RoundedTransformation/>
+                </ffiamgeloading:CachedImage.Transformations>
+                <ffiamgeloading:CachedImage.Triggers>
+                    <DataTrigger TargetType="ffiamgeloading:CachedImage" Binding="{Binding Source={x:Reference uploadImage}, Path=Source}" Value="{x:Null}">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </ffiamgeloading:CachedImage.Triggers>
+                <ffiamgeloading:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding UploadImageCommandAsync}" />
+                </ffiamgeloading:CachedImage.GestureRecognizers>
+            </ffiamgeloading:CachedImage>
+
+            <!--offer description-->
+            <Frame
+                    Grid.Row="2"
+                    IsVisible="False"
+                CornerRadius="8"
+                BackgroundColor="{StaticResource secondColor}"
+                BorderColor="{StaticResource textColor}"
+                Margin="10">
+                <Frame.Triggers>
+                    <DataTrigger TargetType="Frame" Binding="{Binding Source={x:Reference uploadImage}, Path=Source}" Value="{x:Null}">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </Frame.Triggers>
+                <Entry
+                        x:Name="entryDescription"
+                        BackgroundColor="Transparent"
+                        Placeholder="Your description"
+                        Text="{Binding OfferDescription}">
+                </Entry>
+            </Frame>
+            <!--Category area-->
+            <Frame
+                    Grid.Row="3"
+                    IsVisible="False"
+                    CornerRadius="8"
+                    BackgroundColor="{StaticResource secondColor}"
+                    BorderColor="{StaticResource textColor}"
+                    Margin="10">
+                    <Frame.Triggers>
+                        <DataTrigger TargetType="Frame" Binding="{Binding Source={x:Reference entryDescription}, Path=Text}" Value="{x:Null}">
+                            <Setter Property="IsVisible" Value="False"/>
+                        </DataTrigger>
+                    </Frame.Triggers>
+                    <StackLayout
+                        Orientation="Horizontal"
+                        VerticalOptions="Center"
+                        HorizontalOptions="FillAndExpand">
+                        <Picker
+                            x:Name="pickerCategory"
+                            Title="Select Category"
+                            HorizontalOptions="FillAndExpand"
+                            SelectedItem="{Binding SelectedCategory}"
+                            ItemsSource="{Binding OfferCategories}"
+                            ItemDisplayBinding="{Binding Category}"/>
+                        <Label
+                            Text="&#xf0dd;"
+                            FontSize="30"
+                            
+                            FontFamily="{StaticResource FontAwesomeSolid}"/>
+                    </StackLayout>
+            </Frame>
+           
+            <!--Upload offer button-->
+            <Label
+                Grid.Row="4"
+                IsVisible="False"
+                Text="Send"
+               HorizontalOptions="Center">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding Source={x:Reference pickerCategory},Path=SelectedItem}" Value="{x:Null}">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </Label.Triggers>
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding UploadOfferCommandAsync}"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+        </Grid>
     </ContentPage.Content>
 </views:MvxContentPage>

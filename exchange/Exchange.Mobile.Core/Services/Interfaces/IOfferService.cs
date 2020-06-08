@@ -9,5 +9,6 @@ namespace Exchange.Mobile.Core.Services.Interfaces
     {
         Task<Offer> ShowOfferAsync(FilterRequestModel model = null);
         Task<IEnumerable<OfferCategory>> GetOfferCategoryAsync();
+        Task<string> UploadOfferAsync(UploadOfferRequestModel model);
     }
 }
