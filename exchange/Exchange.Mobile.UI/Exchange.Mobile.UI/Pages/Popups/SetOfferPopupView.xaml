@@ -34,19 +34,6 @@
                 <ColumnDefinition Width="0.1*"/>
             </Grid.ColumnDefinitions>
 
-            <!--<Label VerticalOptions="Center"
-                   Grid.Row="0" Grid.Column="3"
-                   FontSize="30" 
-                   WidthRequest="30"
-                   TextColor="White"  
-                   HorizontalOptions="End"
-                   Text="&#xf142;"
-                   FontFamily="{StaticResource FontAwesomeSolid}">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="KebabMenuTapped"/>
-                </Label.GestureRecognizers>
-            </Label>-->
-
             <ffiamgeloading:CachedImage
                 Grid.Row="1" Grid.Column="1"
                 Aspect="AspectFit"
@@ -113,7 +100,7 @@
                    Text="Send"
                    TextColor="{StaticResource textColor}">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SendOfferCommandAsync}"/>
+                    <TapGestureRecognizer Command="{Binding SendOfferCommandAsync}" Tapped="TapGestureRecognizer_Tapped"/>
                 </Label.GestureRecognizers>
             </Label>
 

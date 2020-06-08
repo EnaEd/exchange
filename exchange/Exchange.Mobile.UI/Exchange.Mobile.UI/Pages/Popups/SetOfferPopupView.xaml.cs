@@ -1,5 +1,6 @@
 ﻿using Exchange.Mobile.Core.ViewModels;
 using Rg.Plugins.Popup.Pages;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -95,5 +96,9 @@ namespace Exchange.Mobile.UI.Pages.Popups
             base.OnDisappearing();
         }
 
+        private async void TapGestureRecognizer_Tapped(object sender, System.EventArgs e)
+        {
+            await PopupNavigation.Instance.PopAsync();
+        }
     }
 }
