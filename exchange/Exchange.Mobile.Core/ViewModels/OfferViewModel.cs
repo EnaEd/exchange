@@ -9,7 +9,6 @@ using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -23,12 +22,13 @@ namespace Exchange.Mobile.Core.ViewModels
 
         private readonly IOfferService _offerService;
         private readonly IAuthService<User> _authService;
+        private int _showedCount;
 
         public OfferViewModel(IOfferService offerService, IAuthService<User> authService)
         {
             _offerService = offerService;
             _authService = authService;
-
+            _showedCount = default;
             Device.InvokeOnMainThreadAsync(async () =>
             {
                 await GetOfferCategories(_offerService);
@@ -46,9 +46,19 @@ namespace Exchange.Mobile.Core.ViewModels
 
         public IMvxCommand UploadImageCommandAsync => new MvxAsyncCommand(UploadImageAsync);
 
+        public IMvxCommand RefreshOffersCommandAsync => new MvxAsyncCommand(RefreshOffersAsync);
+
+
+
         #endregion Commands
 
         #region Functionality
+
+        private async Task RefreshOffersAsync()
+        {
+            _showedCount = default;
+            await ShowOfferAsync(CurrentCategory);
+        }
 
         private async Task UploadImageAsync()
         {
@@ -107,22 +117,24 @@ namespace Exchange.Mobile.Core.ViewModels
                     {
                         City = City,
                         Country = Country,
-                        CategoryId = (int)(CurrentCategory?.Id ?? null)
+                        CategoryId = (int)(CurrentCategory?.Id ?? null),
+                        SkippedCount = _showedCount + Offers.Count
                     };
-                    var response = await _offerService.ShowOfferAsync(model);
-
+                    IEnumerable<Offer> response = await _offerService.ShowOfferAsync(model);
                     if (response is null)
                     {
                         IsBusy = false;
                         return;
                     }
-
-                    Offers.Add(new OfferCardModel
+                    Offers = response.Select(item => new OfferCardModel
                     {
-                        Description = response.Description,
-                        OfferImage = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(response.PhotoSource))),
-                        OwnerId = response.UserId
-                    });
+                        Description = item.Description,
+                        OfferImage = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.PhotoSource))),
+                        OwnerId = item.UserId
+                    }).ToArray();
+
+                    _showedCount += Offers.Count();
+                    IsContentEmpty = Offers.Count() == default ? true : false;
                     await RaisePropertyChanged(nameof(Offers));
                 }
                 finally
@@ -148,7 +160,14 @@ namespace Exchange.Mobile.Core.ViewModels
 
         #region Properties
 
-        public ObservableCollection<OfferCardModel> Offers { get; set; } = new ObservableCollection<OfferCardModel>();
+        private bool _isContentEmpty;
+        public bool IsContentEmpty
+        {
+            get => _isContentEmpty;
+            set => SetProperty(ref _isContentEmpty, value);
+        }
+
+        public IList<OfferCardModel> Offers { get; set; } = new List<OfferCardModel>();
 
         private OfferCategory _currentCategory;
         public OfferCategory CurrentCategory

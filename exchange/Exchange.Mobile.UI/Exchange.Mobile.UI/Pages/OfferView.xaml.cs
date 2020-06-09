@@ -7,6 +7,7 @@ using MLToolkit.Forms.SwipeCardView.Core;
 using MvvmCross.Forms.Presenters.Attributes;
 using MvvmCross.Forms.Views;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Exchange.Mobile.UI.Pages
@@ -62,6 +63,13 @@ namespace Exchange.Mobile.UI.Pages
             {
                 ViewModel.CurrentOfferCard = (sender as SwipeCardView).TopItem as OfferCardModel;
             }
+        }
+
+        private async void TapGestureRecognizer_Tapped(object sender, System.EventArgs e)
+        {
+            var label = sender as Label;
+            await label.FadeTo(default, 100);
+            await label.FadeTo(100, 100);
         }
     }
 }

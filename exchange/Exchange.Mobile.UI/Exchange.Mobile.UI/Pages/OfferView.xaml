@@ -5,7 +5,8 @@
                        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
                        xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-                       xmlns:swipeCardView="clr-namespace:MLToolkit.Forms.SwipeCardView;assembly=MLToolkit.Forms.SwipeCardView"
+                       xmlns:swipeCardView="clr-namespace:MLToolkit.Forms.SwipeCardView;assembly=MLToolkit.Forms.SwipeCardView" 
+                       xmlns:converters="clr-namespace:Exchange.Mobile.UI.Converters"
                        mc:Ignorable="d"
                        BackgroundColor="{StaticResource mainColor}"
                        x:Class="Exchange.Mobile.UI.Pages.OfferView"
@@ -14,6 +15,12 @@
     <views:MvxContentPage.IconImageSource>
         <FontImageSource  FontFamily="{StaticResource FontAwesomeSolid}" Glyph="" />
     </views:MvxContentPage.IconImageSource>
+    <views:MvxContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolInvertConverter x:Key="BoolInverConverter"/>
+
+        </ResourceDictionary>
+    </views:MvxContentPage.Resources>
     <ContentPage.Content>
         <Grid BackgroundColor="{StaticResource mainColor}">
             <Grid.RowDefinitions>
@@ -30,7 +37,7 @@
                     Margin="10"
                     BackgroundColor="{StaticResource secondColor}"
                     IsEnabled="False"
-                    Text="{Binding CurrentOfferCard.Description}"/>
+                    Text="{Binding Source={x:Reference swipeCardOffers}, Path=TopItem.Description}"/>
             </Grid>
             <Grid 
                 Grid.Row="1"
@@ -39,12 +46,33 @@
                 <Frame
                     BackgroundColor="{StaticResource secondColor}"
                     BorderColor="{StaticResource textColor}"/>
+                <StackLayout
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    IsVisible="{Binding IsContentEmpty}">
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Text="&#xf002;"
+                        FontSize="Large"
+                        FontFamily="{StaticResource FontAwesomeSolid}"/>
+                    <Label
+                        Text="Sorry no contet for your request"/>
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Margin="0,50,0,0"
+                        Text="Refresh">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RefreshOffersCommandAsync}" Tapped="TapGestureRecognizer_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
                 <swipeCardView:SwipeCardView
+                    x:Name="swipeCardOffers"
                     Margin="25"
                 ItemsSource="{Binding Offers}"
                 VerticalOptions="FillAndExpand"
                 Swiped="SwipeCardView_Swiped"
-                PropertyChanged="SwipeCardView_PropertyChanged"
+                    IsVisible="{Binding IsContentEmpty,Converter={StaticResource BoolInverConverter}}"
                 >
                     <swipeCardView:SwipeCardView.ItemTemplate>
                         <DataTemplate>

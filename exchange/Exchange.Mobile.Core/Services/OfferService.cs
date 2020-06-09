@@ -16,10 +16,10 @@ namespace Exchange.Mobile.Core.Services
             return JsonConvert.DeserializeObject<IEnumerable<OfferCategory>>(await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<Offer> ShowOfferAsync(FilterRequestModel model = null)
+        public async Task<IEnumerable<Offer>> ShowOfferAsync(FilterRequestModel model = null)
         {
             var response = await ExecutePostAsync($"{ApplicationConfig.BaseUrl}api/exchange/showoffer", model);
-            return JsonConvert.DeserializeObject<Offer>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<IEnumerable<Offer>>(await response.Content.ReadAsStringAsync());
 
         }
 

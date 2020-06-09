@@ -7,7 +7,7 @@ namespace Exchange.Mobile.Core.Services.Interfaces
 {
     public interface IOfferService
     {
-        Task<Offer> ShowOfferAsync(FilterRequestModel model = null);
+        Task<IEnumerable<Offer>> ShowOfferAsync(FilterRequestModel model = null);
         Task<IEnumerable<OfferCategory>> GetOfferCategoryAsync();
         Task<string> UploadOfferAsync(UploadOfferRequestModel model);
     }
