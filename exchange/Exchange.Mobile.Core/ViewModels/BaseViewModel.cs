@@ -86,4 +86,12 @@ namespace Exchange.Mobile.Core.ViewModels
         }
         #endregion Functionality
     }
+
+    public class BaseViewModel<T> : MvxViewModel<T>
+    {
+        public override void Prepare(T parameter)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -8,6 +8,6 @@
         public string Country { get; set; }
         public float? Long { get; set; }
         public float? Lat { get; set; }
-        public long? LastOfferId { get; set; }
+        public long? SkippedCount { get; set; }
     }
 }

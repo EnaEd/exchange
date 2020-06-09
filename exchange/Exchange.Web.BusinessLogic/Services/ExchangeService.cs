@@ -33,9 +33,10 @@ namespace Exchange.Web.BusinessLogic.Services
             return _mapper.Map<IEnumerable<CategoryExchangeModel>>(await _categoryRepository.GetAllAsync());
         }
 
-        public async Task<PhotoModel> ShowOfferAsync(FilterRequestModel model)
+        public async Task<IEnumerable<PhotoModel>> ShowOfferAsync(FilterRequestModel model)
         {
-            return _mapper.Map<PhotoModel>(await _photoRepository.GetOneByFilter(_mapper.Map<FilterModel>(model)));
+
+            return _mapper.Map<IEnumerable<PhotoModel>>(await _photoRepository.GetOneByFilter(_mapper.Map<FilterModel>(model)));
         }
 
         public async Task UploadOfferAsync(OfferRequestModel model)
