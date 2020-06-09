@@ -15,7 +15,7 @@ namespace Exchange.Mobile.Core.ViewModels
 
 
 
-        public AuthViewModel(IAuthService<User> authService, IMvxNavigationService navigationService, IOneSignalService oneSignalService)
+        public AuthViewModel(IAuthService<User> authService, IMvxNavigationService navigationService)
         {
             _authService = authService;
             _navigationService = navigationService;

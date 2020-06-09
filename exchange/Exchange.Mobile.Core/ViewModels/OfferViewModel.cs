@@ -9,7 +9,6 @@ using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -88,12 +87,15 @@ namespace Exchange.Mobile.Core.ViewModels
 
             var notification = new Dictionary<string, object>
             {
-                ["contents"] = new Dictionary<string, string>() { { "en", "Test message" } },
+                ["contents"] = new Dictionary<string, string>() {
+                    { "en", "You have a new exchange offer" }
+                },
                 ["include_player_ids"] = new List<string>() { user.OneSignalId }
             };
             OneSignal.Current.PostNotification(notification,
-                (responseSuccess) => { Debug.WriteLine("success"); },
-                (responseFailure) => { Debug.WriteLine($"{Json.Serialize(responseFailure)}"); });
+                (responseSuccess) => { DisplayAlertService.ShowToast("success"); },
+                (responseFailure) => { DisplayAlertService.ShowToast($"{Json.Serialize(responseFailure)}"); });
+            Conditions = default;
         }
 
         private async Task SelectedItem(object category)
@@ -134,7 +136,7 @@ namespace Exchange.Mobile.Core.ViewModels
                     }).ToArray();
 
                     _showedCount += Offers.Count();
-                    IsContentEmpty = Offers.Count() == default ? true : false;
+                    IsContentEmpty = Offers.Count() == default;
                     await RaisePropertyChanged(nameof(Offers));
                 }
                 finally
@@ -148,17 +150,28 @@ namespace Exchange.Mobile.Core.ViewModels
 
         public async Task<bool> CheckIsLastOffer(OfferCardModel offerCard)
         {
-            var lastItem = Offers.LastOrDefault();
-            return
+            return await Task.Run(() =>
+            {
+                var lastItem = Offers.LastOrDefault();
+                return
                 offerCard.Description.Equals(lastItem?.Description) &&
                 offerCard.OfferImage.Equals(lastItem?.OfferImage) &&
                 offerCard.OwnerId.Equals(lastItem?.OwnerId);
+            });
+
 
         }
 
         #endregion Functionality
 
         #region Properties
+
+        private string _conditions;
+        public string Conditions
+        {
+            get => _conditions;
+            set => SetProperty(ref _conditions, value);
+        }
 
         private bool _isContentEmpty;
         public bool IsContentEmpty

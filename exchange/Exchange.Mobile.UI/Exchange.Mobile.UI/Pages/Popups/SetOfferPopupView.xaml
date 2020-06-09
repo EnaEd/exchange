@@ -91,8 +91,8 @@
                 Grid.Row="2"
                 Grid.Column="1" Grid.ColumnSpan="3"
                 BackgroundColor="{StaticResource secondColor}"
-                    Placeholder="Description"/>
-
+                    Placeholder="Description"
+                Text="{Binding Conditions}"/>
             <Label VerticalOptions="Center"
                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5"
                    FontSize="Small" 

@@ -32,7 +32,6 @@ namespace Exchange.Mobile.UI.Droid
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
             Forms9Patch.Droid.Settings.Initialize(this);
             CrossCurrentActivity.Current.Init(this, bundle);
-
         }
 
 
