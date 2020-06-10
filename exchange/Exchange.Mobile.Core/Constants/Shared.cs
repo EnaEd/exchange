@@ -10,6 +10,8 @@
             public const string IMAGE_EXTENSION = ".jpg";
 
             public const string RESULT_REQUEST_MESSAGE = "result your request is";
+
+            public const string FAIL_TO_CREATE_DISCUSS = "fail to create discuss";
         }
 
     }

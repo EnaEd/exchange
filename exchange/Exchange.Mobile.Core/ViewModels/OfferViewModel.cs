@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -21,10 +22,12 @@ namespace Exchange.Mobile.Core.ViewModels
 
         private readonly IOfferService _offerService;
         private readonly IAuthService<User> _authService;
+        private readonly IDiscussOfferService _discussOfferService;
         private int _showedCount;
 
-        public OfferViewModel(IOfferService offerService, IAuthService<User> authService)
+        public OfferViewModel(IOfferService offerService, IAuthService<User> authService, IDiscussOfferService discussOfferService)
         {
+            _discussOfferService = discussOfferService;
             _offerService = offerService;
             _authService = authService;
             _showedCount = default;
@@ -85,17 +88,77 @@ namespace Exchange.Mobile.Core.ViewModels
             //string number = _deviceInfoService.GetPhoneNumber();
             var user = await _authService.GetUserByIdAsync(CurrentOfferCard.OwnerId ?? default);
 
-            var notification = new Dictionary<string, object>
+            DiscussOfferModel result = await CreateDiscussModel();
+
+            try
             {
-                ["contents"] = new Dictionary<string, string>() {
+                if (!IsBusy)
+                {
+                    IsBusy = true;
+                    var response = await _discussOfferService.CreateDiscussOfferAsync(result);
+                }
+
+                //create push 
+                var notification = new Dictionary<string, object>
+                {
+                    ["contents"] = new Dictionary<string, string>() {
                     { "en", "You have a new exchange offer" }
                 },
-                ["include_player_ids"] = new List<string>() { user.OneSignalId }
+                    ["include_player_ids"] = new List<string>() { user.OneSignalId }
+                };
+                OneSignal.Current.PostNotification(notification,
+                    (responseSuccess) => { DisplayAlertService.ShowToast("success"); },
+                    (responseFailure) => { DisplayAlertService.ShowToast($"{Json.Serialize(responseFailure)}"); });
+                Conditions = default;
+            }
+            catch (Exception)
+            {
+
+                DisplayAlertService.ShowToast(Constant.Shared.FAIL_TO_CREATE_DISCUSS);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private async Task<DiscussOfferModel> CreateDiscussModel()
+        {
+            string offerImageBase64 = default;
+            string partnerPhotoOfferBase64 = default;
+            var parnter = await _authService.GetUserByPhone(new PhoneRequestModel { PhoneNumber = PhoneNumber });
+
+            if (CurrentOfferCard.OfferImage is StreamImageSource ownerOfferImage)
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    //get stream from imagesource and copy to memory stram
+                    var stream = await ownerOfferImage.Stream(CancellationToken.None);
+                    stream.CopyTo(memoryStream);
+                    offerImageBase64 = Convert.ToBase64String(memoryStream.ToArray());
+                }
+            }
+
+            if (UploadedImage is StreamImageSource partnerOfferImage)
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    //get stream from imagesource and copy to memory stram
+                    var stream = await partnerOfferImage.Stream(CancellationToken.None);
+                    stream.CopyTo(memoryStream);
+                    partnerPhotoOfferBase64 = Convert.ToBase64String(memoryStream.ToArray());
+                }
+            }
+            DiscussOfferModel discussOfferModel = new DiscussOfferModel
+            {
+                Conditions = Conditions,
+                OwnerId = CurrentOfferCard.OwnerId ?? default,
+                OwnerPhotoOffer = offerImageBase64,
+                PartnerId = parnter.Id,
+                PartnerPhoneNumber = PhoneNumber,
+                PartnerPhotoOffer = partnerPhotoOfferBase64
             };
-            OneSignal.Current.PostNotification(notification,
-                (responseSuccess) => { DisplayAlertService.ShowToast("success"); },
-                (responseFailure) => { DisplayAlertService.ShowToast($"{Json.Serialize(responseFailure)}"); });
-            Conditions = default;
+            return discussOfferModel;
         }
 
         private async Task SelectedItem(object category)

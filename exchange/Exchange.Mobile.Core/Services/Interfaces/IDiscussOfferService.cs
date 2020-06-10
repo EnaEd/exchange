@@ -7,9 +7,9 @@ namespace Exchange.Mobile.Core.Services.Interfaces
 {
     public interface IDiscussOfferService
     {
-        Task<IEnumerable<DiscussOfferModel>> GetUserDiscuss(DiscussOfferRequestModel model);
-        Task<DiscussOfferModel> CreateDiscussOffer(DiscussOfferModel model);
-        Task<DiscussOfferModel> UpdateDiscussOffer(DiscussOfferModel model);
-        Task<string> DeleteDiscussOffer(DiscussOfferModel model);
+        Task<IEnumerable<DiscussOfferModel>> GetUserDiscussAsync(DiscussOfferRequestModel model);
+        Task<DiscussOfferModel> CreateDiscussOfferAsync(DiscussOfferModel model);
+        Task<DiscussOfferModel> UpdateDiscussOfferAsync(DiscussOfferModel model);
+        Task<string> DeleteDiscussOfferAsync(DiscussOfferModel model);
     }
 }

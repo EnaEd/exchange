@@ -1,4 +1,5 @@
-﻿using Exchange.Mobile.Core.Models;
+﻿using Exchange.Mobile.Core.Constants;
+using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Models.RequestModels;
 using Exchange.Mobile.Core.Services.Interfaces;
 using Newtonsoft.Json;
@@ -33,6 +34,13 @@ namespace Exchange.Mobile.Core.Services
             var response = await _apiService.ExecuteGetAsync<User>($"{ApplicationConfig.BaseUrl}api/user/{id}");
             var user = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
             return user;
+        }
+
+        public async Task<User> GetUserByPhone(PhoneRequestModel model)
+        {
+            var response = await _apiService.ExecutePostAsync($"{ApplicationConfig.BaseUrl}{Constant.Route.GET_USER_BY_PHONE_ROUTE}", model);
+            var result = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
+            return result as User;
         }
 
         public async Task<bool> RegistrationAsync(User data)

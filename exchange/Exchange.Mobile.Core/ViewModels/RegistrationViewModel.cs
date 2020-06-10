@@ -103,7 +103,7 @@ namespace Exchange.Mobile.Core.ViewModels
                 FirstName = FirstName,
                 LastName = LastName,
                 Password = Password,
-                Phone = Phone
+                PhoneNumber = Phone
             };
 
             bool isRegistrationSuccess = await _authService.RegistrationAsync(user);

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using Exchange.Mobile.Core.Models;
+using Exchange.Mobile.Core.Models.RequestModels;
+using System.Threading.Tasks;
 
 namespace Exchange.Mobile.Core.Services.Interfaces
 {
@@ -8,5 +10,6 @@ namespace Exchange.Mobile.Core.Services.Interfaces
         Task<bool> RegistrationAsync(T data);
         Task<T> UpdatePushIdIfNeededAsync(string phoneNumber, string pushId);
         Task<T> GetUserByIdAsync(long id);
+        Task<User> GetUserByPhone(PhoneRequestModel model);
     }
 }
