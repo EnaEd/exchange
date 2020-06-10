@@ -24,6 +24,9 @@
 
             //discussoffer controller routes
             public const string GET_DISCUSS_BY_USER_ROUTE = "getuserdiscuss";
+            public const string CREATE_DISCUSS_ROUTE = "creatediscuss";
+            public const string UPDATE_DISCUSS_ROUTE = "updatediscuss";
+            public const string DELETE_DISCUSS_ROUTE = "deletediscuss";
         }
     }
 }
