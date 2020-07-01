@@ -77,13 +77,17 @@ namespace Exchange.Mobile.Core.ViewModels
 
             if (!(file is null))
             {
-                UploadedImage = ImageSource.FromFile(file.Path);
+                UploadedImage = ImageSource.FromStream(() =>
+                {
+                    var stream = file.GetStream();
+                    return stream;
+                });
             }
 
         }
 
 
-        private async Task SendOfferAsync()
+        public async Task SendOfferAsync()
         {
             //string number = _deviceInfoService.GetPhoneNumber();
             var user = await _authService.GetUserByIdAsync(CurrentOfferCard.OwnerId ?? default);
@@ -126,7 +130,17 @@ namespace Exchange.Mobile.Core.ViewModels
         {
             string offerImageBase64 = default;
             string partnerPhotoOfferBase64 = default;
-            var parnter = await _authService.GetUserByPhone(new PhoneRequestModel { PhoneNumber = PhoneNumber });
+
+            if (UploadedImage is StreamImageSource partnerOfferImage)
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    //get stream from imagesource and copy to memory stram
+                    var stream = await partnerOfferImage.Stream(CancellationToken.None);
+                    stream.CopyTo(memoryStream);
+                    partnerPhotoOfferBase64 = Convert.ToBase64String(memoryStream.ToArray());
+                }
+            }
 
             if (CurrentOfferCard.OfferImage is StreamImageSource ownerOfferImage)
             {
@@ -139,16 +153,8 @@ namespace Exchange.Mobile.Core.ViewModels
                 }
             }
 
-            if (UploadedImage is StreamImageSource partnerOfferImage)
-            {
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    //get stream from imagesource and copy to memory stram
-                    var stream = await partnerOfferImage.Stream(CancellationToken.None);
-                    stream.CopyTo(memoryStream);
-                    partnerPhotoOfferBase64 = Convert.ToBase64String(memoryStream.ToArray());
-                }
-            }
+            var parnter = await _authService.GetUserByPhoneAsync(new PhoneRequestModel { PhoneNumber = PhoneNumber });
+
             DiscussOfferModel discussOfferModel = new DiscussOfferModel
             {
                 Conditions = Conditions,

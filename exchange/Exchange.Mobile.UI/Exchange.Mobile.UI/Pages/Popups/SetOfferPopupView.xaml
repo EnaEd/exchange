@@ -100,7 +100,7 @@
                    Text="Send"
                    TextColor="{StaticResource textColor}">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SendOfferCommandAsync}" Tapped="TapGestureRecognizer_Tapped"/>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                 </Label.GestureRecognizers>
             </Label>
 

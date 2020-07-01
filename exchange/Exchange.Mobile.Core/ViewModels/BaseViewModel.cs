@@ -19,6 +19,7 @@ namespace Exchange.Mobile.Core.ViewModels
         public readonly IMvxNavigationService NavigationService;
         public readonly IDisplayAlertService DisplayAlertService;
         private readonly IDeviceInfoService DeviceInfoService;
+
         //TODO EE: get location from auth view Model
         public readonly ILocationHelper LocationHelper;
         public BaseViewModel()
@@ -30,13 +31,13 @@ namespace Exchange.Mobile.Core.ViewModels
 
             //PhoneNumber = DeviceInfoService.GetPhoneNumber();
             PhoneNumber = "0123456789";
-
         }
 
 
         #region Properties
 
         public ObservableCollection<OfferCategory> OfferCategories { get; set; } = new ObservableCollection<OfferCategory>();
+
         public string PhoneNumber { get; set; }
 
         private bool _isBusy;
@@ -84,6 +85,7 @@ namespace Exchange.Mobile.Core.ViewModels
             City = placemark.Locality;
             Country = placemark.CountryName;
         }
+
         #endregion Functionality
     }
 

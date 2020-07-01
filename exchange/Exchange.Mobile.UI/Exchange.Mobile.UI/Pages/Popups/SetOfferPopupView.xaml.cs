@@ -1,6 +1,7 @@
 ﻿using Exchange.Mobile.Core.ViewModels;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -93,11 +94,13 @@ namespace Exchange.Mobile.UI.Pages.Popups
         protected override void OnDisappearing()
         {
             ViewModel.UploadedImage = null;
+            ViewModel.Conditions = null;
             base.OnDisappearing();
         }
 
         private async void TapGestureRecognizer_Tapped(object sender, System.EventArgs e)
         {
+            Task.Run(() => ViewModel.SendOfferAsync()).Wait();
             await PopupNavigation.Instance.PopAsync();
         }
     }

@@ -36,7 +36,7 @@ namespace Exchange.Mobile.Core.Services
             return user;
         }
 
-        public async Task<User> GetUserByPhone(PhoneRequestModel model)
+        public async Task<User> GetUserByPhoneAsync(PhoneRequestModel model)
         {
             var response = await _apiService.ExecutePostAsync($"{ApplicationConfig.BaseUrl}{Constant.Route.GET_USER_BY_PHONE_ROUTE}", model);
             var result = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());

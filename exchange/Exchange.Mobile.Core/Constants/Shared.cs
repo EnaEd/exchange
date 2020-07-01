@@ -12,6 +12,7 @@
             public const string RESULT_REQUEST_MESSAGE = "result your request is";
 
             public const string FAIL_TO_CREATE_DISCUSS = "fail to create discuss";
+            public const string FAIL_TO_LOAD_DISCUSS = "fail to load discuss";
         }
 
     }

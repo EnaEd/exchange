@@ -4,18 +4,59 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core"
+    xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core" 
+    xmlns:ffiamgeloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+    xmlns:converters="clr-namespace:Exchange.Mobile.UI.Converters"
     mc:Ignorable="d"
     x:Class="Exchange.Mobile.UI.Pages.OfferDiscussView"
     x:TypeArguments="viewModels:OfferDiscussViewModel">
     <views:MvxContentPage.IconImageSource>
         <FontImageSource FontFamily="{StaticResource FontAwesomeSolid}" Glyph="" />
     </views:MvxContentPage.IconImageSource>
+    <views:MvxContentPage.Resources>
+        <ResourceDictionary>
+            <converters:Base64ToImageSourceConverter x:Key="Base64ToImageConverter"/>
+        </ResourceDictionary>
+    </views:MvxContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid
+            BackgroundColor="{StaticResource mainColor}">
+            <CollectionView
+                Margin="10"
+                ItemsSource="{Binding Discusses}"
+                SelectionMode="None"
+                    ItemSizingStrategy="MeasureAllItems">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid BackgroundColor="{StaticResource secondColor}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackLayout
+                                    Grid.Row="0"
+                                    Orientation="Horizontal">
+                                <ffiamgeloading:CachedImage
+                                    HeightRequest="50"
+                                    WidthRequest="50"
+                                        Source="{Binding OwnerPhotoOffer, Converter={StaticResource Base64ToImageConverter}}"/>
+                                <Label
+                                    VerticalTextAlignment="Center"
+                                         Text="&#xf382;"
+                                         FontFamily="{StaticResource FontAwesomeSolid}"/>
+                                <ffiamgeloading:CachedImage
+                                    HeightRequest="50"
+                                    WidthRequest="50"
+                                        Source="{Binding PartnerPhotoOffer, Converter={StaticResource Base64ToImageConverter}}"/>
+                            </StackLayout>
+                            <Label
+                                    Grid.Row="1"
+                                    Text="{Binding Conditions}"
+                                    />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
     </ContentPage.Content>
 </views:MvxContentPage>
