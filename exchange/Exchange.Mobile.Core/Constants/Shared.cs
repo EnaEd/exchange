@@ -13,6 +13,8 @@
 
             public const string FAIL_TO_CREATE_DISCUSS = "fail to create discuss";
             public const string FAIL_TO_LOAD_DISCUSS = "fail to load discuss";
+
+            public const string SUCCESS_RESULT_REQUEST = "success";
         }
 
     }

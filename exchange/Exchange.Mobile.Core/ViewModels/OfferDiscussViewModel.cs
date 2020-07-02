@@ -48,10 +48,18 @@ namespace Exchange.Mobile.Core.ViewModels
         #region commands
         public IMvxCommand DeleteDiscussCommandAsync => new MvxAsyncCommand<object>(DeleteDiscussAsync);
 
+        public IMvxCommand RefreshCommandAsync => new MvxAsyncCommand(RefreshAsync);
+
 
         #endregion commands
 
         #region functionality
+
+        private async Task RefreshAsync()
+        {
+            await ShowDiscuss();
+        }
+
         private async Task DeleteDiscussAsync(object args)
         {
             if (!IsBusy)
@@ -60,8 +68,10 @@ namespace Exchange.Mobile.Core.ViewModels
                 try
                 {
                     var result = await _discussOfferService.DeleteDiscussOfferAsync(args as DiscussOfferModel);
-                    IsBusy = false;
-                    await ShowDiscuss();
+                    if (result.Equals(Constant.Shared.SUCCESS_RESULT_REQUEST))
+                    {
+                        Discusses.Remove(args as DiscussOfferModel);
+                    }
                 }
                 catch (Exception ex)
                 {
