@@ -24,13 +24,15 @@ namespace Exchange.Mobile.UI.Droid
 
             base.OnCreate(bundle);
 
+
+
             Xamarin.Essentials.Platform.Init(this, bundle);
 
             DisplayCrashReport();
 
             Rg.Plugins.Popup.Popup.Init(this, bundle);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
-            Forms9Patch.Droid.Settings.Initialize(this);
+            //Forms9Patch.Droid.Settings.Initialize(this);
             CrossCurrentActivity.Current.Init(this, bundle);
         }
 

@@ -2,7 +2,10 @@
 using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Models.RequestModels;
 using Exchange.Mobile.Core.Services.Interfaces;
+using MvvmCross.Commands;
+using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -42,7 +45,36 @@ namespace Exchange.Mobile.Core.ViewModels
 
         #endregion overrides
 
+        #region commands
+        public IMvxCommand DeleteDiscussCommandAsync => new MvxAsyncCommand<object>(DeleteDiscussAsync);
+
+
+        #endregion commands
+
         #region functionality
+        private async Task DeleteDiscussAsync(object args)
+        {
+            if (!IsBusy)
+            {
+                IsBusy = true;
+                try
+                {
+                    var result = await _discussOfferService.DeleteDiscussOfferAsync(args as DiscussOfferModel);
+                    IsBusy = false;
+                    await ShowDiscuss();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    throw;
+                }
+                finally
+                {
+                    IsBusy = false;
+                }
+            }
+        }
+
         public async Task ShowDiscuss()
         {
             try
