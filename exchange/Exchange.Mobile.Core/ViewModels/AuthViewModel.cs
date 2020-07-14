@@ -4,7 +4,6 @@ using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Services.Interfaces;
 using MvvmCross.Navigation;
 using System.Diagnostics;
-using Xamarin.Forms;
 
 namespace Exchange.Mobile.Core.ViewModels
 {
@@ -19,37 +18,41 @@ namespace Exchange.Mobile.Core.ViewModels
         {
             _authService = authService;
             _navigationService = navigationService;
+        }
+        public async override void ViewAppearing()
+        {
+            PhoneNumber = DeviceInfoService.GetPhoneNumber();
 
-            string pushId = string.Empty;
+
+
 
             OneSignal.Current.IdsAvailable(new IdsAvailableCallback((id, token) =>
             {
-                pushId = id;
+                SignalId = id;
             }));
 
 
-            Device.InvokeOnMainThreadAsync(async () =>
+
+
+            try
             {
-
-                try
+                if (await _authService.CheckUserPhone(PhoneNumber))
                 {
-                    if (await _authService.CheckUserPhone(PhoneNumber))
-                    {
 
-                        await _authService.UpdatePushIdIfNeededAsync(PhoneNumber, pushId);
-                        await _navigationService.Navigate<MainTabbedViewModel>();
-                        return;
-                    }
-                    //var model = new PhoneRequestModel { PhoneNumber = number };
-                    await _navigationService.Navigate<RegistrationViewModel, string>(PhoneNumber);
-                }
-                catch (System.Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                    //TODO EE:handle expetion
+                    await _authService.UpdatePushIdIfNeededAsync(PhoneNumber, SignalId);
+                    await _navigationService.Navigate<MainTabbedViewModel>();
+                    return;
                 }
 
-            });
+                await _navigationService.Navigate<RegistrationViewModel>();
+            }
+            catch (System.Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                //TODO EE:handle expetion
+            }
+
+            base.ViewAppearing();
         }
 
     }

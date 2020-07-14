@@ -37,6 +37,9 @@
     <EnableLLVM>false</EnableLLVM>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
+    <AndroidEnableMultiDex>false</AndroidEnableMultiDex>
+    <AndroidDexTool>dx</AndroidDexTool>
+    <MandroidI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,6 +50,10 @@
     <WarningLevel>4</WarningLevel>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    <BundleAssemblies>false</BundleAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -64,6 +71,9 @@
     </PackageReference>
     <PackageReference Include="MvvmCross.Forms">
       <Version>6.4.2</Version>
+    </PackageReference>
+    <PackageReference Include="Plugin.CurrentActivity">
+      <Version>2.1.0.4</Version>
     </PackageReference>
     <PackageReference Include="Rg.Plugins.Popup">
       <Version>2.0.0.2</Version>
@@ -88,9 +98,13 @@
     <PackageReference Include="Xamarin.GooglePlayServices.Base">
       <Version>71.1610.1</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.GooglePlayServices.Location">
+      <Version>71.1600.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
+    <Compile Include="PermissionRequest.cs" />
     <Compile Include="Renderers\GradientFrameRenderer.cs" />
     <Compile Include="Renderers\GradientStackRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -98,6 +112,7 @@
     <Compile Include="Services\DeviceInfoService.cs" />
     <Compile Include="Services\DisplayAlertService.cs" />
     <Compile Include="Services\FireBaseMessageService .cs" />
+    <Compile Include="Services\NativeLocationService.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="SplashActivity.cs" />
   </ItemGroup>

@@ -1,9 +1,9 @@
-﻿using Exchange.Mobile.Core.Helpers.Interface;
+﻿using Exchange.Mobile.Core.Constants;
+using Exchange.Mobile.Core.Helpers.Interface;
 using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Services.Interfaces;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
-using MvvmCross.ViewModels;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +11,7 @@ using Xamarin.Essentials;
 
 namespace Exchange.Mobile.Core.ViewModels
 {
-    public class RegistrationViewModel : MvxViewModel<string>
+    public class RegistrationViewModel : BaseViewModel
     {
         private readonly IAuthService<User> _authService;
         private readonly IMvxNavigationService _navigationService;
@@ -42,26 +42,6 @@ namespace Exchange.Mobile.Core.ViewModels
             set => SetProperty(ref _lastName, value);
         }
 
-        private string _phone;
-        public string Phone
-        {
-            get => _phone;
-            set => SetProperty(ref _phone, value);
-        }
-
-        private string _city;
-        public string City
-        {
-            get => _city;
-            set => SetProperty(ref _city, value);
-        }
-
-        private string _country;
-        public string Country
-        {
-            get => _country;
-            set => SetProperty(ref _country, value);
-        }
         private string _email;
         public string Email
         {
@@ -103,11 +83,12 @@ namespace Exchange.Mobile.Core.ViewModels
                 FirstName = FirstName,
                 LastName = LastName,
                 Password = Password,
-                PhoneNumber = Phone
+                PhoneNumber = PhoneNumber,
+                OneSignalId = SignalId
             };
 
-            bool isRegistrationSuccess = await _authService.RegistrationAsync(user);
-            if (isRegistrationSuccess)
+
+            if ((await _authService.RegistrationAsync(user)).Equals(Constant.Shared.REGISTRATION_SUCCESS))
             {
                 await _navigationService.Navigate<OfferViewModel>();
                 return;
@@ -127,13 +108,8 @@ namespace Exchange.Mobile.Core.ViewModels
             }
             City = placemark.Locality;
             Country = placemark.CountryName;
-
         }
 
-        public override void Prepare(string phoneNumber)
-        {
-            Phone = phoneNumber;
-        }
         #endregion Functionality
     }
 }

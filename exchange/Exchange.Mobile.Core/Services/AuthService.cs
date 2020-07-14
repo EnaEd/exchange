@@ -43,11 +43,11 @@ namespace Exchange.Mobile.Core.Services
             return result as User;
         }
 
-        public async Task<bool> RegistrationAsync(User data)
+        public async Task<string> RegistrationAsync(User data)
         {
             var response = await _apiService.ExecutePostAsync($"{ ApplicationConfig.BaseUrl}api/account/registration", data);
-            var test = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
-            return test is User;
+
+            return JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
 
         }
 

@@ -18,7 +18,7 @@ namespace Exchange.Mobile.Core.ViewModels
     {
         public readonly IMvxNavigationService NavigationService;
         public readonly IDisplayAlertService DisplayAlertService;
-        private readonly IDeviceInfoService DeviceInfoService;
+        public readonly IDeviceInfoService DeviceInfoService;
 
         //TODO EE: get location from auth view Model
         public readonly ILocationHelper LocationHelper;
@@ -29,15 +29,23 @@ namespace Exchange.Mobile.Core.ViewModels
             DisplayAlertService = Mvx.IoCProvider.Resolve<IDisplayAlertService>();
             DeviceInfoService = Mvx.IoCProvider.Resolve<IDeviceInfoService>();
 
-            //PhoneNumber = DeviceInfoService.GetPhoneNumber();
-            PhoneNumber = "0123456789";
+
+
+
+
+
+
+            //PhoneNumber = "0123456789";
         }
+
+
 
 
         #region Properties
 
         public ObservableCollection<OfferCategory> OfferCategories { get; set; } = new ObservableCollection<OfferCategory>();
 
+        public static string SignalId { get; set; }
         public string PhoneNumber { get; set; }
 
         private bool _isBusy;

@@ -11,10 +11,14 @@ namespace Exchange.Mobile.UI.Droid
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
+
+
             base.OnCreate(savedInstanceState);
 
             Xamarin.Forms.Forms.SetFlags("SwipeView_Experimental");
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+
         }
 
         protected override void OnResume()

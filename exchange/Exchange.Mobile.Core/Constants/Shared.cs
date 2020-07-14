@@ -15,6 +15,7 @@
             public const string FAIL_TO_LOAD_DISCUSS = "fail to load discuss";
 
             public const string SUCCESS_RESULT_REQUEST = "success";
+            public const string REGISTRATION_SUCCESS = "registration success";
         }
 
     }

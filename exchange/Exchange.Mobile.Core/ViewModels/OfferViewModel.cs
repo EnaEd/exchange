@@ -92,7 +92,7 @@ namespace Exchange.Mobile.Core.ViewModels
             //string number = _deviceInfoService.GetPhoneNumber();
             var user = await _authService.GetUserByIdAsync(CurrentOfferCard.OwnerId ?? default);
 
-            DiscussOfferModel result = await CreateDiscussModel();
+            DiscussOfferModel result = await CreateDiscussModel(user);
 
             try
             {
@@ -126,7 +126,7 @@ namespace Exchange.Mobile.Core.ViewModels
             }
         }
 
-        private async Task<DiscussOfferModel> CreateDiscussModel()
+        private async Task<DiscussOfferModel> CreateDiscussModel(User owner)
         {
             string offerImageBase64 = default;
             string partnerPhotoOfferBase64 = default;
@@ -160,6 +160,7 @@ namespace Exchange.Mobile.Core.ViewModels
                 Conditions = Conditions,
                 OwnerId = CurrentOfferCard.OwnerId ?? default,
                 OwnerPhotoOffer = offerImageBase64,
+                OwnerPhoneNumber = owner.PhoneNumber,
                 PartnerId = parnter.Id,
                 PartnerPhoneNumber = PhoneNumber,
                 PartnerPhotoOffer = partnerPhotoOfferBase64
