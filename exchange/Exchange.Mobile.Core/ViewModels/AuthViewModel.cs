@@ -31,6 +31,7 @@ namespace Exchange.Mobile.Core.ViewModels
                 SignalId = id;
             }));
 
+            //good commit
 
 
 
