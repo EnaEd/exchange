@@ -2,6 +2,8 @@
 using Exchange.Mobile.Core.Helpers.Interface;
 using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Services.Interfaces;
+using Exchange.Mobile.Core.Validations;
+using FluentValidation.Results;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using System;
@@ -74,7 +76,7 @@ namespace Exchange.Mobile.Core.ViewModels
         {
 
             await GetLocationData();
-            //TODO validate registration fields
+
             User user = new User
             {
                 City = City,
@@ -87,6 +89,15 @@ namespace Exchange.Mobile.Core.ViewModels
                 OneSignalId = SignalId
             };
 
+            //validation before send request
+            UserValidator uservalidator = new UserValidator();
+            ValidationResult result = uservalidator.Validate(user);
+            if (!result.IsValid)
+            {
+                string errors = result.Errors.First().ToString();
+                _displayAlertService.ShowToast(errors);
+                return;
+            }
 
             if ((await _authService.RegistrationAsync(user)).Equals(Constant.Shared.REGISTRATION_SUCCESS))
             {
