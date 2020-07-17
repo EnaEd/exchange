@@ -3,6 +3,8 @@ using Com.OneSignal.Abstractions;
 using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Services.Interfaces;
 using MvvmCross.Navigation;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System.Diagnostics;
 
 namespace Exchange.Mobile.Core.ViewModels
@@ -21,8 +23,19 @@ namespace Exchange.Mobile.Core.ViewModels
         }
         public async override void ViewAppearing()
         {
-            PhoneNumber = DeviceInfoService.GetPhoneNumber();
 
+            var status = await CrossPermissions.Current.CheckPermissionStatusAsync<PhonePermission>();
+            if (status != PermissionStatus.Granted)
+            {
+                status = await CrossPermissions.Current.RequestPermissionAsync<PhonePermission>();
+            }
+            if (status != PermissionStatus.Granted)
+            {
+                DisplayAlertService.ShowToast("need phone permission");
+                return;
+            }
+
+            PhoneNumber = DeviceInfoService.GetPhoneNumber();
 
 
 
@@ -30,10 +43,6 @@ namespace Exchange.Mobile.Core.ViewModels
             {
                 SignalId = id;
             }));
-
-            //new good commit
-
-
 
             try
             {

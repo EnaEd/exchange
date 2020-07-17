@@ -12,7 +12,6 @@ using Plugin.CurrentActivity;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 
 namespace Exchange.Mobile.UI.Droid
 {
@@ -42,7 +41,7 @@ namespace Exchange.Mobile.UI.Droid
             //Forms9Patch.Droid.Settings.Initialize(this);
             CrossCurrentActivity.Current.Init(this, bundle);
 
-            Permissions.RequestAsync<PermissionRequest>();
+            //Permissions.RequestAsync<PermissionRequest>();
         }
 
 

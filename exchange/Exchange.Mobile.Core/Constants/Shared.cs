@@ -16,6 +16,9 @@
 
             public const string SUCCESS_RESULT_REQUEST = "success";
             public const string REGISTRATION_SUCCESS = "registration success";
+            public const string REGISTRATION_FAIL = "registration fail";
+
+            public const string REQUEST_LOCATION_FAIL = "request to location fail";
         }
 
     }

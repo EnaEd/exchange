@@ -17,7 +17,7 @@ namespace Exchange.Mobile.Core
                .EndingWith("Helper")
                .AsInterfaces()
                .RegisterAsLazySingleton();
-            RegisterAppStart<RegistrationViewModel>();
+            RegisterAppStart<AuthViewModel>();
         }
     }
 }

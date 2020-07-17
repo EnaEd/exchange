@@ -104,18 +104,23 @@ namespace Exchange.Mobile.Core.ViewModels
                 await _navigationService.Navigate<OfferViewModel>();
                 return;
             }
-            _displayAlertService.ShowToast("registration not successfull");
+            _displayAlertService.ShowToast(Constant.Shared.REGISTRATION_FAIL);
 
         }
 
         private async Task GetLocationData()
         {
             var position = await _locationHelper.GetPositionAsync(TimeSpan.FromMilliseconds(10000));
+            if (position is null)
+            {
+                _displayAlertService.ShowToast(Constant.Shared.REQUEST_LOCATION_FAIL);
+                return;
+            }
             var placemarks = await Geocoding.GetPlacemarksAsync(position.Latitude, position.Longitude);
             var placemark = placemarks?.FirstOrDefault();
             if (placemark is null)
             {
-                _displayAlertService.ShowToast("location fail");
+                _displayAlertService.ShowToast(Constant.Shared.REQUEST_LOCATION_FAIL);
             }
             City = placemark.Locality;
             Country = placemark.CountryName;
