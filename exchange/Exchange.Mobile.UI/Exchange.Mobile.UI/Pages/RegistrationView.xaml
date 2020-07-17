@@ -4,30 +4,40 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="false"
+             BackgroundColor="{StaticResource mainColor}"
              x:Class="Exchange.Mobile.UI.Pages.RegistrationView">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout
+            Margin="20"
+            VerticalOptions="Center"
+            HorizontalOptions="Fill">
             <Entry 
                 VerticalOptions="Center"
-                HorizontalOptions="Center"
+                HorizontalOptions="Fill"
                 Placeholder="FirstName"
                 Text="{Binding FirstName}"/>
             <Entry 
                 VerticalOptions="Center"
-                HorizontalOptions="Center"
+                HorizontalOptions="Fill"
                 Placeholder="LastName"
                 Text="{Binding LastName}"/>
             <Entry 
                 VerticalOptions="Center"
-                HorizontalOptions="Center"
+                HorizontalOptions="Fill"
                 Placeholder="Email"
                 Text="{Binding Email}"/>
             <Entry 
                 VerticalOptions="Center"
-                HorizontalOptions="Center"
+                HorizontalOptions="Fill"
                 Placeholder="Password"
                 Text="{Binding Password}"/>
             <Button 
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TextColor="{StaticResource secondColor}"
+                BackgroundColor="{StaticResource buttonSolidColor}"
+                CornerRadius="10"
                 Text="Confirm"
                 Command="{Binding ConfirmRegistrationCommandAsync}"/>
         </StackLayout>
