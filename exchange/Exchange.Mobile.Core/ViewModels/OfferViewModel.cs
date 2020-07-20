@@ -160,7 +160,7 @@ namespace Exchange.Mobile.Core.ViewModels
                 Conditions = Conditions,
                 OwnerId = CurrentOfferCard.OwnerId ?? default,
                 OwnerPhotoOffer = offerImageBase64,
-                OwnerPhoneNumber = owner.PhoneNumber,
+                OwnerPhoneNumber = owner.Phone,
                 PartnerId = parnter.Id,
                 PartnerPhoneNumber = PhoneNumber,
                 PartnerPhotoOffer = partnerPhotoOfferBase64

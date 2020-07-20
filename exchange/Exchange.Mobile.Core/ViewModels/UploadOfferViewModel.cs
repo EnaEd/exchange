@@ -77,7 +77,7 @@ namespace Exchange.Mobile.Core.ViewModels
             UploadOfferRequestModel requestModel = new UploadOfferRequestModel();
             requestModel.OfferPhoto = UploadedImageBase64;
             requestModel.OfferDescription = OfferDescription;
-            requestModel.OfferOwner = new User { PhoneNumber = PhoneNumber, City = City, Country = Country };
+            requestModel.OfferOwner = new User { Phone = PhoneNumber, City = City, Country = Country };
 
             var result = await _offerService.UploadOfferAsync(requestModel);
             DisplayAlertService.ShowToast($"{Constant.Shared.RESULT_REQUEST_MESSAGE} {result}");

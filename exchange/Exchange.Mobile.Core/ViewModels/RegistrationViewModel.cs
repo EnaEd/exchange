@@ -85,7 +85,7 @@ namespace Exchange.Mobile.Core.ViewModels
                 FirstName = FirstName,
                 LastName = LastName,
                 Password = Password,
-                PhoneNumber = PhoneNumber,
+                Phone = PhoneNumber,
                 OneSignalId = SignalId
             };
 
@@ -101,7 +101,7 @@ namespace Exchange.Mobile.Core.ViewModels
 
             if ((await _authService.RegistrationAsync(user)).Equals(Constant.Shared.REGISTRATION_SUCCESS))
             {
-                await _navigationService.Navigate<OfferViewModel>();
+                await _navigationService.Navigate<MainTabbedViewModel>();
                 return;
             }
             _displayAlertService.ShowToast(Constant.Shared.REGISTRATION_FAIL);
