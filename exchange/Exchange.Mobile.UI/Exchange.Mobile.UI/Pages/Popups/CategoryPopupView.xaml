@@ -27,15 +27,58 @@
             Margin="50,200,50,200"
             HasShadow="True">
             <StackLayout>
+                <Entry
+                    HorizontalOptions="Center"
+                    Placeholder="&#xf3c5; find area"
+                    FontFamily="{StaticResource FontAwesomeSolid}"
+                    PlaceholderColor="{StaticResource textColor}"
+                    Text="{Binding SearchLocation}"/>
+                <ListView
+                    ItemsSource="{Binding Places}"
+                    >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid 
+                                      >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="&#xf3c5;"
+                                            FontFamily="{StaticResource FontAwesomeSolid}"/>
+                                    <!--<Label LineBreakMode="MiddleTruncation"
+                                               Text="{Binding StructuredFormatting.MainText}"
+                                               Grid.Row="0"
+                                               Grid.Column="1"/>-->
+                                    <Label LineBreakMode="MiddleTruncation"
+                                                 Text="{Binding StructuredFormatting.SecondaryText}" 
+                                                 TextColor="Gray" 
+                                                 Grid.Row="0"
+                                           Grid.RowSpan="2"
+                                                 Grid.Column="1"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                </ListView>
                 <Frame
                     CornerRadius="15"
                     HasShadow="True">
                     <Label Text="Select Category"
                        HorizontalOptions="Center"/>
                 </Frame>
+
                 <CollectionView 
                     ItemsSource="{Binding OfferCategories}"
-                    SelectionMode="None"
+                    SelectionMode="Single"
+                    x:Name="CategoryCollection"
+                    
                     ItemSizingStrategy="MeasureAllItems">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>

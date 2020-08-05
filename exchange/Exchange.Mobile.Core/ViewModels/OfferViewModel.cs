@@ -2,6 +2,7 @@
 using Com.OneSignal.Abstractions;
 using Exchange.Mobile.Core.Constants;
 using Exchange.Mobile.Core.Models;
+using Exchange.Mobile.Core.Models.GooglesModels;
 using Exchange.Mobile.Core.Models.RequestModels;
 using Exchange.Mobile.Core.Services.Interfaces;
 using MvvmCross.Commands;
@@ -23,10 +24,14 @@ namespace Exchange.Mobile.Core.ViewModels
         private readonly IOfferService _offerService;
         private readonly IAuthService<User> _authService;
         private readonly IDiscussOfferService _discussOfferService;
+        private readonly IGoogleMapsApiService _googleMapsApiService;
         private int _showedCount;
 
-        public OfferViewModel(IOfferService offerService, IAuthService<User> authService, IDiscussOfferService discussOfferService)
+
+        public OfferViewModel(IOfferService offerService, IAuthService<User> authService,
+            IDiscussOfferService discussOfferService, IGoogleMapsApiService googleMapsApiService)
         {
+            _googleMapsApiService = googleMapsApiService;
             _discussOfferService = discussOfferService;
             _offerService = offerService;
             _authService = authService;
@@ -49,12 +54,25 @@ namespace Exchange.Mobile.Core.ViewModels
         public IMvxCommand UploadImageCommandAsync => new MvxAsyncCommand(UploadImageAsync);
 
         public IMvxCommand RefreshOffersCommandAsync => new MvxAsyncCommand(RefreshOffersAsync);
+        public IMvxCommand GetPlacesCommandAsync => new MvxAsyncCommand<string>(GetPlacesAsync);
 
 
 
         #endregion Commands
 
         #region Functionality
+        private async Task GetPlacesAsync(string place)
+        {
+            var places = await _googleMapsApiService.GetPlaces(place);
+            var placesResult = places.AutoCompletePlaces;
+            if (!(placesResult is null) && placesResult.Count > default(int))
+            {
+                Places = new List<GooglePlaceAutoCompletePrediction>(placesResult);
+                await RaisePropertyChanged(nameof(Places));
+                IsAutoCompleteVisible = true;
+            }
+        }
+
 
         private async Task RefreshOffersAsync()
         {
@@ -185,6 +203,8 @@ namespace Exchange.Mobile.Core.ViewModels
 
                 try
                 {
+                    var location = SearchLocation;
+
                     await GetLocationDataAsync();
                     FilterRequestModel model = new FilterRequestModel
                     {
@@ -236,6 +256,28 @@ namespace Exchange.Mobile.Core.ViewModels
         #endregion Functionality
 
         #region Properties
+
+        private bool _isAutoCompleteVisible;
+        public bool IsAutoCompleteVisible
+        {
+            get => _isAutoCompleteVisible;
+            set => SetProperty(ref _isAutoCompleteVisible, value);
+        }
+
+        public IList<GooglePlaceAutoCompletePrediction> Places { get; set; }
+
+        private string _searchLocation;
+        public string SearchLocation
+        {
+            get => _searchLocation;
+            set
+            {
+                if (SetProperty(ref _searchLocation, value))
+                {
+                    GetPlacesCommandAsync.Execute(_searchLocation);
+                }
+            }
+        }
 
         private string _conditions;
         public string Conditions

@@ -23,7 +23,10 @@ namespace Exchange.Mobile.UI.Pages.Popups
 
         private async void Button_Clicked(object sender, System.EventArgs e)
         {
-            await PopupNavigation.Instance.PopAsync();
+            if (!string.IsNullOrWhiteSpace(_viewModel.SearchLocation))
+            {
+                await PopupNavigation.Instance.PopAsync();
+            }
         }
     }
 }
