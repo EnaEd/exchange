@@ -47,7 +47,7 @@ namespace Exchange.Web.BusinessLogic.Services
             var result = await _discussOfferRepository.GetOneByIdAsync(model.Id);
             if (result is null)
             {
-                throw new UserException(Constant.ErrorInfo.DISCUSS_NOT_FOUND, Enum.ErrorCode.BadRequest);
+                throw new UserException(new List<string> { Constant.ErrorInfo.DISCUSS_NOT_FOUND }, Enum.ErrorCode.BadRequest);
             }
             result.Conditions = model.Conditions ?? default;
             result.ExpireDate = System.DateTime.Now.AddDays(Constant.Shared.DEY_IN_WEEK_COUNT);

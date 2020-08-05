@@ -4,9 +4,10 @@ using Exchange.Web.BusinessLogic.Services.Interfaces;
 using Exchange.Web.DataAccess.Entities;
 using Exchange.Web.DataAccess.Repositories.Interfaces;
 using Exchange.Web.Shared.Common;
-using Exchange.Web.Shared.Constants;
 using Exchange.Web.Shared.Enums;
+using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Exchange.Web.BusinessLogic.Services
@@ -24,10 +25,10 @@ namespace Exchange.Web.BusinessLogic.Services
 
         public async Task<UserModel> CreateUserAsync(UserModel userModel)
         {
-            var result = await _userRepository.CreateAsync(_mapper.Map<UserEntity>(userModel), userModel.Password);
+            IdentityResult result = await _userRepository.CreateAsync(_mapper.Map<UserEntity>(userModel), userModel.Password);
             if (!result.Succeeded)
             {
-                throw new UserException(Constant.ErrorInfo.REGISTRATION_FAIL, Enum.ErrorCode.BadRequest);
+                throw new UserException(result.Errors.Select(error => error.Description).ToList(), Enum.ErrorCode.BadRequest);
             }
 
             return userModel;

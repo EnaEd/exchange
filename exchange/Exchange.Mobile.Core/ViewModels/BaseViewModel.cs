@@ -46,7 +46,7 @@ namespace Exchange.Mobile.Core.ViewModels
         public ObservableCollection<OfferCategory> OfferCategories { get; set; } = new ObservableCollection<OfferCategory>();
 
         public static string SignalId { get; set; }
-        public static string PhoneNumber { get; set; }
+
 
         private bool _isBusy;
         public bool IsBusy

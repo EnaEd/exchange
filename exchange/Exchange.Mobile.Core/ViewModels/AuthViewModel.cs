@@ -46,13 +46,13 @@ namespace Exchange.Mobile.Core.ViewModels
 
             try
             {
-                if (await _authService.CheckUserPhone(PhoneNumber))
-                {
+                //if (await _authService.CheckUserPhone(PhoneNumber))
+                //{
 
-                    await _authService.UpdatePushIdIfNeededAsync(PhoneNumber, SignalId);
-                    await _navigationService.Navigate<MainTabbedViewModel>();
-                    return;
-                }
+                //    await _authService.UpdatePushIdIfNeededAsync(PhoneNumber, SignalId);
+                //    await _navigationService.Navigate<MainTabbedViewModel>();
+                //    return;
+                //}
 
                 await _navigationService.Navigate<RegistrationViewModel>();
             }

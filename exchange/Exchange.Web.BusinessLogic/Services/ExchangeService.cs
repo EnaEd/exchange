@@ -44,12 +44,12 @@ namespace Exchange.Web.BusinessLogic.Services
             var res = await _userService.GetOneAsync(model.OfferOwner.Phone);
             if (res is null)
             {
-                throw new UserException(Constant.ErrorInfo.USER_NOT_FOUND, Enum.ErrorCode.BadRequest);
+                throw new UserException(new List<string> { Constant.ErrorInfo.USER_NOT_FOUND }, Enum.ErrorCode.BadRequest);
             }
             if (string.IsNullOrWhiteSpace(model.OfferPhoto) ||
                 string.IsNullOrWhiteSpace(model.OfferDescription))
             {
-                throw new UserException(Constant.ErrorInfo.NO_DATA_FOR_UPLOAD, Enum.ErrorCode.BadRequest);
+                throw new UserException(new List<string> { Constant.ErrorInfo.NO_DATA_FOR_UPLOAD }, Enum.ErrorCode.BadRequest);
             }
             model.UserId = res.Id;
 

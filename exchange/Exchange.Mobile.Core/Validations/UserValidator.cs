@@ -9,8 +9,6 @@ namespace Exchange.Mobile.Core.Validations
         {
             RuleFor(user => user.Email).NotNull().EmailAddress();
             RuleFor(user => user.Password).NotNull().Matches(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
-            RuleFor(user => user.City).NotNull();
-            RuleFor(user => user.Country).NotNull();
         }
     }
 }

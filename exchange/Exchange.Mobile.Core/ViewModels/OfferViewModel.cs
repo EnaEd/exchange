@@ -153,19 +153,20 @@ namespace Exchange.Mobile.Core.ViewModels
                 }
             }
 
-            var parnter = await _authService.GetUserByPhoneAsync(new PhoneRequestModel { PhoneNumber = PhoneNumber });
+            //var parnter = await _authService.GetUserByPhoneAsync(new PhoneRequestModel { PhoneNumber = PhoneNumber });
 
-            DiscussOfferModel discussOfferModel = new DiscussOfferModel
-            {
-                Conditions = Conditions,
-                OwnerId = CurrentOfferCard.OwnerId ?? default,
-                OwnerPhotoOffer = offerImageBase64,
-                OwnerPhoneNumber = owner.Phone,
-                PartnerId = parnter.Id,
-                PartnerPhoneNumber = PhoneNumber,
-                PartnerPhotoOffer = partnerPhotoOfferBase64
-            };
-            return discussOfferModel;
+            //DiscussOfferModel discussOfferModel = new DiscussOfferModel
+            //{
+            //    Conditions = Conditions,
+            //    OwnerId = CurrentOfferCard.OwnerId ?? default,
+            //    OwnerPhotoOffer = offerImageBase64,
+            //    OwnerPhoneNumber = owner.Phone,
+            //    PartnerId = parnter.Id,
+            //    PartnerPhoneNumber = PhoneNumber,
+            //    PartnerPhotoOffer = partnerPhotoOfferBase64
+            //};
+            //return discussOfferModel;
+            return default;
         }
 
         private async Task SelectedItem(object category)

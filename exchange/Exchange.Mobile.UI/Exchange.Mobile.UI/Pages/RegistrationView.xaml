@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<views:MvxContentPage  xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms" xmlns="http://xamarin.com/schemas/2014/forms"
+<views:MvxContentPage
+             xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms" 
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -32,6 +34,22 @@
                 HorizontalOptions="Fill"
                 Placeholder="Password"
                 Text="{Binding Password}"/>
+            <StackLayout
+                HorizontalOptions="Fill"
+                VerticalOptions="Center"
+                Orientation="Horizontal">
+                <Entry 
+                VerticalOptions="Center"
+                HorizontalOptions="Fill"
+                Placeholder="Country code"
+                Text="{Binding CountryCode}"/>
+                <Entry 
+                VerticalOptions="Center"
+                HorizontalOptions="Fill"
+                Placeholder="Your phone for verification"
+                Text="{Binding PhoneNumber}"/>
+            </StackLayout>
+
             <Button 
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
@@ -40,6 +58,21 @@
                 CornerRadius="10"
                 Text="Confirm"
                 Command="{Binding ConfirmRegistrationCommandAsync}"/>
+            <Entry 
+                VerticalOptions="Center"
+                HorizontalOptions="Fill"
+                Placeholder="Verification code"
+                Text="{Binding Token}"/>
+
+            <Button 
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TextColor="{StaticResource secondColor}"
+                BackgroundColor="{StaticResource buttonSolidColor}"
+                CornerRadius="10"
+                Text="Verify"
+                Command="{Binding VerifyCodeCommandAsync}"/>
+
         </StackLayout>
     </ContentPage.Content>
 </views:MvxContentPage>
