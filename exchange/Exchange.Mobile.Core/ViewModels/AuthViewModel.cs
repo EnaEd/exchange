@@ -1,11 +1,13 @@
 ﻿using Com.OneSignal;
 using Com.OneSignal.Abstractions;
+using Exchange.Mobile.Core.Constants;
 using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Services.Interfaces;
 using MvvmCross.Navigation;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using System.Diagnostics;
+using essentials = Xamarin.Essentials;
 
 namespace Exchange.Mobile.Core.ViewModels
 {
@@ -50,9 +52,14 @@ namespace Exchange.Mobile.Core.ViewModels
                 //{
 
                 //    await _authService.UpdatePushIdIfNeededAsync(PhoneNumber, SignalId);
-                //    await _navigationService.Navigate<MainTabbedViewModel>();
+
                 //    return;
                 //}
+                if (!(await essentials.SecureStorage.GetAsync(Constant.SecureConstant.IS_AUTH) is null))
+                {
+                    await _navigationService.Navigate<MainTabbedViewModel>();
+                    return;
+                }
 
                 await _navigationService.Navigate<RegistrationViewModel>();
             }

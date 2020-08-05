@@ -20,6 +20,8 @@
 
             public const string REQUEST_LOCATION_FAIL = "request to location fail";
 
+            public const string FAIL_CREATE_AUTHY_USER = "fail create authy";
+
         }
 
     }

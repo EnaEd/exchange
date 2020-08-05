@@ -153,6 +153,7 @@ namespace Exchange.Mobile.Core.ViewModels
             {
                 _displayAlertService.ShowToast(Constant.SecureConstant.FAIL_SAVE_PHONE_NUMBER);
             }
+            await SecureStorage.SetAsync(Constant.SecureConstant.IS_AUTH, Constant.SecureConstant.IS_AUTH);
             await _navigationService.Navigate<MainTabbedViewModel>();
 
         }

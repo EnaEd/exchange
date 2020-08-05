@@ -33,7 +33,13 @@ namespace Exchange.Mobile.Core.Services
             HttpResponseMessage response = await httpClient.PostAsync(Constant.AuthyConstant.ADD_USER_URL, requestContent);
             if (!response.IsSuccessStatusCode)
             {
-                return default;
+                var responseModel = new AuthyResponseModel
+                {
+                    Code = $"{response.StatusCode} {response.ReasonPhrase}",
+                    Success = false,
+                    Message = Constant.Shared.FAIL_CREATE_AUTHY_USER
+                };
+                return responseModel;
             }
             string content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<AuthyResponseModel>(content);
@@ -44,7 +50,12 @@ namespace Exchange.Mobile.Core.Services
             HttpResponseMessage response = await httpClient.GetAsync($"{Constant.AuthyConstant.SEND_OTP_URL}/{authyId}");
             if (!response.IsSuccessStatusCode)
             {
-                return default;
+                var responseModel = new AuthyOTPResponseModel
+                {
+                    Success = false,
+                    Message = $"{response.StatusCode} {response.ReasonPhrase}"
+                };
+                return responseModel;
             }
             string content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<AuthyOTPResponseModel>(content);
