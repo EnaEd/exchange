@@ -12,9 +12,7 @@ namespace Exchange.Mobile.Core.Models.GooglesModels
         public string Raw { get; set; }
         [JsonProperty("address_components")]
         public List<AddressComponent> Addresses { get; set; } = new List<AddressComponent>();
-        //public GooglePlace()
-        //{
-        //}
+
         public GooglePlace(JObject jsonObject)
         {
             Name = (string)jsonObject["result"]["name"];

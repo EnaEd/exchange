@@ -54,6 +54,11 @@ namespace Exchange.Mobile.Core.ViewModels
         public IMvxCommand UploadImageCommandAsync => new MvxAsyncCommand(UploadImageAsync);
 
         public IMvxCommand RefreshOffersCommandAsync => new MvxAsyncCommand(RefreshOffersAsync);
+
+        public IMvxCommand ChangeConditionCommand => new MvxCommand(ChangeCondition);
+
+
+
         public IMvxCommand GetPlacesCommandAsync => new MvxAsyncCommand<string>(GetPlacesAsync);
 
 
@@ -61,6 +66,12 @@ namespace Exchange.Mobile.Core.ViewModels
         #endregion Commands
 
         #region Functionality
+
+        private void ChangeCondition()
+        {
+            CurrentCategory = null;
+        }
+
         private async Task GetPlacesAsync(string place)
         {
             var places = await _googleMapsApiService.GetPlaces(place);

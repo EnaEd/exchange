@@ -71,5 +71,11 @@ namespace Exchange.Mobile.UI.Pages
             await label.FadeTo(default, 100);
             await label.FadeTo(100, 100);
         }
+
+
+        private async void ChangeCondition_Tapped(object sender, System.EventArgs e)
+        {
+            await PopupNavigation.Instance.PushAsync(new CategoryPopupView(ViewModel));
+        }
     }
 }

@@ -65,6 +65,14 @@
                             <TapGestureRecognizer Command="{Binding RefreshOffersCommandAsync}" Tapped="TapGestureRecognizer_Tapped"/>
                         </Label.GestureRecognizers>
                     </Label>
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Margin="0,50,0,0"
+                        Text="Change condition">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ChangeConditionCommand}" Tapped="ChangeCondition_Tapped" />
+                            </Label.GestureRecognizers>
+                    </Label>
                 </StackLayout>
                 <swipeCardView:SwipeCardView
                     x:Name="swipeCardOffers"
