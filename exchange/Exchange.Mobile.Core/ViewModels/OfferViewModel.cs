@@ -10,10 +10,12 @@ using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Exchange.Mobile.Core.ViewModels
@@ -141,7 +143,7 @@ namespace Exchange.Mobile.Core.ViewModels
                 };
                 OneSignal.Current.PostNotification(notification,
                     (responseSuccess) => { DisplayAlertService.ShowToast("success"); },
-                    (responseFailure) => { DisplayAlertService.ShowToast($"{Json.Serialize(responseFailure)}"); });
+                    (responseFailure) => { DisplayAlertService.ShowToast($"{Json.Serialize(responseFailure)}"); Debug.WriteLine(Json.Serialize(responseFailure)); });
                 Conditions = default;
             }
             catch (Exception)
@@ -181,21 +183,20 @@ namespace Exchange.Mobile.Core.ViewModels
                     offerImageBase64 = Convert.ToBase64String(memoryStream.ToArray());
                 }
             }
+            var userPhone = await SecureStorage.GetAsync(Constant.SecureConstant.PHONE_FIELD);
+            var parnter = await _authService.GetUserByPhoneAsync(new PhoneRequestModel { PhoneNumber = userPhone });
 
-            //var parnter = await _authService.GetUserByPhoneAsync(new PhoneRequestModel { PhoneNumber = PhoneNumber });
-
-            //DiscussOfferModel discussOfferModel = new DiscussOfferModel
-            //{
-            //    Conditions = Conditions,
-            //    OwnerId = CurrentOfferCard.OwnerId ?? default,
-            //    OwnerPhotoOffer = offerImageBase64,
-            //    OwnerPhoneNumber = owner.Phone,
-            //    PartnerId = parnter.Id,
-            //    PartnerPhoneNumber = PhoneNumber,
-            //    PartnerPhotoOffer = partnerPhotoOfferBase64
-            //};
-            //return discussOfferModel;
-            return default;
+            DiscussOfferModel discussOfferModel = new DiscussOfferModel
+            {
+                Conditions = Conditions,
+                OwnerId = CurrentOfferCard.OwnerId ?? default,
+                OwnerPhotoOffer = offerImageBase64,
+                OwnerPhoneNumber = owner.Phone,
+                PartnerId = parnter.Id,
+                PartnerPhoneNumber = userPhone,
+                PartnerPhotoOffer = partnerPhotoOfferBase64
+            };
+            return discussOfferModel;
         }
 
         private async Task SelectedItem(object category)

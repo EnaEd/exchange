@@ -1,11 +1,13 @@
 ﻿using Exchange.Mobile.Core.Constants;
 using Exchange.Mobile.Core.Models;
+using Exchange.Mobile.Core.Models.RequestModels;
 using Exchange.Mobile.Core.Services.Interfaces;
 using MvvmCross.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Exchange.Mobile.Core.ViewModels
@@ -92,10 +94,11 @@ namespace Exchange.Mobile.Core.ViewModels
                 if (!IsBusy)
                 {
                     IsBusy = true;
-                    // User user = await _authService.GetUserByPhoneAsync(new PhoneRequestModel { PhoneNumber = PhoneNumber });
+                    var phone = await SecureStorage.GetAsync(Constant.SecureConstant.PHONE_FIELD);
+                    User user = await _authService.GetUserByPhoneAsync(new PhoneRequestModel { PhoneNumber = phone });
 
-                    //Discusses = new ObservableCollection<DiscussOfferModel>(
-                    //    await _discussOfferService.GetUserDiscussAsync(new DiscussOfferRequestModel { UserId = user.Id }));
+                    Discusses = new ObservableCollection<DiscussOfferModel>(
+                        await _discussOfferService.GetUserDiscussAsync(new DiscussOfferRequestModel { UserId = user.Id }));
 
                     await RaisePropertyChanged(nameof(Discusses));
 
