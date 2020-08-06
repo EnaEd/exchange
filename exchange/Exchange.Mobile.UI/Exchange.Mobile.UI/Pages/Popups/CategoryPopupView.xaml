@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core" 
     xmlns:local="clr-namespace:Exchange.Mobile.UI.Controls" 
-    xmlns:converters="clr-namespace:Exchange.Mobile.Core.Converters;assembly=Exchange.Mobile.Core"
+    xmlns:converters="clr-namespace:Exchange.Mobile.UI.Converters"
     mc:Ignorable="d"
     x:Class="Exchange.Mobile.UI.Pages.Popups.CategoryPopupView" 
     x:Name="CategoryPopup">
@@ -15,6 +15,7 @@
         <ResourceDictionary>
             <converters:StringToIconConverter x:Key="IconConverter"/>
             <converters:ExcludeConverter x:Key="ExcludeConverter"/>
+            <converters:BoolInvertConverter x:Key="BoolInvertConverter"/>
         </ResourceDictionary>
 
     </pages:PopupPage.Resources>
@@ -26,7 +27,8 @@
             BackgroundColor="{StaticResource mainColor}"
             Margin="50,200,50,200"
             HasShadow="True">
-            <StackLayout>
+            <StackLayout
+                >
                 <Entry
                     HorizontalOptions="Center"
                     Placeholder="&#xf3c5; find area"
@@ -34,8 +36,10 @@
                     PlaceholderColor="{StaticResource textColor}"
                     Text="{Binding SearchLocation}"/>
                 <ListView
+                    MinimumHeightRequest="100"
+                    IsVisible="{Binding IsAutoCompleteVisible}"
                     ItemsSource="{Binding Places}"
-                    >
+                    ItemSelected="ListView_ItemSelected">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -68,6 +72,7 @@
 
                 </ListView>
                 <Frame
+                    IsVisible="{Binding IsAutoCompleteVisible, Converter={StaticResource BoolInvertConverter}}"
                     CornerRadius="15"
                     HasShadow="True">
                     <Label Text="Select Category"
@@ -75,6 +80,7 @@
                 </Frame>
 
                 <CollectionView 
+                    IsVisible="{Binding IsAutoCompleteVisible, Converter={StaticResource BoolInvertConverter}}"
                     ItemsSource="{Binding OfferCategories}"
                     SelectionMode="Single"
                     x:Name="CategoryCollection"

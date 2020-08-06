@@ -2,6 +2,7 @@
 using Exchange.Mobile.Core.Models.GooglesModels;
 using Exchange.Mobile.Core.Services.Interfaces;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 
 namespace Exchange.Mobile.Core.Services
@@ -29,7 +30,7 @@ namespace Exchange.Mobile.Core.Services
                 result.Errors.Add(Constant.Shared.FAIL_JSON_PARSE);
                 return result;
             }
-            result = JsonConvert.DeserializeObject<GooglePlace>(json);
+            result = new GooglePlace(JObject.Parse(json));
             return result;
         }
 

@@ -1,6 +1,8 @@
-﻿using Exchange.Mobile.Core.ViewModels;
+﻿using Exchange.Mobile.Core.Models.GooglesModels;
+using Exchange.Mobile.Core.ViewModels;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
+using System.Linq;
 using Xamarin.Forms.Xaml;
 
 namespace Exchange.Mobile.UI.Pages.Popups
@@ -27,6 +29,13 @@ namespace Exchange.Mobile.UI.Pages.Popups
             {
                 await PopupNavigation.Instance.PopAsync();
             }
+        }
+
+        private void ListView_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+        {
+            var item = e.SelectedItem as GooglePlaceAutoCompletePrediction;
+            _viewModel.CurrentSearchLocation = _viewModel.Places.FirstOrDefault(place => place.StructuredFormatting.MainText.Equals(item.StructuredFormatting.MainText));
+            _viewModel.IsAutoCompleteVisible = false;
         }
     }
 }

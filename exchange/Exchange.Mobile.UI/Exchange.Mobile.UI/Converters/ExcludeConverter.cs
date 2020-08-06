@@ -2,7 +2,7 @@
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace Exchange.Mobile.Core.Converters
+namespace Exchange.Mobile.UI.Converters
 {
     public class ExcludeConverter : IValueConverter
     {

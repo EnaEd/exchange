@@ -203,13 +203,12 @@ namespace Exchange.Mobile.Core.ViewModels
 
                 try
                 {
-                    var location = SearchLocation;
+                    var area = await _googleMapsApiService.GetPlaceDetails(CurrentSearchLocation.PlaceId);
 
-                    await GetLocationDataAsync();
                     FilterRequestModel model = new FilterRequestModel
                     {
-                        City = City,
-                        Country = Country,
+                        City = area.Addresses.FirstOrDefault(address => address.Types.Contains("locality")).LongName,
+                        Country = area.Addresses.FirstOrDefault(address => address.Types.Contains("country")).LongName,
                         CategoryId = (int)(CurrentCategory?.Id ?? null),
                         SkippedCount = _showedCount + Offers.Count
                     };
@@ -277,6 +276,12 @@ namespace Exchange.Mobile.Core.ViewModels
                     GetPlacesCommandAsync.Execute(_searchLocation);
                 }
             }
+        }
+        private GooglePlaceAutoCompletePrediction _currentSearchLocation;
+        public GooglePlaceAutoCompletePrediction CurrentSearchLocation
+        {
+            get => _currentSearchLocation;
+            set => SetProperty(ref _currentSearchLocation, value);
         }
 
         private string _conditions;
