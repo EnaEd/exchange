@@ -237,7 +237,7 @@ namespace Exchange.Mobile.Core.ViewModels
                     {
                         Description = item.Description,
                         OfferImage = item.PhotoSource.StartsWith("https") ?
-                        ImageSource.FromStream(() => new MemoryStream(_dropBoxService.DownLoadFileAsync(item.PhotoSource).GetAwaiter().GetResult().ToArray())) :
+                        ImageSource.FromStream(() => new MemoryStream(_dropBoxService.DownLoadFileAsync(item.PhotoSource).GetAwaiter().GetResult())) :
                         ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.PhotoSource))),
                         OwnerId = item.UserId
                     }).ToArray();

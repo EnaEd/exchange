@@ -10,7 +10,7 @@ namespace Exchange.Mobile.Core.Services
 {
     public class DropBoxService : IDropBoxService
     {
-        public async Task<MemoryStream> DownLoadFileAsync(string path)
+        public async Task<byte[]> DownLoadFileAsync(string path)
         {
             var stream = new MemoryStream();
             using (var dropBox = new DropboxClient(Constant.DropBoxConstant.ACCESS_TOKEN, new DropboxClientConfig { HttpClient = new HttpClient(new HttpClientHandler()) }))
@@ -19,7 +19,7 @@ namespace Exchange.Mobile.Core.Services
                 var t = await response.GetContentAsStreamAsync();
                 await t.CopyToAsync(stream);
             }
-            return stream;
+            return stream.ToArray();
         }
 
         public async Task<string> UploadFile(string folder, string fileName, byte[] content)

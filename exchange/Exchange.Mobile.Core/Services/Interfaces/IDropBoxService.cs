@@ -1,11 +1,10 @@
-﻿using System.IO;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Exchange.Mobile.Core.Services.Interfaces
 {
     public interface IDropBoxService
     {
         Task<string> UploadFile(string folder, string fileName, byte[] content);
-        Task<MemoryStream> DownLoadFileAsync(string path);
+        Task<byte[]> DownLoadFileAsync(string path);
     }
 }
