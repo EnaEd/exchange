@@ -96,30 +96,87 @@
                     BackgroundColor="{StaticResource secondColor}"
                     BorderColor="{StaticResource textColor}"
                     Margin="10">
-                    <Frame.Triggers>
-                        <DataTrigger TargetType="Frame" Binding="{Binding Source={x:Reference entryDescription}, Path=Text}" Value="{x:Null}">
-                            <Setter Property="IsVisible" Value="False"/>
-                        </DataTrigger>
-                    </Frame.Triggers>
-                    <StackLayout
+                <Frame.Triggers>
+                    <DataTrigger TargetType="Frame" Binding="{Binding Source={x:Reference entryDescription}, Path=Text}" Value="{x:Null}">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </Frame.Triggers>
+                <StackLayout
                         Orientation="Horizontal"
                         VerticalOptions="Center"
                         HorizontalOptions="FillAndExpand">
-                        <Picker
+                    <Picker
                             x:Name="pickerCategory"
                             Title="Select Category"
                             HorizontalOptions="FillAndExpand"
                             SelectedItem="{Binding SelectedCategory}"
                             ItemsSource="{Binding OfferCategories}"
                             ItemDisplayBinding="{Binding Category}"/>
-                        <Label
+                    <Label
                             Text="&#xf0dd;"
                             FontSize="30"
                             
                             FontFamily="{StaticResource FontAwesomeSolid}"/>
-                    </StackLayout>
+                </StackLayout>
             </Frame>
-           
+
+            <!--Location area-->
+            <Frame
+                    Grid.Row="3"
+                    IsVisible="False"
+                    CornerRadius="8"
+                    BackgroundColor="{StaticResource secondColor}"
+                    BorderColor="{StaticResource textColor}"
+                    Margin="10">
+                <Frame.Triggers>
+                    <DataTrigger TargetType="Frame" Binding="{Binding Source={x:Reference pickerCategory},Path=SelectedItem}" Value="{x:Null}">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </Frame.Triggers>
+                <StackLayout
+                        Orientation="Horizontal"
+                        VerticalOptions="Center"
+                        HorizontalOptions="FillAndExpand">
+                    <Entry
+                        HorizontalOptions="Center"
+                        Placeholder="&#xf3c5; find area"
+                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        PlaceholderColor="{StaticResource textColor}"
+                        Text="{Binding SearchLocation}"/>
+                    <ListView
+                        MinimumHeightRequest="100"
+                        IsVisible="{Binding IsAutoCompleteVisible}"
+                        ItemsSource="{Binding Places}"
+                        ItemSelected="ListView_ItemSelected">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="&#xf3c5;"
+                                            FontFamily="{StaticResource FontAwesomeSolid}"/>
+                                        <Label LineBreakMode="MiddleTruncation"
+                                                 Text="{Binding StructuredFormatting.SecondaryText}" 
+                                                 TextColor="Gray" 
+                                                 Grid.Row="0"
+                                           Grid.RowSpan="2"
+                                                 Grid.Column="1"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+
+                    </ListView>
+                </StackLayout>
+            </Frame>
+
             <!--Upload offer button-->
             <Label
                 Grid.Row="4"
@@ -127,7 +184,7 @@
                 Text="Send"
                HorizontalOptions="Center">
                 <Label.Triggers>
-                    <DataTrigger TargetType="Label" Binding="{Binding Source={x:Reference pickerCategory},Path=SelectedItem}" Value="{x:Null}">
+                    <DataTrigger TargetType="Label" Binding="{Binding CurrentSearchLocation}" Value="{x:Null}">
                         <Setter Property="IsVisible" Value="False"/>
                     </DataTrigger>
                 </Label.Triggers>

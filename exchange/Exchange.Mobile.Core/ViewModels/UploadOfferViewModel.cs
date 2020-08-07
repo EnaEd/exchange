@@ -1,12 +1,15 @@
 ﻿using Exchange.Mobile.Core.Constants;
 using Exchange.Mobile.Core.Models;
+using Exchange.Mobile.Core.Models.GooglesModels;
 using Exchange.Mobile.Core.Models.RequestModels;
 using Exchange.Mobile.Core.Services.Interfaces;
 using MvvmCross.Commands;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -18,20 +21,49 @@ namespace Exchange.Mobile.Core.ViewModels
         private readonly IDisplayAlertService _displayAlertService;
         private readonly IOfferService _offerService;
         private readonly IAuthService<User> _authService;
+        private readonly IGoogleMapsApiService _googleMapsApiService;
 
-        public UploadOfferViewModel(IDisplayAlertService displayAlertService, IOfferService offerService, IAuthService<User> authService)
+        public UploadOfferViewModel(IDisplayAlertService displayAlertService, IOfferService offerService, IAuthService<User> authService, IGoogleMapsApiService googleMapsApiService)
         {
             _displayAlertService = displayAlertService;
             _offerService = offerService;
             _authService = authService;
 
             InvokeOnMainThreadAsync(async () => await GetOfferCategories(offerService));
-
+            _googleMapsApiService = googleMapsApiService;
         }
 
 
 
         #region Properties
+
+        private bool _isAutoCompleteVisible;
+        public bool IsAutoCompleteVisible
+        {
+            get => _isAutoCompleteVisible;
+            set => SetProperty(ref _isAutoCompleteVisible, value);
+        }
+
+        public IList<GooglePlaceAutoCompletePrediction> Places { get; set; }
+
+        private string _searchLocation;
+        public string SearchLocation
+        {
+            get => _searchLocation;
+            set
+            {
+                if (SetProperty(ref _searchLocation, value))
+                {
+                    GetPlacesCommandAsync.Execute(_searchLocation);
+                }
+            }
+        }
+        private GooglePlaceAutoCompletePrediction _currentSearchLocation;
+        public GooglePlaceAutoCompletePrediction CurrentSearchLocation
+        {
+            get => _currentSearchLocation;
+            set => SetProperty(ref _currentSearchLocation, value);
+        }
 
         private OfferCategory _selectedCategory;
         public OfferCategory SelectedCategory
@@ -65,19 +97,36 @@ namespace Exchange.Mobile.Core.ViewModels
         #region Commands
         public IMvxCommand UploadImageCommandAsync => new MvxAsyncCommand(UploadImageAsync);
         public IMvxCommand UploadOfferCommandAsync => new MvxAsyncCommand(UploadOfferAsync);
+        public IMvxCommand GetPlacesCommandAsync => new MvxAsyncCommand<string>(GetPlacesAsync);
 
 
         #endregion Commands
 
         #region Functionality
 
+        private async Task GetPlacesAsync(string place)
+        {
+            var places = await _googleMapsApiService.GetPlaces(place);
+            var placesResult = places.AutoCompletePlaces;
+            if (!(placesResult is null) && placesResult.Count > default(int))
+            {
+                Places = new List<GooglePlaceAutoCompletePrediction>(placesResult);
+                await RaisePropertyChanged(nameof(Places));
+                IsAutoCompleteVisible = true;
+            }
+        }
+
         private async Task UploadOfferAsync()
         {
+            var area = await _googleMapsApiService.GetPlaceDetails(CurrentSearchLocation.PlaceId);
+            var city = area.Addresses.FirstOrDefault(address => address.Types.Contains("locality")).LongName;
+            var country = area.Addresses.FirstOrDefault(address => address.Types.Contains("country")).LongName;
+            var userPhone = await Xamarin.Essentials.SecureStorage.GetAsync(Constant.SecureConstant.PHONE_FIELD);
 
-            UploadOfferRequestModel requestModel = new UploadOfferRequestModel();
+            var requestModel = new UploadOfferRequestModel();
             requestModel.OfferPhoto = UploadedImageBase64;
             requestModel.OfferDescription = OfferDescription;
-            //requestModel.OfferOwner = new User { Phone = PhoneNumber, City = City, Country = Country };
+            requestModel.OfferOwner = new User { Phone = userPhone, City = city, Country = country };
 
             var result = await _offerService.UploadOfferAsync(requestModel);
             DisplayAlertService.ShowToast($"{Constant.Shared.RESULT_REQUEST_MESSAGE} {result}");
