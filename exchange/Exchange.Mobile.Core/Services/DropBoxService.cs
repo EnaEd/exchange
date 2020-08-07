@@ -23,12 +23,13 @@ namespace Exchange.Mobile.Core.Services
 
         public async Task<string> UploadFile(string folder, string fileName, byte[] content)
         {
+            FileMetadata updated = default;
             using (var dropBox = new DropboxClient(Constant.DropBoxConstant.ACCESS_TOKEN))
             using (var stream = new MemoryStream(content))
             {
-                FileMetadata updated = await dropBox.Files.UploadAsync($"{folder}/{fileName}", WriteMode.Overwrite.Instance, body: stream);
+                updated = await dropBox.Files.UploadAsync($"/{folder}/{fileName}", WriteMode.Overwrite.Instance, body: stream);
             }
-            return string.Empty;
+            return $"{Constant.DropBoxConstant.BASE_PATH}{updated.PathDisplay}";
         }
     }
 }

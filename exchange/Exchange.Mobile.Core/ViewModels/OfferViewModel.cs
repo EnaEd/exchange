@@ -233,7 +233,9 @@ namespace Exchange.Mobile.Core.ViewModels
                     Offers = response.Select(item => new OfferCardModel
                     {
                         Description = item.Description,
-                        OfferImage = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.PhotoSource))),
+                        OfferImage = item.PhotoSource.StartsWith("https") ?
+                        ImageSource.FromUri(new Uri(item.PhotoSource)) :
+                        ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.PhotoSource))),
                         OwnerId = item.UserId
                     }).ToArray();
 

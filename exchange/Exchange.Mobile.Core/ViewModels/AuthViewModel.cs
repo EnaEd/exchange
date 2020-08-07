@@ -1,6 +1,5 @@
 ﻿using Com.OneSignal;
 using Com.OneSignal.Abstractions;
-using Exchange.Mobile.Core.Constants;
 using Exchange.Mobile.Core.Models;
 using Exchange.Mobile.Core.Services.Interfaces;
 using MvvmCross.Navigation;
@@ -47,21 +46,18 @@ namespace Exchange.Mobile.Core.ViewModels
 
             try
             {
-                //await _navigationService.Navigate<MainTabbedViewModel>();
+                await _navigationService.Navigate<MainTabbedViewModel>();
 
 
+                //if (!(await Xamarin.Essentials.SecureStorage.GetAsync(Constant.SecureConstant.IS_AUTH) is null))
+                //{
+                //    var phone = await Xamarin.Essentials.SecureStorage.GetAsync(Constant.SecureConstant.PHONE_FIELD);
+                //    await _authService.UpdatePushIdIfNeededAsync(phone, SignalId);
+                //    await _navigationService.Navigate<MainTabbedViewModel>();
+                //    return;
+                //}
 
-
-
-                if (!(await Xamarin.Essentials.SecureStorage.GetAsync(Constant.SecureConstant.IS_AUTH) is null))
-                {
-                    var phone = await Xamarin.Essentials.SecureStorage.GetAsync(Constant.SecureConstant.PHONE_FIELD);
-                    await _authService.UpdatePushIdIfNeededAsync(phone, SignalId);
-                    await _navigationService.Navigate<MainTabbedViewModel>();
-                    return;
-                }
-
-                await _navigationService.Navigate<RegistrationViewModel>();
+                //await _navigationService.Navigate<RegistrationViewModel>();
             }
             catch (System.Exception ex)
             {

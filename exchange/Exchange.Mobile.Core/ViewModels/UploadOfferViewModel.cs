@@ -9,7 +9,6 @@ using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -22,8 +21,10 @@ namespace Exchange.Mobile.Core.ViewModels
         private readonly IOfferService _offerService;
         private readonly IAuthService<User> _authService;
         private readonly IGoogleMapsApiService _googleMapsApiService;
+        private readonly IDropBoxService _dropBoxService;
 
-        public UploadOfferViewModel(IDisplayAlertService displayAlertService, IOfferService offerService, IAuthService<User> authService, IGoogleMapsApiService googleMapsApiService)
+        public UploadOfferViewModel(IDisplayAlertService displayAlertService, IOfferService offerService,
+            IAuthService<User> authService, IGoogleMapsApiService googleMapsApiService, IDropBoxService dropBoxService)
         {
             _displayAlertService = displayAlertService;
             _offerService = offerService;
@@ -31,6 +32,7 @@ namespace Exchange.Mobile.Core.ViewModels
 
             InvokeOnMainThreadAsync(async () => await GetOfferCategories(offerService));
             _googleMapsApiService = googleMapsApiService;
+            _dropBoxService = dropBoxService;
         }
 
 
@@ -92,6 +94,7 @@ namespace Exchange.Mobile.Core.ViewModels
             get => _offerDescription;
             set => SetProperty(ref _offerDescription, value);
         }
+
         #endregion Properties
 
         #region Commands
@@ -118,16 +121,24 @@ namespace Exchange.Mobile.Core.ViewModels
 
         private async Task UploadOfferAsync()
         {
-            var area = await _googleMapsApiService.GetPlaceDetails(CurrentSearchLocation.PlaceId);
-            var city = area.Addresses.FirstOrDefault(address => address.Types.Contains("locality")).LongName;
-            var country = area.Addresses.FirstOrDefault(address => address.Types.Contains("country")).LongName;
-            var userPhone = await Xamarin.Essentials.SecureStorage.GetAsync(Constant.SecureConstant.PHONE_FIELD);
+            //mock
+            var city = "Kharkiv";
+            var country = "Ukraine";
+            var userPhone = "936683441";
+
+            //var area = await _googleMapsApiService.GetPlaceDetails(CurrentSearchLocation.PlaceId);
+            //var city = area.Addresses.FirstOrDefault(address => address.Types.Contains("locality")).LongName;
+            //var country = area.Addresses.FirstOrDefault(address => address.Types.Contains("country")).LongName;
+            //var userPhone = await Xamarin.Essentials.SecureStorage.GetAsync(Constant.SecureConstant.PHONE_FIELD);
 
             var requestModel = new UploadOfferRequestModel();
-            requestModel.OfferPhoto = UploadedImageBase64;
+            //requestModel.OfferPhoto = UploadedImageBase64;
+            var stream = new MemoryStream();
+
+            requestModel.OfferPhoto = await _dropBoxService.UploadFile("media", $"{Guid.NewGuid()}.jpg", Convert.FromBase64String(UploadedImageBase64));
             requestModel.OfferDescription = OfferDescription;
             requestModel.OfferOwner = new User { Phone = userPhone, City = city, Country = country };
-
+            requestModel.CategoryId = SelectedCategory.Id;
             var result = await _offerService.UploadOfferAsync(requestModel);
             DisplayAlertService.ShowToast($"{Constant.Shared.RESULT_REQUEST_MESSAGE} {result}");
             ToDefaultData();
@@ -162,6 +173,7 @@ namespace Exchange.Mobile.Core.ViewModels
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
                     file.GetStream().CopyTo(memoryStream);
+
                     _uploadedImageBase64 = Convert.ToBase64String(memoryStream.ToArray());
                 }
             }
