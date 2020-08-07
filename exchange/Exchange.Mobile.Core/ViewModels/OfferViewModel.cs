@@ -27,11 +27,13 @@ namespace Exchange.Mobile.Core.ViewModels
         private readonly IAuthService<User> _authService;
         private readonly IDiscussOfferService _discussOfferService;
         private readonly IGoogleMapsApiService _googleMapsApiService;
+        private readonly IDropBoxService _dropBoxService;
         private int _showedCount;
 
 
         public OfferViewModel(IOfferService offerService, IAuthService<User> authService,
-            IDiscussOfferService discussOfferService, IGoogleMapsApiService googleMapsApiService)
+            IDiscussOfferService discussOfferService, IGoogleMapsApiService googleMapsApiService,
+            IDropBoxService dropBoxService)
         {
             _googleMapsApiService = googleMapsApiService;
             _discussOfferService = discussOfferService;
@@ -44,6 +46,7 @@ namespace Exchange.Mobile.Core.ViewModels
 
                 //await ShowOfferAsync();
             });
+            _dropBoxService = dropBoxService;
         }
 
 
@@ -234,7 +237,7 @@ namespace Exchange.Mobile.Core.ViewModels
                     {
                         Description = item.Description,
                         OfferImage = item.PhotoSource.StartsWith("https") ?
-                        ImageSource.FromUri(new Uri(item.PhotoSource)) :
+                        ImageSource.FromStream(() => new MemoryStream(_dropBoxService.DownLoadFileAsync(item.PhotoSource).GetAwaiter().GetResult().ToArray())) :
                         ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.PhotoSource))),
                         OwnerId = item.UserId
                     }).ToArray();
