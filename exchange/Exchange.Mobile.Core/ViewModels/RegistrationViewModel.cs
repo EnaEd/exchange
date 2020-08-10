@@ -1,6 +1,7 @@
 ﻿using Exchange.Mobile.Core.Constants;
 using Exchange.Mobile.Core.Helpers.Interface;
 using Exchange.Mobile.Core.Models;
+using Exchange.Mobile.Core.Models.GooglesModels;
 using Exchange.Mobile.Core.Models.ResponseModels;
 using Exchange.Mobile.Core.Services.Interfaces;
 using Exchange.Mobile.Core.Validations;
@@ -8,6 +9,7 @@ using FluentValidation.Results;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -21,17 +23,48 @@ namespace Exchange.Mobile.Core.ViewModels
         private readonly IDisplayAlertService _displayAlertService;
         private readonly ILocationHelper _locationHelper;
         private readonly IAuthyService _authyService;
+        private readonly IGoogleMapsApiService _googleMapsApiService;
         public RegistrationViewModel(IAuthService<User> authService, IMvxNavigationService navigationService,
-            IDisplayAlertService displayAlertService, ILocationHelper locationHelper, IAuthyService authyService)
+            IDisplayAlertService displayAlertService, ILocationHelper locationHelper,
+            IAuthyService authyService, IGoogleMapsApiService googleMapsApiService)
         {
             _authService = authService;
             _navigationService = navigationService;
             _displayAlertService = displayAlertService;
             _locationHelper = locationHelper;
             _authyService = authyService;
+            _googleMapsApiService = googleMapsApiService;
         }
 
         #region Properties
+
+        private bool _isAutoCompleteVisible;
+        public bool IsAutoCompleteVisible
+        {
+            get => _isAutoCompleteVisible;
+            set => SetProperty(ref _isAutoCompleteVisible, value);
+        }
+
+        public IList<GooglePlaceAutoCompletePrediction> Places { get; set; }
+
+        private string _searchLocation;
+        public string SearchLocation
+        {
+            get => _searchLocation;
+            set
+            {
+                if (SetProperty(ref _searchLocation, value))
+                {
+                    GetPlacesCommandAsync.Execute(_searchLocation);
+                }
+            }
+        }
+        private GooglePlaceAutoCompletePrediction _currentSearchLocation;
+        public GooglePlaceAutoCompletePrediction CurrentSearchLocation
+        {
+            get => _currentSearchLocation;
+            set => SetProperty(ref _currentSearchLocation, value);
+        }
 
         private string _firstName;
         public string FirstName
@@ -99,8 +132,7 @@ namespace Exchange.Mobile.Core.ViewModels
         #region Commands
         public IMvxAsyncCommand ConfirmRegistrationCommandAsync => new MvxAsyncCommand(ConfirmRegistrationAsync);
         public IMvxAsyncCommand VerifyCodeCommandAsync => new MvxAsyncCommand(VerifyCodeAsync);
-
-
+        public IMvxCommand GetPlacesCommandAsync => new MvxAsyncCommand<string>(GetPlacesAsync);
 
 
 
@@ -108,6 +140,18 @@ namespace Exchange.Mobile.Core.ViewModels
         #endregion Commands
 
         #region Functionality
+
+        private async Task GetPlacesAsync(string place)
+        {
+            var places = await _googleMapsApiService.GetPlaces(place);
+            var placesResult = places.AutoCompletePlaces;
+            if (!(placesResult is null) && placesResult.Count > default(int))
+            {
+                Places = new List<GooglePlaceAutoCompletePrediction>(placesResult);
+                await RaisePropertyChanged(nameof(Places));
+                IsAutoCompleteVisible = true;
+            }
+        }
 
         private async Task VerifyCodeAsync()
         {
@@ -118,10 +162,12 @@ namespace Exchange.Mobile.Core.ViewModels
                 return;
             }
 
+            var area = await _googleMapsApiService.GetPlaceDetails(CurrentSearchLocation.PlaceId);
+
             User user = new User
             {
-                City = response.Device.City,
-                Country = response.Device.Country,
+                City = area.Addresses.FirstOrDefault(address => address.Types.Contains("locality")).LongName,
+                Country = area.Addresses.FirstOrDefault(address => address.Types.Contains("country")).LongName,
                 Email = Email,
                 FirstName = FirstName,
                 LastName = LastName,

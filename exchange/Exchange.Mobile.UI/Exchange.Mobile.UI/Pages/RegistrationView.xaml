@@ -5,52 +5,98 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:Exchange.Mobile.Core.ViewModels;assembly=Exchange.Mobile.Core" 
              mc:Ignorable="d"
              NavigationPage.HasNavigationBar="false"
              BackgroundColor="{StaticResource mainColor}"
-             x:Class="Exchange.Mobile.UI.Pages.RegistrationView">
+             x:Class="Exchange.Mobile.UI.Pages.RegistrationView"
+             x:TypeArguments="viewModels:RegistrationViewModel">
     <ContentPage.Content>
         <StackLayout
             Margin="20"
             VerticalOptions="Center"
             HorizontalOptions="Fill">
-            <Entry 
+            <StackLayout
+                IsVisible="false">
+                <Entry 
                 VerticalOptions="Center"
                 HorizontalOptions="Fill"
                 Placeholder="FirstName"
                 Text="{Binding FirstName}"/>
-            <Entry 
+                <Entry 
                 VerticalOptions="Center"
                 HorizontalOptions="Fill"
                 Placeholder="LastName"
                 Text="{Binding LastName}"/>
-            <Entry 
+                <Entry 
                 VerticalOptions="Center"
                 HorizontalOptions="Fill"
                 Placeholder="Email"
                 Text="{Binding Email}"/>
-            <Entry 
+                <Entry 
                 VerticalOptions="Center"
                 HorizontalOptions="Fill"
                 Placeholder="Password"
                 Text="{Binding Password}"/>
+            </StackLayout>
+
+            <StackLayout>
+                <Entry
+                        Placeholder="&#xf3c5; find area"
+                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        PlaceholderColor="{StaticResource textColor}"
+                        Text="{Binding SearchLocation}"/>
+                <ListView
+                        HeightRequest="100"
+                        IsVisible="{Binding IsAutoCompleteVisible}"
+                        ItemsSource="{Binding Places}"
+                        ItemSelected="ListView_ItemSelected">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="&#xf3c5;"
+                                            FontFamily="{StaticResource FontAwesomeSolid}"/>
+                                    <Label LineBreakMode="MiddleTruncation"
+                                                 Text="{Binding StructuredFormatting.SecondaryText}" 
+                                                 TextColor="Gray" 
+                                                 Grid.Row="0"
+                                           Grid.RowSpan="2"
+                                                 Grid.Column="1"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                </ListView>
+            </StackLayout>
             <StackLayout
+                IsVisible="false">
+                <StackLayout
                 HorizontalOptions="Fill"
                 VerticalOptions="Center"
                 Orientation="Horizontal">
-                <Entry 
+                    <Entry 
                 VerticalOptions="Center"
                 HorizontalOptions="Fill"
                 Placeholder="Country code"
                 Text="{Binding CountryCode}"/>
-                <Entry 
+                    <Entry 
                 VerticalOptions="Center"
                 HorizontalOptions="Fill"
                 Placeholder="Your phone for verification"
                 Text="{Binding PhoneNumber}"/>
-            </StackLayout>
+                </StackLayout>
 
-            <Button 
+                <Button 
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
                 TextColor="{StaticResource secondColor}"
@@ -58,13 +104,17 @@
                 CornerRadius="10"
                 Text="Confirm"
                 Command="{Binding ConfirmRegistrationCommandAsync}"/>
-            <Entry 
+            </StackLayout>
+
+            <StackLayout
+                IsVisible="false">
+                <Entry 
                 VerticalOptions="Center"
                 HorizontalOptions="Fill"
                 Placeholder="Verification code"
                 Text="{Binding Token}"/>
 
-            <Button 
+                <Button 
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
                 TextColor="{StaticResource secondColor}"
@@ -72,6 +122,8 @@
                 CornerRadius="10"
                 Text="Verify"
                 Command="{Binding VerifyCodeCommandAsync}"/>
+            </StackLayout>
+
 
         </StackLayout>
     </ContentPage.Content>

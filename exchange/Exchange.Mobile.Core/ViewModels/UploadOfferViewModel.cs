@@ -22,9 +22,11 @@ namespace Exchange.Mobile.Core.ViewModels
         private readonly IAuthService<User> _authService;
         private readonly IGoogleMapsApiService _googleMapsApiService;
         private readonly IDropBoxService _dropBoxService;
+        private readonly IGoogleStorageService _googleStorageService;
 
         public UploadOfferViewModel(IDisplayAlertService displayAlertService, IOfferService offerService,
-            IAuthService<User> authService, IGoogleMapsApiService googleMapsApiService, IDropBoxService dropBoxService)
+            IAuthService<User> authService, IGoogleMapsApiService googleMapsApiService,
+            IDropBoxService dropBoxService, IGoogleStorageService googleStorageService)
         {
             _displayAlertService = displayAlertService;
             _offerService = offerService;
@@ -33,6 +35,7 @@ namespace Exchange.Mobile.Core.ViewModels
             InvokeOnMainThreadAsync(async () => await GetOfferCategories(offerService));
             _googleMapsApiService = googleMapsApiService;
             _dropBoxService = dropBoxService;
+            _googleStorageService = googleStorageService;
         }
 
 
@@ -135,7 +138,9 @@ namespace Exchange.Mobile.Core.ViewModels
             //requestModel.OfferPhoto = UploadedImageBase64;
             var stream = new MemoryStream();
 
-            requestModel.OfferPhoto = await _dropBoxService.UploadFile("media", $"{Guid.NewGuid()}.jpg", Convert.FromBase64String(UploadedImageBase64));
+            //requestModel.OfferPhoto = await _dropBoxService.UploadFile("media", $"{Guid.NewGuid()}.jpg", Convert.FromBase64String(UploadedImageBase64));
+            requestModel.OfferPhoto = await _googleStorageService.UploadFileAsync(
+                Constant.GoogleConstant.GOOGLE_STORAGE_BUCKET_NAME, $"{Guid.NewGuid()}.jpg", "text/plain", new MemoryStream(Convert.FromBase64String(UploadedImageBase64)));
             requestModel.OfferDescription = OfferDescription;
             requestModel.OfferOwner = new User { Phone = userPhone, City = city, Country = country };
             requestModel.CategoryId = SelectedCategory.Id;

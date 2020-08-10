@@ -237,7 +237,12 @@ namespace Exchange.Mobile.Core.ViewModels
                     {
                         Description = item.Description,
                         OfferImage = item.PhotoSource.StartsWith("https") ?
-                        ImageSource.FromStream(() => new MemoryStream(_dropBoxService.DownLoadFileAsync(item.PhotoSource).GetAwaiter().GetResult())) :
+                        //from dropbox
+                        //ImageSource.FromStream(() => new MemoryStream(_dropBoxService.DownLoadFileAsync(item.PhotoSource).GetAwaiter().GetResult())) :
+
+                        //from googlestorage
+                        ImageSource.FromUri(new Uri(item.PhotoSource)) :
+                        //from base64
                         ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(item.PhotoSource))),
                         OwnerId = item.UserId
                     }).ToArray();
