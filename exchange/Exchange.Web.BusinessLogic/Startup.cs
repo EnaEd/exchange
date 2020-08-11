@@ -22,6 +22,8 @@ namespace Exchange.Web.BusinessLogic
                 config.AddProfile(new FilterProfile());
                 config.AddProfile(new CategoryExchangeProfile());
                 config.AddProfile(new DiscussOfferProfile());
+                config.AddProfile(new ChatProfile());
+                config.AddProfile(new ChatMessageProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
@@ -32,7 +34,7 @@ namespace Exchange.Web.BusinessLogic
           .AddClasses()
           .UsingRegistrationStrategy(RegistrationStrategy.Skip)
           .AsMatchingInterface()
-          .AsImplementedInterfaces()//if not math interface like Interface<T>
+          .AsImplementedInterfaces()//if not match interface like Interface<T>
           .WithTransientLifetime());
         }
     }
