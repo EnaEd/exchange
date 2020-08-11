@@ -13,6 +13,8 @@ namespace Exchange.Web.BusinessLogic
         {
             DataAccess.Startup.Init(services, configuration);
 
+            services.AddSignalRCore();
+
             var mapperConfig = new MapperConfiguration(config =>
             {
                 config.AddProfile(new UserProfile());

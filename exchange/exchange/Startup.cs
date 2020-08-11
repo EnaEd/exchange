@@ -1,4 +1,5 @@
-﻿using Exchange.Web.Presentation.Extensions;
+﻿using Exchange.Web.BusinessLogic.Services;
+using Exchange.Web.Presentation.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -47,12 +48,14 @@ namespace Exchange.Web.Presentation
             app.UseSwaggerUI(c =>
             c.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "My Api V1"));
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}"
                     );
+                endpoints.MapHub<ChatHubService>("/chat");
             });
         }
     }

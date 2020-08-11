@@ -4,3 +4,4 @@ Registration made validationError message more clear
 add locale
 move t ographQl
 save image to storage (Google/AWS)
+add rabbit MQ instead of signalR
