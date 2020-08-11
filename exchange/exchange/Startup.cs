@@ -24,7 +24,7 @@ namespace Exchange.Web.Presentation
             BusinessLogic.Startup.Init(services, Configuration);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
-
+            services.AddSignalR();
             services.AddSwaggerGen(c =>
             c.SwaggerDoc(name: "v1", new OpenApiInfo { Title = "MyApi", Version = "v1" }));
         }
@@ -51,11 +51,11 @@ namespace Exchange.Web.Presentation
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ChatHubService>("/chat");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}"
                     );
-                endpoints.MapHub<ChatHubService>("/chat");
             });
         }
     }

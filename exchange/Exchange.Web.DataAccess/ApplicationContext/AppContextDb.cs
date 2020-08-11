@@ -10,12 +10,16 @@ namespace Exchange.Web.DataAccess.ApplicationContext
     {
         public DbSet<CategotyExchangeEntity> ExchangeCategories { get; set; }
         public DbSet<DiscussOfferEntity> DiscussOfferEntities { get; set; }
+        public DbSet<ChatEntity> ChatEntities { get; set; }
+        public DbSet<ChatMessageEntity> ChatMessageEntities { get; set; }
+        public DbSet<ChatPartyEntity> ChatPartyEntities { get; set; }
+        public DbSet<ChatMessageStatusEntity> ChatMessageStatusEntities { get; set; }
+
         public AppContextDb(DbContextOptions<AppContextDb> options) : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
             base.OnModelCreating(builder);
         }
     }

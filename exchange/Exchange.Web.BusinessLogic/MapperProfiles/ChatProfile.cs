@@ -10,6 +10,9 @@ namespace Exchange.Web.BusinessLogic.MapperProfiles
         {
             CreateMap<ChatEntity, ChatModel>();
             CreateMap<ChatModel, ChatEntity>();
+
+            CreateMap<ChatRequestModel, ChatEntity>();
+            CreateMap<ChatEntity, ChatRequestModel>().ForMember(x => x.PrticipantIds, option => option.Ignore());
         }
     }
 }

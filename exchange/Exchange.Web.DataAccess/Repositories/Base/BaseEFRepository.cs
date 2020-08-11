@@ -45,5 +45,12 @@ namespace Exchange.Web.DataAccess.Repositories.Base
             await Context.SaveChangesAsync();
             return entity;
         }
+
+        public async Task<IEnumerable<T>> CreateRangeAsync(IEnumerable<T> entities)
+        {
+            DbSet.AddRange(entities);
+            await Context.SaveChangesAsync();
+            return entities;
+        }
     }
 }

@@ -32,6 +32,11 @@ namespace Exchange.Web.DataAccess.Repositories
             return entity;
         }
 
+        public Task<IEnumerable<UserEntity>> CreateRangeAsync(IEnumerable<UserEntity> entities)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task DeleteAsync(UserEntity entity)
         {
             await _userManager.DeleteAsync(entity);

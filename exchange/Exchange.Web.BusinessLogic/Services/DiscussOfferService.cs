@@ -24,7 +24,7 @@ namespace Exchange.Web.BusinessLogic.Services
 
         public async Task<DiscussOfferModel> CreateDiscussAsync(DiscussOfferModel model)
         {
-            model.ExpireDate = System.DateTime.Now.AddDays(Constant.Shared.DEY_IN_WEEK_COUNT);
+            model.ExpireDate = System.DateTime.Now.AddDays(Constant.Shared.DAY_IN_WEEK_COUNT);
             model.Status = Enum.DiscussStatus.Created.ToString();
             var result = await _discussOfferRepository.CreateAsync(_mapper.Map<DiscussOfferEntity>(model));
             return _mapper.Map<DiscussOfferModel>(result);
@@ -50,7 +50,7 @@ namespace Exchange.Web.BusinessLogic.Services
                 throw new UserException(new List<string> { Constant.ErrorInfo.DISCUSS_NOT_FOUND }, Enum.ErrorCode.BadRequest);
             }
             result.Conditions = model.Conditions ?? default;
-            result.ExpireDate = System.DateTime.Now.AddDays(Constant.Shared.DEY_IN_WEEK_COUNT);
+            result.ExpireDate = System.DateTime.Now.AddDays(Constant.Shared.DAY_IN_WEEK_COUNT);
             result.OwnerId = model.OwnerId;
             result.OwnerPhoneNumber = model.OwnerPhoneNumber ?? default;
             result.OwnerPhotoOffer = model.OwnerPhotoOffer ?? default;

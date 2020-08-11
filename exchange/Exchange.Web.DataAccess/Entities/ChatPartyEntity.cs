@@ -6,5 +6,14 @@ namespace Exchange.Web.DataAccess.Entities
     {
         public long ChatId { get; set; }
         public long UserId { get; set; }
+        public ChatPartyEntity()
+        {
+
+        }
+        public ChatPartyEntity(long chatId, long userId)
+        {
+            ChatId = chatId;
+            UserId = userId;
+        }
     }
 }

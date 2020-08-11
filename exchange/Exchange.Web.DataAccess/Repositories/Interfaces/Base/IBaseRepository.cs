@@ -10,5 +10,6 @@ namespace Exchange.Web.DataAccess.Repositories.Interfaces.Base
         public Task<T> CreateAsync(T entity);
         public Task DeleteAsync(T entity);
         public Task<T> UpdateAsync(T entity);
+        public Task<IEnumerable<T>> CreateRangeAsync(IEnumerable<T> entities);
     }
 }

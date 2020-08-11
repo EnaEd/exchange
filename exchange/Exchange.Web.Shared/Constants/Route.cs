@@ -27,6 +27,12 @@
             public const string CREATE_DISCUSS_ROUTE = "creatediscuss";
             public const string UPDATE_DISCUSS_ROUTE = "updatediscuss";
             public const string DELETE_DISCUSS_ROUTE = "deletediscuss";
+
+            //messangerController
+            public const string MESSANGER_CREATE_CHAT = "createchat";
+            public const string MESSANGER_GET_CHATS = "getchats";
+            public const string MESSANGER_CREATE_MESSAGE = "createmessage";
+            public const string MESSANGER_GET_MESSAGES = "getmessages";
         }
     }
 }
