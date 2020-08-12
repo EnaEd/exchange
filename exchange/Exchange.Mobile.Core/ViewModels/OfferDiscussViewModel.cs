@@ -25,8 +25,10 @@ namespace Exchange.Mobile.Core.ViewModels
         {
             _discussOfferService = discussOfferService;
             _authService = authService;
-
+            _discussOfferService.OnChatMessage += UpdateChat;
         }
+
+
 
         #region properties
         public ObservableCollection<DiscussOfferModel> Discusses { get; set; } = new ObservableCollection<DiscussOfferModel>();
@@ -55,6 +57,11 @@ namespace Exchange.Mobile.Core.ViewModels
         #endregion commands
 
         #region functionality
+
+        private void UpdateChat()
+        {
+            Task.Run(async () => await ShowDiscuss());
+        }
 
         private async Task RefreshAsync()
         {

@@ -10,16 +10,19 @@ namespace Exchange.Web.Presentation.Controllers
     public class MessangerController : Controller
     {
         private readonly IChatService _chatService;
+        private readonly IChatHubService _chatHubService;
 
-        public MessangerController(IChatService chatService)
+        public MessangerController(IChatService chatService, IChatHubService chatHubService)
         {
             _chatService = chatService;
+            _chatHubService = chatHubService;
         }
 
         [HttpPost(Constant.Route.MESSANGER_CREATE_CHAT)]
         public async Task<IActionResult> CreateConversation([FromBody] ChatRequestModel model)
         {
             var response = await _chatService.CreateChatAsync(model);
+
             return Ok(response);
         }
 
