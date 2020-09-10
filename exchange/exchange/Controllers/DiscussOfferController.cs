@@ -25,7 +25,9 @@ namespace Exchange.Web.Presentation.Controllers
         [HttpPost(Constant.Route.CREATE_DISCUSS_ROUTE)]
         public async Task<IActionResult> CreateDiscuss([FromBody] DiscussOfferModel model)
         {
-            return Ok(await _discussOfferService.CreateDiscussAsync(model));
+            var response = await _discussOfferService.CreateDiscussAsync(model);
+
+            return Ok(response);
         }
 
         [HttpPost(Constant.Route.UPDATE_DISCUSS_ROUTE)]
