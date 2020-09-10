@@ -14,9 +14,10 @@ import { UploadOfferComponent } from './components/upload-offer/upload-offer.com
 import { AuthComponent } from './components/auth/auth.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { BaseComponent } from './components/base/base.component';
 
 @NgModule({
-  declarations: [AppComponent, UploadOfferComponent, AuthComponent, HomeComponent, DashboardComponent],
+  declarations: [AppComponent, UploadOfferComponent, AuthComponent, HomeComponent, DashboardComponent, BaseComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
