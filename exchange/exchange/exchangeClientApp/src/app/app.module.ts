@@ -12,9 +12,10 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UploadOfferComponent } from './components/upload-offer/upload-offer.component';
 import { AuthComponent } from './components/auth/auth.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
-  declarations: [AppComponent, UploadOfferComponent, AuthComponent],
+  declarations: [AppComponent, UploadOfferComponent, AuthComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
