@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "exchangeClientApp"
+    }
+  },
+  "defaultProject": "exchangeClientApp",
+  "cli": {
+    "analytics": false
+  }
 }
