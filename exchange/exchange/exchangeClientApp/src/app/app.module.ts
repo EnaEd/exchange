@@ -1,3 +1,4 @@
+import { BaseGuard } from './components/base/guards/base.guard';
 import { appReducers } from './store/app.reducer';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -17,7 +18,14 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BaseComponent } from './components/base/base.component';
 
 @NgModule({
-  declarations: [AppComponent, UploadOfferComponent, AuthComponent, HomeComponent, DashboardComponent, BaseComponent],
+  declarations: [
+    AppComponent,
+    UploadOfferComponent,
+    AuthComponent,
+    HomeComponent,
+    DashboardComponent,
+    BaseComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -30,7 +38,7 @@ import { BaseComponent } from './components/base/base.component';
     StoreRouterConnectingModule.forRoot(),
     FontAwesomeModule,
   ],
-  providers: [],
+  providers: [BaseGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

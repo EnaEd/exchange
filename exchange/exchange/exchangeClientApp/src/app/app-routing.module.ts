@@ -1,3 +1,4 @@
+import { BaseGuard } from './components/base/guards/base.guard';
 import { BaseComponent } from './components/base/base.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
@@ -10,10 +11,13 @@ const routes: Routes = [
     path: '',
     component: BaseComponent,
     children: [{ path: '', component: HomeComponent }],
+    canActivate: [BaseGuard],
   },
   {
     path: 'home',
     component: BaseComponent,
+    canActivate: [BaseGuard],
+    canActivateChild: [BaseGuard],
     children: [{ path: '', component: HomeComponent }],
   },
   { path: 'auth', component: AuthComponent },

@@ -1,5 +1,4 @@
 ﻿using Exchange.Web.BusinessLogic.Services;
-using Exchange.Web.Presentation.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +36,7 @@ namespace Exchange.Web.Presentation
             }
             app.UseCors();
             app.UseRouting();
-            app.UseErrorHandler();
+            //app.UseErrorHandler();
             //custom handler with logger
             //app.UseErrorHandler();
 
