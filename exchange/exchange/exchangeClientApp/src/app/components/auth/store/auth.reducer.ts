@@ -3,6 +3,7 @@ import {
   SignInSuccessAction,
   SignUpSuccessAction,
   SignOutSuccessAction,
+  RequestsSMSCodeSuccessfullAction,
 } from './auth.actions';
 import { createReducer, on, Action } from '@ngrx/store';
 import { initialAuthState, IAuthState } from './auth.state';
@@ -28,6 +29,10 @@ const reducer = createReducer(
     user: initialAuthState.user,
     isAuthenticate: initialAuthState.isAuthenticate,
     isUserExists: initialAuthState.isUserExists,
+  })),
+  on(RequestsSMSCodeSuccessfullAction, (state, { payload }) => ({
+    ...state,
+    descriptionEvent: payload,
   }))
 );
 export function authReducer(state: IAuthState | undefined, action: Action) {

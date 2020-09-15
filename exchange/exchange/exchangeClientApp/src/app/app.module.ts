@@ -16,6 +16,8 @@ import { AuthComponent } from './components/auth/auth.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BaseComponent } from './components/base/base.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AuthEffects } from '../app/components/auth/store/auth.effects';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { BaseComponent } from './components/base/base.component';
     BaseComponent,
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(appReducers),
@@ -34,7 +37,7 @@ import { BaseComponent } from './components/base/base.component';
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AuthEffects]),
     StoreRouterConnectingModule.forRoot(),
     FontAwesomeModule,
   ],

@@ -1,2 +1,9 @@
-<p>auth works!</p>
-<input type="text" />
+<form [formGroup]="phoneForm" (ngSubmit)="onSubmit()">
+  <label>phone: </label>
+  <input
+    type="text"
+    formControlName="phone"
+    placeholder="+380931234567"
+  /><br />
+  <input type="submit" value="log in" />
+</form>
