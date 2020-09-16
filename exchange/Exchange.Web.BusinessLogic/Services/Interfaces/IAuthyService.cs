@@ -7,7 +7,7 @@ namespace Exchange.Web.BusinessLogic.Services.Interfaces
 {
     public interface IAuthyService
     {
-        public Task<AythyUserModel> CreateAuthyUserAsync(CreateUserRequestModel model);
+        public Task<AuthyOTPCodeResponse> CreateAuthyUserAsync(CreateUserRequestModel model);
         public Task<AuthyBaseModel> SendOTPCodeAsync(int authyId);
         public Task<AuthyVerifyCodeResponseModel> VerifyOTPCode(int authyId, string token);
     }

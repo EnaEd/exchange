@@ -21,7 +21,7 @@ namespace Exchange.Web.BusinessLogic.Services
             _authySection = configuration.GetSection(nameof(AuthyConfig));
 
         }
-        public async Task<AythyUserModel> CreateAuthyUserAsync(CreateUserRequestModel model)
+        public async Task<AuthyOTPCodeResponse> CreateAuthyUserAsync(CreateUserRequestModel model)
         {
 
             using (var client = new HttpClient())
@@ -36,13 +36,14 @@ namespace Exchange.Web.BusinessLogic.Services
                     new KeyValuePair<string, string>(Constant.Authy.COUNTRY_CODE,model.CountryCode)
                 });
 
-                HttpResponseMessage response = await client.PostAsync(_authySection[nameof(AuthyConfig.AuthyAddUserUrl)], requestContent);
+                HttpResponseMessage response =
+                    await client.PostAsync($"{_authySection[nameof(AuthyConfig.AuthyBaseUrl)]}{_authySection[nameof(AuthyConfig.AuthyAddUserUrl)]}", requestContent);
                 if (!response.IsSuccessStatusCode)
                 {
                     throw new UserException(new List<string> { Constant.ErrorInfo.AUTHY_FAIL_CREATE_USER }, Shared.Enums.Enum.ErrorCode.BadRequest);
                 }
                 string result = await response.Content.ReadAsStringAsync();
-                AythyUserModel deserializeResult = JsonConvert.DeserializeObject<AythyUserModel>(result);
+                AuthyOTPCodeResponse deserializeResult = JsonConvert.DeserializeObject<AuthyOTPCodeResponse>(result);
                 return deserializeResult;
             }
         }
@@ -54,7 +55,8 @@ namespace Exchange.Web.BusinessLogic.Services
                 client.DefaultRequestHeaders.Add(_authySection[nameof(AuthyConfig.AuthyDefaultGuardHeader)],
                    _authySection[nameof(AuthyConfig.AuthyApiKey)]);
 
-                HttpResponseMessage response = await client.GetAsync($"{_authySection[nameof(AuthyConfig.AuthySendOtpUrl)]}/{authyId}");
+                HttpResponseMessage response =
+                    await client.GetAsync($"{_authySection[nameof(AuthyConfig.AuthyBaseUrl)]}{_authySection[nameof(AuthyConfig.AuthySendOtpUrl)]}/{authyId}");
                 if (!response.IsSuccessStatusCode)
                 {
                     throw new UserException(new List<string> { Constant.ErrorInfo.AUTHY_FAIL_SEND_OTP }, Shared.Enums.Enum.ErrorCode.BadRequest);
@@ -74,7 +76,7 @@ namespace Exchange.Web.BusinessLogic.Services
                   _authySection[nameof(AuthyConfig.AuthyApiKey)]);
 
                 HttpResponseMessage response =
-                    await client.GetAsync($"{_authySection[nameof(AuthyConfig.AuthyVerifyTokenUrl)]}/{token}/{authyId}");
+                    await client.GetAsync($"{_authySection[nameof(AuthyConfig.AuthyBaseUrl)]}{_authySection[nameof(AuthyConfig.AuthyVerifyTokenUrl)]}/{token}/{authyId}");
                 if (!response.IsSuccessStatusCode)
                 {
                     throw new UserException(new List<string> { Constant.ErrorInfo.AUTHY_FAIL_VERIFY_OTP_CODE },

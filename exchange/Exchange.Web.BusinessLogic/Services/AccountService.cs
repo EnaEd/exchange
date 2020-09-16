@@ -1,27 +1,74 @@
 ﻿using Exchange.Web.BusinessLogic.Models;
+using Exchange.Web.BusinessLogic.Models.Authy.RequestModel;
+using Exchange.Web.BusinessLogic.Models.Authy.ResponseModel;
 using Exchange.Web.BusinessLogic.Services.Interfaces;
+using Exchange.Web.Shared.Common;
+using Exchange.Web.Shared.Constants;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Exchange.Web.BusinessLogic.Services
 {
     public class AccountService : IAccountService
     {
+        private readonly IAuthyService _authyService;
         private readonly IUserService _userService;
 
-        public AccountService(IUserService userService)
+        public AccountService(IUserService userService, IAuthyService authyService)
         {
             _userService = userService;
+            _authyService = authyService;
         }
 
-        public async Task<bool> IsUserExist(string phoneNumber)
+        public async Task<UserModel> IsUserExistAsync(string phoneNumber)
         {
-            return await _userService.IsUserExists(phoneNumber);
+            var result = await _userService.IsUserExists(phoneNumber);
+            if (result is null)
+            {
+                return new UserModel
+                {
+                    Errors = new List<string> { Constant.ErrorInfo.USER_NOT_FOUND },
+                    Code = Shared.Enums.Enum.ErrorCode.NotFound.ToString()
+                };
+            }
+            return result;
         }
 
         public async Task<UserModel> RegistrationAsync(UserModel model)
         {
             //TODO EE:validation model
             return await _userService.CreateUserAsync(model);
+        }
+
+        public async Task<string> SignInUser(PhoneRequestModel model)
+        {
+            var result = await IsUserExistAsync(model.PhoneNumber);
+            if (result is null)
+            {
+                throw new UserException(new List<string> { Constant.ErrorInfo.USER_NOT_FOUND }, Shared.Enums.Enum.ErrorCode.NotFound);
+            }
+
+            CreateUserRequestModel authyRequestModel = new CreateUserRequestModel
+            {
+                CountryCode = model.CountryCode,
+                Email = result.Email,
+                PhoneNumber = model.PhoneNumber
+            };
+
+            AuthyOTPCodeResponse authyUser = await _authyService.CreateAuthyUserAsync(authyRequestModel);
+            if (!authyUser.Success)
+            {
+                throw new UserException(new List<string> { authyUser.Message }, Shared.Enums.Enum.ErrorCode.BadRequest);
+            }
+
+            var baseModel = await _authyService.SendOTPCodeAsync(authyUser.User.Id);
+            if (!baseModel.Success)
+            {
+                throw new UserException(new List<string> { baseModel.Message }, Shared.Enums.Enum.ErrorCode.BadRequest);
+            }
+
+            return baseModel.Message;
+
         }
 
         public async Task<UserModel> UpdateUserIfNeeded(UserModel model)

@@ -3,5 +3,6 @@
     public class PhoneRequestModel
     {
         public string PhoneNumber { get; set; }
+        public string CountryCode { get; set; }
     }
 }

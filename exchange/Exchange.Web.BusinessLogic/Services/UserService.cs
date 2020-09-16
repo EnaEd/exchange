@@ -49,9 +49,15 @@ namespace Exchange.Web.BusinessLogic.Services
             return _mapper.Map<UserModel>(await _userRepository.GetOneByIdAsync(id));
         }
 
-        public async Task<bool> IsUserExists(string phoneNumber)
+        public async Task<UserModel> IsUserExists(string phoneNumber)
         {
-            return !(await _userRepository.GetOneByPhoneNumberAsync(phoneNumber) is null);
+            var user = await _userRepository.GetOneByPhoneNumberAsync(phoneNumber);
+            if (user is not null)
+            {
+                var userModel = _mapper.Map<UserModel>(user);
+                return userModel;
+            }
+            return null;
         }
 
         public async Task<UserModel> UpdateUserAsync(UserModel userModel)
