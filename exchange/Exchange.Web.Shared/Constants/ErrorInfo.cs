@@ -16,6 +16,10 @@
             public const string FAIL_CREATE_MESSAGE = "fail occurs creating message";
             public const string FAIL_CREATE_CHATPARTY = "fail occurs creating chat party";
 
+            public const string AUTHY_FAIL_CREATE_USER = "somethig went wrong. User create fail";
+            public const string AUTHY_FAIL_SEND_OTP = "somethig went wrong. Send otp fail";
+            public const string AUTHY_FAIL_VERIFY_OTP_CODE = "somethig went wrong. Verify otp code fail";
+
         }
     }
 }
