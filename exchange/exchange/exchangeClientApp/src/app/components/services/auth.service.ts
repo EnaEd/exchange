@@ -1,50 +1,37 @@
+import { environment } from './../../../environments/environment.prod';
+import { SignInRequestModel } from './../../Models/RequestModels/signIn-request.model';
 import { AuthyUser } from './../../Models/authy-user.model';
-import { environment } from './../../../environments/environment';
+
 import { UserModel } from './../../Models/user.model';
 import { HttpService } from './http.service';
 import { Observable } from 'rxjs';
-export class AuthService {
-  constructor(private httpService: HttpService) {
-    //this._client = new Client({ key: 'nhMV4vVdkT8NHP6yu8g6D4JfF8OJw678' });
-  }
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-  signUp(user: UserModel): Observable<any> {
-    // return this.httpService.post(
-    //   `${environment.apiURL}account/registration`,
-    //   null,
-    //   user,
-    //   null
-    // );
-    return null;
-  }
-  checkExistsUser(phone: string): Observable<any> {
-    // return this.httpService.post(
-    //   `${environment.apiURL}account/checkuserexists`,
-    //   null,
-    //   phone,
-    //   null
-    // );
-    return null;
-  }
-  createAuthyUser(model: AuthyUser): Observable<any> {
-    // return this._client.registerUser(
-    //   {
-    //     countryCode: model.countryCode,
-    //     email: model.email,
-    //     phone: model.phone,
-    //   },
-    //   (err, res) => {
-    //     if (err) throw err;
-    //     console.log('Authy Id', res.user.id);
-    //   }
-    // );
-    return null;
-  }
-  sendrequestSMSCode(model: string): Observable<any> {
-    // return this._client.requestSms({ authyId: model }, (err, res) => {
-    //   if (err) throw err;
-    //   console.log('Message successfully send to', res.cellphone);
-    // });
-    return null;
+@Injectable()
+export class AuthService {
+  // constructor(private _httpService: HttpService) {}
+
+  // signIn(model: SignInRequestModel): Observable<any> {
+  //   debugger;
+  //   return this._httpService.post(
+  //     `${environment.apiURL}/account/signin`,
+  //     model
+  //   );
+  // }
+
+  constructor(private _client: HttpClient) {}
+  signIn(model: SignInRequestModel): Observable<any> {
+    debugger;
+    const headers = new HttpHeaders()
+      .set(
+        'Access-Control-Allow-Headers',
+        'Content-Type,Access-Control-Allow-Headers, Authorization, X-Requested-With'
+      )
+      .set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+      .set('Access-Control-Allow-Origin', '*');
+    return this._client.post(`${environment.apiURL}/account/signin`, model, {
+      headers: headers,
+    });
   }
 }

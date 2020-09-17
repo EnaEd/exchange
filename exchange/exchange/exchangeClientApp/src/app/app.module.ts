@@ -1,3 +1,5 @@
+import { AuthService } from './components/services/auth.service';
+import { HttpService } from './components/services/http.service';
 import { BaseGuard } from './components/base/guards/base.guard';
 import { appReducers } from './store/app.reducer';
 import { BrowserModule } from '@angular/platform-browser';
@@ -18,6 +20,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BaseComponent } from './components/base/base.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthEffects } from '../app/components/auth/store/auth.effects';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,7 @@ import { AuthEffects } from '../app/components/auth/store/auth.effects';
   ],
   imports: [
     ReactiveFormsModule,
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(appReducers),
@@ -41,7 +45,7 @@ import { AuthEffects } from '../app/components/auth/store/auth.effects';
     StoreRouterConnectingModule.forRoot(),
     FontAwesomeModule,
   ],
-  providers: [BaseGuard],
+  providers: [BaseGuard, AuthService, HttpService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

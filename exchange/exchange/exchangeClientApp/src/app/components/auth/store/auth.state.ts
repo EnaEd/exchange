@@ -4,10 +4,12 @@ export interface IAuthState {
   isAuthenticate: boolean;
   isUserExists: boolean;
   descriptionEvent: string;
+  eventSuccess: boolean;
 }
 export const initialAuthState: IAuthState = {
   user: null,
   isAuthenticate: false,
   isUserExists: false,
   descriptionEvent: null,
+  eventSuccess: false,
 };

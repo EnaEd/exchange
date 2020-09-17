@@ -22,11 +22,12 @@ namespace Exchange.Web.Presentation
         public void ConfigureServices(IServiceCollection services)
         {
             BusinessLogic.Startup.Init(services, Configuration);
-
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddSignalR();
             services.AddSwaggerGen(c =>
             c.SwaggerDoc(name: "v1", new OpenApiInfo { Title = "MyApi", Version = "v1" }));
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -35,8 +36,7 @@ namespace Exchange.Web.Presentation
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors();
-            app.UseRouting();
+
             app.UseErrorHandler();
             //custom handler with logger
             //app.UseErrorHandler();
@@ -48,6 +48,8 @@ namespace Exchange.Web.Presentation
             app.UseSwaggerUI(c =>
             c.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "My Api V1"));
 
+            app.UseRouting();
+            app.UseCors(option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseEndpoints(endpoints =>
             {

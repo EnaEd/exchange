@@ -16,8 +16,8 @@ const reducer = createReducer(
   })),
   on(SignInSuccessAction, (state, { payload }) => ({
     ...state,
-    user: payload,
-    isAuthenticate: true,
+    descriptionEvent: payload,
+    eventSuccess: true,
   })),
   on(SignUpSuccessAction, (state, { payload }) => ({
     ...state,

@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import * as AuthActions from '../auth/store/auth.actions';
@@ -20,12 +21,11 @@ export class AuthComponent implements OnInit {
   public onSubmit(): void {
     console.log(this.phoneForm.get('phone').value);
     this.store.dispatch(
-      AuthActions.SendSMSCodeAction({
+      AuthActions.SignInAction({
         //todo add separate method to phone string
-        authyModel: {
+        model: {
           countryCode: '+380',
-          email: 'hope@mail.com',
-          phone: '936683441',
+          phoneNumber: '936683441',
         }, //this.phoneForm.get('phone').value,
       })
     );

@@ -1,3 +1,4 @@
+import { SignInRequestModel } from './../../../Models/RequestModels/signIn-request.model';
 import { AuthyUser } from './../../../Models/authy-user.model';
 import { createAction, props } from '@ngrx/store';
 import { UserModel } from '../../../Models/user.model';
@@ -47,11 +48,11 @@ export const CheckIsUserExistErrorAction = createAction(
 );
 export const SignInAction = createAction(
   AuthActionEnum.SignIn,
-  props<{ model: UserModel }>()
+  props<{ model: SignInRequestModel }>()
 );
 export const SignInSuccessAction = createAction(
   AuthActionEnum.SignInSuccess,
-  props<{ payload: UserModel }>()
+  props<{ payload: string }>()
 );
 export const SignInErrorAction = createAction(
   AuthActionEnum.SignInError,
