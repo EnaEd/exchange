@@ -12,17 +12,14 @@ export class AuthEffects {
       ofType(AuthActions.SignInAction),
       mergeMap((action) =>
         this._authService.signIn(action.model).pipe(
-          map((data) => {
-            debugger;
-            console.log(data);
-            return {
-              type: AuthActions.AuthActionEnum.SignInSuccess,
-              payload: data,
-            };
-          }),
-          catchError(() => {
-            return empty;
-          })
+          map((data) => ({
+            type: AuthActions.AuthActionEnum.SignInSuccess,
+            payload: data.message,
+          })),
+          catchError(async (data) => ({
+            type: AuthActions.AuthActionEnum.SignInError,
+            payload: data.error,
+          }))
         )
       )
     )

@@ -7,6 +7,7 @@ import { HttpService } from './http.service';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { text } from '@fortawesome/fontawesome-svg-core';
 
 @Injectable()
 export class AuthService {
@@ -22,16 +23,14 @@ export class AuthService {
 
   constructor(private _client: HttpClient) {}
   signIn(model: SignInRequestModel): Observable<any> {
-    debugger;
-    const headers = new HttpHeaders()
-      .set(
-        'Access-Control-Allow-Headers',
-        'Content-Type,Access-Control-Allow-Headers, Authorization, X-Requested-With'
-      )
-      .set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-      .set('Access-Control-Allow-Origin', '*');
-    return this._client.post(`${environment.apiURL}/account/signin`, model, {
-      headers: headers,
-    });
+    // debugger;
+    // const headers = new HttpHeaders()
+    //   .set(
+    //     'Access-Control-Allow-Headers',
+    //     'Content-Type,Access-Control-Allow-Headers, Authorization, X-Requested-With'
+    //   )
+    //   .set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    //   .set('Access-Control-Allow-Origin', '*');
+    return this._client.post(`${environment.apiURL}/account/signin`, model, {});
   }
 }

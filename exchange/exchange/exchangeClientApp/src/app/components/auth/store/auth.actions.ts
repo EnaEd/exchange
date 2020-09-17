@@ -1,7 +1,8 @@
+import { UserModel } from './../../../Models/user.model';
+import { BaseModel } from './../../../Models/base.model';
 import { SignInRequestModel } from './../../../Models/RequestModels/signIn-request.model';
 import { AuthyUser } from './../../../Models/authy-user.model';
 import { createAction, props } from '@ngrx/store';
-import { UserModel } from '../../../Models/user.model';
 
 export enum AuthActionEnum {
   CheckIsUserExist = '[Auth] is user exists',

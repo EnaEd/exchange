@@ -4,6 +4,7 @@ import {
   SignUpSuccessAction,
   SignOutSuccessAction,
   RequestsSMSCodeSuccessfullAction,
+  SignInErrorAction,
 } from './auth.actions';
 import { createReducer, on, Action } from '@ngrx/store';
 import { initialAuthState, IAuthState } from './auth.state';
@@ -33,6 +34,10 @@ const reducer = createReducer(
   on(RequestsSMSCodeSuccessfullAction, (state, { payload }) => ({
     ...state,
     descriptionEvent: payload,
+  })),
+  on(SignInErrorAction, (state, { payload }) => ({
+    ...state,
+    user: payload,
   }))
 );
 export function authReducer(state: IAuthState | undefined, action: Action) {

@@ -1,4 +1,5 @@
 ﻿using Exchange.Web.BusinessLogic.Models;
+using Exchange.Web.BusinessLogic.Models.Authy;
 using Exchange.Web.BusinessLogic.Models.Authy.RequestModel;
 using Exchange.Web.BusinessLogic.Models.Authy.ResponseModel;
 using Exchange.Web.BusinessLogic.Services.Interfaces;
@@ -40,7 +41,7 @@ namespace Exchange.Web.BusinessLogic.Services
             return await _userService.CreateUserAsync(model);
         }
 
-        public async Task<string> SignInUser(PhoneRequestModel model)
+        public async Task<AuthyBaseModel> SignInUser(PhoneRequestModel model)
         {
             var result = await IsUserExistAsync(model.PhoneNumber);
             if (result is null)
@@ -67,7 +68,7 @@ namespace Exchange.Web.BusinessLogic.Services
                 throw new UserException(new List<string> { baseModel.Message }, Shared.Enums.Enum.ErrorCode.BadRequest);
             }
 
-            return baseModel.Message;
+            return baseModel;
 
         }
 
