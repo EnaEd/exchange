@@ -18,7 +18,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BaseComponent } from './components/base/base.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AuthEffects } from '../app/components/auth/store/auth.effects';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -32,6 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
     BaseComponent,
   ],
   imports: [
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,

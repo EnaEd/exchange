@@ -1,3 +1,4 @@
+import { UserModel } from './../../../Models/user.model';
 import {
   CheckIsUserExistSuccessAction,
   SignInSuccessAction,
@@ -8,6 +9,7 @@ import {
 } from './auth.actions';
 import { createReducer, on, Action } from '@ngrx/store';
 import { initialAuthState, IAuthState } from './auth.state';
+import { userSelector } from './auth.selectors';
 
 const reducer = createReducer(
   initialAuthState,

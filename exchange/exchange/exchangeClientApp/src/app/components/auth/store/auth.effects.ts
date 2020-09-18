@@ -1,3 +1,4 @@
+import { UserModel } from './../../../Models/user.model';
 import { AuthService } from './../../services/auth.service';
 import * as AuthActions from './auth.actions';
 import { Injectable } from '@angular/core';
@@ -16,10 +17,15 @@ export class AuthEffects {
             type: AuthActions.AuthActionEnum.SignInSuccess,
             payload: data.message,
           })),
-          catchError(async (data) => ({
-            type: AuthActions.AuthActionEnum.SignInError,
-            payload: data.error,
-          }))
+          catchError(async (data) => {
+            debugger;
+            let parseObject = JSON.parse(data.error);
+            debugger;
+            return {
+              type: AuthActions.AuthActionEnum.SignInError,
+              payload: data.error,
+            };
+          })
         )
       )
     )

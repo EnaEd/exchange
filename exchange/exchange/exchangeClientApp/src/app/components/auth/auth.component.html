@@ -1,10 +1,20 @@
-<form [formGroup]="phoneForm" (ngSubmit)="onSubmit()">
-  <label>phone: </label>
-  <input
-    type="text"
-    formControlName="phone"
-    placeholder="+380931234567"
-  /><br />
-  <input type="submit" value="log in" />
-</form>
-<div></div>
+<div *ngIf="!(eventSuccessSelector$ | async) && !(userSelector$ | async)">
+  <form [formGroup]="phoneForm" (ngSubmit)="onSubmit()">
+    <label>phone: </label>
+    <input
+      type="text"
+      formControlName="phone"
+      placeholder="+380931234567"
+    /><br />
+    <input type="submit" value="log in" />
+  </form>
+</div>
+<div *ngIf="(eventSuccessSelector$ | async) || (userSelector$ | async)">
+  <div>{{ userSelector$ | async | json }}</div>
+  <div>{{ eventSuccessSelector$ | async }}</div>
+
+  <div>{{ userSelector$["Errors"] | async | json }}</div>
+</div>
+<!-- <div *ngIf="error">
+  
+</div> -->
