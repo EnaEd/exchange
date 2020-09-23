@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { HttpMethodTypeEnum } from '../../enums/http-method-type';
+import { HttpMethodTypeEnum } from '../enums/http-method-type';
 import { Injectable } from '@angular/core';
 
 @Injectable()

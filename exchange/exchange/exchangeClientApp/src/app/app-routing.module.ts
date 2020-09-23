@@ -1,3 +1,4 @@
+import { VerifyCodeGuard } from './components/verify-otp-code/guards/verify-code.guard';
 import { BaseGuard } from './components/base/guards/base.guard';
 import { BaseComponent } from './components/base/base.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -22,7 +23,11 @@ const routes: Routes = [
     children: [{ path: '', component: HomeComponent }],
   },
   { path: 'auth', component: AuthComponent },
-  { path: 'checkotp', component: VerifyOTPCodeComponent },
+  {
+    path: 'checkotp',
+    component: VerifyOTPCodeComponent,
+    canActivate: [VerifyCodeGuard],
+  },
 ];
 
 @NgModule({

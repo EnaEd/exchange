@@ -1,5 +1,6 @@
-import { AuthService } from './components/services/auth.service';
-import { HttpService } from './components/services/http.service';
+import { VerifyCodeGuard } from './components/verify-otp-code/guards/verify-code.guard';
+import { AuthService } from './services/auth.service';
+import { HttpService } from './services/http.service';
 import { BaseGuard } from './components/base/guards/base.guard';
 import { appReducers } from './store/app.reducer';
 import { BrowserModule } from '@angular/platform-browser';
@@ -52,7 +53,7 @@ import { VerifyOTPCodeComponent } from './components/verify-otp-code/verify-otp-
     StoreRouterConnectingModule.forRoot(),
     FontAwesomeModule,
   ],
-  providers: [BaseGuard, AuthService, HttpService],
+  providers: [BaseGuard, AuthService, HttpService, VerifyCodeGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

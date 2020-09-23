@@ -1,1 +1,10 @@
-<p>verify-otp-code works!</p>
+<form [formGroup]="otpCode" (ngSubmit)="onSubmit()">
+  <input name="codeField" type="text" formControlName="code" required />
+  <br />
+  <br />
+  <input
+    type="submit"
+    value="send code"
+    [disabled]="otpCode.controls['code'].invalid"
+  />
+</form>
