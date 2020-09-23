@@ -21,6 +21,9 @@ import { BaseComponent } from './components/base/base.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AuthEffects } from '../app/components/auth/store/auth.effects';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { VerifyOTPCodeComponent } from './components/verify-otp-code/verify-otp-code.component';
 
 @NgModule({
   declarations: [
@@ -30,12 +33,15 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     DashboardComponent,
     BaseComponent,
+    VerifyOTPCodeComponent,
   ],
   imports: [
+    ToastrModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({

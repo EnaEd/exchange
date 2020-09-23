@@ -1,3 +1,4 @@
+import { isLogged } from './../../../store/app.selector';
 import { UserModel } from './../../../Models/user.model';
 import {
   CheckIsUserExistSuccessAction,

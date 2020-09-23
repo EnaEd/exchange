@@ -5,6 +5,7 @@ import {
 import { RouterReducerState } from '@ngrx/router-store';
 
 export interface IAppState {
+  [x: string]: any;
   router?: RouterReducerState;
   auth: IAuthState;
 }

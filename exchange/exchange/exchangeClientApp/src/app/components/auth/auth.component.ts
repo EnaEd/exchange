@@ -1,18 +1,18 @@
-import { Observable } from 'rxjs';
+import { mergeMap, map } from 'rxjs/operators';
 import {
   userSelector,
   erorrsSelector,
-  descriptionEventSelector,
   eventSuccessSelector,
+  descriptionEventSelector,
 } from './store/auth.selectors';
-import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import * as AuthActions from '../auth/store/auth.actions';
 import { Store, select } from '@ngrx/store';
 import { IAppState } from 'src/app/store/app.state';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+import { Actions } from '@ngrx/effects';
 
 @Component({
   selector: 'app-auth',
@@ -24,16 +24,36 @@ export class AuthComponent implements OnInit {
 
   public userSelector$ = this.store.pipe(select(userSelector));
 
-  // public erorrsSelector$ = this.store.pipe(select(erorrsSelector));
-  public erorrsSelector$ = this.store.select((state) => state);
+  public erorrsSelector$ = this.store
+    .pipe(select(erorrsSelector))
+    .subscribe((data) => {
+      if (data) {
+        this.toaster.error(data.toString());
+      }
+    });
 
-  public eventSuccessSelector$ = this.store.pipe(select(eventSuccessSelector));
+  private _descriptionEvent: string;
+  public descriptionEventSelector$ = this.store
+    .pipe(select(descriptionEventSelector))
+    .subscribe((event) => (this._descriptionEvent = event));
+  public eventSuccessSelector$ = this.store
+    .pipe(select(eventSuccessSelector))
+    .subscribe((data) => {
+      if (data) {
+        this.toaster.success(this._descriptionEvent);
+        this.router.navigateByUrl('/checkotp');
+      }
+    });
 
   public phoneForm: FormGroup = new FormGroup({
     phone: new FormControl(''),
   });
 
-  constructor(private store: Store<IAppState>, private router: Router) {}
+  constructor(
+    private store: Store<IAppState>,
+    private router: Router,
+    private toaster: ToastrService
+  ) {}
 
   ngOnInit(): void {}
   public onSubmit(): void {
@@ -43,7 +63,7 @@ export class AuthComponent implements OnInit {
         //todo add separate method to phone string
         model: {
           countryCode: '+380',
-          phoneNumber: '936683442',
+          phoneNumber: '936683441',
         }, //this.phoneForm.get('phone').value,
       })
     );

@@ -1,3 +1,4 @@
+import { BaseModel } from './../../../Models/base.model';
 import { UserModel } from './../../../Models/user.model';
 import { AuthService } from './../../services/auth.service';
 import * as AuthActions from './auth.actions';
@@ -5,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { empty } from 'rxjs';
+import { JsonPipe } from '@angular/common';
 
 @Injectable()
 export class AuthEffects {
@@ -18,12 +20,13 @@ export class AuthEffects {
             payload: data.message,
           })),
           catchError(async (data) => {
-            debugger;
-            let parseObject = JSON.parse(data.error);
-            debugger;
+            let parseUser: UserModel = {
+              id: JSON.parse(`"${data.error.Id}"`),
+              errors: JSON.parse(`"${data.error.Errors}"`),
+            } as UserModel;
             return {
               type: AuthActions.AuthActionEnum.SignInError,
-              payload: data.error,
+              payload: parseUser,
             };
           })
         )

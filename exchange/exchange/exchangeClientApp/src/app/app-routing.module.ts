@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthComponent } from './components/auth/auth.component';
 import { HomeComponent } from './components/home/home.component';
+import { VerifyOTPCodeComponent } from './components/verify-otp-code/verify-otp-code.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     children: [{ path: '', component: HomeComponent }],
   },
   { path: 'auth', component: AuthComponent },
+  { path: 'checkotp', component: VerifyOTPCodeComponent },
 ];
 
 @NgModule({
