@@ -9,6 +9,6 @@ namespace Exchange.Web.BusinessLogic.Services.Interfaces
     {
         public Task<AuthyOTPCodeResponse> CreateAuthyUserAsync(CreateUserRequestModel model);
         public Task<AuthyBaseModel> SendOTPCodeAsync(int authyId);
-        public Task<AuthyVerifyCodeResponseModel> VerifyOTPCode(int authyId, string token);
+        public Task<AuthyVerifyCodeResponseModel> VerifyOTPCodeAsync(int authyId, string token);
     }
 }

@@ -9,6 +9,7 @@ const eventSuccess = (state: IAppState) => state.auth;
 const isAuthenticate = (state: IAppState) => state.auth;
 const isUserExists = (state: IAppState) => state.auth;
 const error = (state: IAppState) => state.auth;
+const authyId = (state: IAppState) => state.auth;
 
 export const erorrsSelector = createSelector(
   error,
@@ -33,4 +34,8 @@ export const descriptionEventSelector = createSelector(
 export const eventSuccessSelector = createSelector(
   eventSuccess,
   (state: IAuthState) => state.eventSuccess
+);
+export const authyIdSelector = createSelector(
+  authyId,
+  (state: IAuthState) => state.authyId
 );

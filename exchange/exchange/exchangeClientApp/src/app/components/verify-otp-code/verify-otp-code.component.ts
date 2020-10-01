@@ -1,8 +1,11 @@
+import { authyIdSelector } from './../auth/store/auth.selectors';
 import { IAppState } from 'src/app/store/app.state';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
+import * as VerifyActions from './store/verify-otp.actions';
+import { VerifyOtpCodeRequestModel } from 'src/app/Models/RequestModels/verify-otp-code-request.model';
 
 @Component({
   selector: 'app-verify-otp-code',
@@ -13,6 +16,10 @@ export class VerifyOTPCodeComponent implements OnInit {
   public otpCode: FormGroup = new FormGroup({
     code: new FormControl('', Validators.required),
   });
+  private _authyId: number;
+  authyId$ = this._store.pipe(select(authyIdSelector)).subscribe((data) => {
+    this._authyId = data;
+  });
 
   constructor(
     private _toaster: ToastrService,
@@ -21,6 +28,9 @@ export class VerifyOTPCodeComponent implements OnInit {
 
   ngOnInit(): void {}
   onSubmit(): void {
-    //this._store.dispatch()
+    let model = new VerifyOtpCodeRequestModel();
+    model.authyId = this._authyId;
+    model.token = this.otpCode.get('code').value;
+    this._store.dispatch(VerifyActions.SendVerifyOtpCodeAction({ model }));
   }
 }

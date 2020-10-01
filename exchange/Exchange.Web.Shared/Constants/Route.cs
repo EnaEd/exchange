@@ -17,6 +17,7 @@
             public const string CHECK_USER_EXISTS_ROUTE = "checkuserexists";
             public const string UPDATE_USER_ROUTE = "updateuser";
             public const string SIGN_IN_USER_ROUTE = "signin";
+            public const string VERIFY_USERS_OTP_CODE = "verifycode";
 
             //exchange controller routes
             public const string SHOW_OFFER_ROUTE = "showoffer";

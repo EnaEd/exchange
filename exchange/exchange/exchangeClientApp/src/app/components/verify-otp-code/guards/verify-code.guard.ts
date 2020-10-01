@@ -26,9 +26,10 @@ export class VerifyCodeGuard implements CanActivate {
       this._descriptionEvent ??
       ''.normalize().includes('sms token was sent'.normalize())
     ) {
-      this._router.navigateByUrl('/checkotp');
       return true;
     }
+    //TODO EE:uncomment after logic complite
+
     this._toaster.warning('code was not send');
     this._router.navigateByUrl('/auth');
     return false;

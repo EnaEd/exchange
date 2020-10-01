@@ -7,6 +7,7 @@ namespace Exchange.Web.BusinessLogic.Models.Authy
         public string Message { get; set; }
         public bool Success { get; set; }
         public string CellPhone { get; set; }
+        public int AuthyId { get; set; }
 
     }
 }

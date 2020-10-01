@@ -1,4 +1,5 @@
 ﻿using Exchange.Web.BusinessLogic.Models;
+using Exchange.Web.BusinessLogic.Models.Authy.RequestModel;
 using Exchange.Web.BusinessLogic.Services.Interfaces;
 using Exchange.Web.Shared.Constants;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,12 @@ namespace Exchange.Web.Presentation.Controllers
         public async Task<IActionResult> UpdateUser([FromBody] UserModel model)
         {
             return Ok(await _accountService.UpdateUserIfNeeded(model));
+        }
+
+        [HttpPost(Constant.Route.VERIFY_USERS_OTP_CODE)]
+        public async Task<IActionResult> VerifyOtpCode([FromBody] VerifyCodeRequestModel model)
+        {
+            return Ok(await _accountService.VerifyOtpCodeAsync(model));
         }
     }
 }

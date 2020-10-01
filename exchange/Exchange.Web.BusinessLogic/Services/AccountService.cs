@@ -63,6 +63,7 @@ namespace Exchange.Web.BusinessLogic.Services
             }
 
             var baseModel = await _authyService.SendOTPCodeAsync(authyUser.User.Id);
+            baseModel.AuthyId = authyUser.User.Id;
             if (!baseModel.Success)
             {
                 throw new UserException(new List<string> { baseModel.Message }, Shared.Enums.Enum.ErrorCode.BadRequest);
@@ -82,6 +83,12 @@ namespace Exchange.Web.BusinessLogic.Services
             }
             var test = await _userService.UpdateUserAsync(user);
             return await _userService.UpdateUserAsync(user);
+        }
+
+        public async Task<AuthyVerifyCodeResponseModel> VerifyOtpCodeAsync(VerifyCodeRequestModel model)
+        {
+            AuthyVerifyCodeResponseModel result = await _authyService.VerifyOTPCodeAsync(model.AuthyId, model.Token);
+            return result;
         }
     }
 }

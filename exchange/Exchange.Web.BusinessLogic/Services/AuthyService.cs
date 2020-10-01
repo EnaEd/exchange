@@ -68,7 +68,7 @@ namespace Exchange.Web.BusinessLogic.Services
 
         }
 
-        public async Task<AuthyVerifyCodeResponseModel> VerifyOTPCode(int authyId, string token)
+        public async Task<AuthyVerifyCodeResponseModel> VerifyOTPCodeAsync(int authyId, string token)
         {
             using (var client = new HttpClient())
             {
