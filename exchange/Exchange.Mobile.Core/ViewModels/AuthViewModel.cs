@@ -35,6 +35,7 @@ namespace Exchange.Mobile.Core.ViewModels
                 return;
             }
 
+
             //PhoneNumber = DeviceInfoService.GetPhoneNumber();
 
 

@@ -1,3 +1,5 @@
+import { AngularMaterialModule } from './modules/angular-material.module';
+import { VerifyOtpEffect } from './components/verify-otp-code/store/verivy-otp.effects';
 import { VerifyCodeGuard } from './components/verify-otp-code/guards/verify-code.guard';
 import { AuthService } from './services/auth.service';
 import { HttpService } from './services/http.service';
@@ -5,7 +7,6 @@ import { BaseGuard } from './components/base/guards/base.guard';
 import { appReducers } from './store/app.reducer';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
@@ -37,6 +38,7 @@ import { VerifyOTPCodeComponent } from './components/verify-otp-code/verify-otp-
     VerifyOTPCodeComponent,
   ],
   imports: [
+    AngularMaterialModule,
     ToastrModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
@@ -49,7 +51,7 @@ import { VerifyOTPCodeComponent } from './components/verify-otp-code/verify-otp-
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, VerifyOtpEffect]),
     StoreRouterConnectingModule.forRoot(),
     FontAwesomeModule,
   ],

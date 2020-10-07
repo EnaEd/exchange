@@ -1,3 +1,4 @@
+import { VerifyOtpCodeResponseModel } from './../../../Models/response-models/verify-otp-code-response.model';
 import { UserModel } from './../../../Models/user.model';
 import { createAction, props } from '@ngrx/store';
 import { VerifyOtpCodeRequestModel } from '../../../Models/RequestModels/verify-otp-code-request.model';
@@ -12,9 +13,9 @@ export const SendVerifyOtpCodeAction = createAction(
 );
 export const SendVerifyOtpCodeSuccessAction = createAction(
   VerifyOptCodeActionEnum.SendVerifyOtpCodeSuccess,
-  props<{ model: VerifyOtpCodeRequestModel }>()
+  props<{ model: VerifyOtpCodeResponseModel }>()
 );
 export const SendVerifyOtpCodeErrorAction = createAction(
   VerifyOptCodeActionEnum.SendVerifyOtpCodeError,
-  props<{ model: UserModel }>()
+  props<{ errors: string[] }>()
 );

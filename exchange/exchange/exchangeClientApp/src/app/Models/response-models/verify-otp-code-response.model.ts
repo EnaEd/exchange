@@ -1,6 +1,6 @@
 import { AuthyDeviceModel } from '../authy-device.model';
 
 export class VerifyOtpCodeResponseModel {
-  token: number;
+  token: string;
   device: AuthyDeviceModel;
 }

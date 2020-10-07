@@ -1,4 +1,5 @@
 ﻿using Exchange.Web.BusinessLogic.Models;
+using Exchange.Web.BusinessLogic.Models.Authy;
 using Exchange.Web.BusinessLogic.Models.Authy.RequestModel;
 using Exchange.Web.BusinessLogic.Services.Interfaces;
 using Exchange.Web.Shared.Constants;
@@ -34,7 +35,7 @@ namespace Exchange.Web.Presentation.Controllers
         [HttpPost(Constant.Route.SIGN_IN_USER_ROUTE)]
         public async Task<IActionResult> SignInUser([FromBody] PhoneRequestModel requestModel)
         {
-            var result = await _accountService.SignInUser(requestModel);
+            AuthyBaseModel result = await _accountService.SignInUser(requestModel);
             return Ok(result);
         }
 

@@ -2,7 +2,7 @@
 {
     public class AuthyVerifyCodeResponseModel : AuthyBaseModel
     {
-        public long Token { get; set; }
+        public string Token { get; set; }
         public DeviceResponseModel Device { get; set; }
     }
 }

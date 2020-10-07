@@ -5,6 +5,7 @@ import { AuthyUser } from './../../../Models/authy-user.model';
 import { createAction, props } from '@ngrx/store';
 
 export enum AuthActionEnum {
+  LoggedSuccess = '[Auth] Confim code successfull, log in ',
   CheckIsUserExist = '[Auth] is user exists',
   CheckIsUserExistSuccess = '[Auth] is user exists success',
   CheckIsUserExistError = '[Auth] is user exists error',
@@ -21,6 +22,7 @@ export enum AuthActionEnum {
   SendSMSCodeSuccess = '[Auth] send sms code success',
   RequestsSMSCodeSuccessfull = '[Auth] request sms code successfull',
 }
+export const LoggedSuccessAction = createAction(AuthActionEnum.LoggedSuccess);
 
 export const RequestsSMSCodeSuccessfullAction = createAction(
   AuthActionEnum.RequestsSMSCodeSuccessfull,
@@ -53,11 +55,11 @@ export const SignInAction = createAction(
 );
 export const SignInSuccessAction = createAction(
   AuthActionEnum.SignInSuccess,
-  props<{ payload: string }>()
+  props<{ payload: string; authyId: string }>()
 );
 export const SignInErrorAction = createAction(
   AuthActionEnum.SignInError,
-  props<{ payload: UserModel }>()
+  props<{ errors: string[] }>()
 );
 export const SignUpAction = createAction(
   AuthActionEnum.SignUp,

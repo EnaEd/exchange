@@ -1,5 +1,3 @@
-import { isLogged } from './../../../store/app.selector';
-import { UserModel } from './../../../Models/user.model';
 import {
   CheckIsUserExistSuccessAction,
   SignInSuccessAction,
@@ -7,10 +5,10 @@ import {
   SignOutSuccessAction,
   RequestsSMSCodeSuccessfullAction,
   SignInErrorAction,
+  LoggedSuccessAction,
 } from './auth.actions';
 import { createReducer, on, Action } from '@ngrx/store';
 import { initialAuthState, IAuthState } from './auth.state';
-import { userSelector } from './auth.selectors';
 
 const reducer = createReducer(
   initialAuthState,
@@ -18,10 +16,11 @@ const reducer = createReducer(
     ...state,
     isUserExists: payload,
   })),
-  on(SignInSuccessAction, (state, { payload }) => ({
+  on(SignInSuccessAction, (state, { payload, authyId }) => ({
     ...state,
     descriptionEvent: payload,
     eventSuccess: true,
+    authyId: Number.parseInt(authyId),
   })),
   on(SignUpSuccessAction, (state, { payload }) => ({
     ...state,
@@ -38,9 +37,13 @@ const reducer = createReducer(
     ...state,
     descriptionEvent: payload,
   })),
-  on(SignInErrorAction, (state, { payload }) => ({
+  on(SignInErrorAction, (state, { errors }) => ({
     ...state,
-    user: payload,
+    errors: errors,
+  })),
+  on(LoggedSuccessAction, (state) => ({
+    ...state,
+    isAuthenticate: true,
   }))
 );
 export function authReducer(state: IAuthState | undefined, action: Action) {

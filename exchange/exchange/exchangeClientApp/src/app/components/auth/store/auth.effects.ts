@@ -7,6 +7,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { empty } from 'rxjs';
 import { JsonPipe } from '@angular/common';
+import * as BaseActions from '../../../store/app.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -18,15 +19,13 @@ export class AuthEffects {
           map((data) => ({
             type: AuthActions.AuthActionEnum.SignInSuccess,
             payload: data.message,
+            authyId: data.authyId,
           })),
           catchError(async (data) => {
-            let parseUser: UserModel = {
-              id: JSON.parse(`"${data.error.Id}"`),
-              errors: JSON.parse(`"${data.error.Errors}"`),
-            } as UserModel;
+            let errors: string[] = JSON.parse(`"${data.error.Errors}"`);
             return {
-              type: AuthActions.AuthActionEnum.SignInError,
-              payload: parseUser,
+              type: BaseActions.BaseActionEnum.ErrorActionEnum,
+              errors: errors,
             };
           })
         )

@@ -1,7 +1,6 @@
 import { mergeMap, map } from 'rxjs/operators';
 import {
   userSelector,
-  erorrsSelector,
   eventSuccessSelector,
   descriptionEventSelector,
 } from './store/auth.selectors';
@@ -13,6 +12,7 @@ import { IAppState } from 'src/app/store/app.state';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Actions } from '@ngrx/effects';
+import { erorrsSelector } from 'src/app/store/app.selector';
 
 @Component({
   selector: 'app-auth',
@@ -27,7 +27,8 @@ export class AuthComponent implements OnInit {
   public erorrsSelector$ = this.store
     .pipe(select(erorrsSelector))
     .subscribe((data) => {
-      if (data) {
+      debugger;
+      if (data.length > 0) {
         this.toaster.error(data.toString());
       }
     });

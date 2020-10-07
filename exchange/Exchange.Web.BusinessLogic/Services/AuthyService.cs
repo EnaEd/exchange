@@ -83,7 +83,10 @@ namespace Exchange.Web.BusinessLogic.Services
                         Shared.Enums.Enum.ErrorCode.BadRequest);
                 }
                 string result = await response.Content.ReadAsStringAsync();
-                var deserializeResult = JsonConvert.DeserializeObject<AuthyVerifyCodeResponseModel>(result);
+                var deserializeResult = JsonConvert.DeserializeObject<AuthyVerifyCodeResponseModel>(result, new JsonSerializerSettings()
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
                 return deserializeResult;
             }
         }

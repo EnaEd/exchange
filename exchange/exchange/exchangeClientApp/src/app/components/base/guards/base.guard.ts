@@ -1,4 +1,4 @@
-import { isLogged } from './../../../store/app.selector';
+import { isLoggedSelector } from './../../../store/app.selector';
 import { IAppState } from './../../../store/app.state';
 import { Router, CanActivate } from '@angular/router';
 import { Store, select } from '@ngrx/store';
@@ -10,14 +10,15 @@ export class BaseGuard implements CanActivate {
   constructor(private router: Router, private store: Store<IAppState>) {}
 
   isLogged$ = this.store
-    .pipe(select(isLogged))
+    .pipe(select(isLoggedSelector))
     .subscribe((data: boolean) => (this.isLogged = data));
 
   canActivate(): boolean {
-    if (this.isLogged == false) {
-      this.router.navigateByUrl('/auth');
-      return false;
-    }
+    // TODO: Uncomment after complete app
+    // if (this.isLogged == false) {
+    //   this.router.navigateByUrl('/auth');
+    //   return false;
+    // }
     return true;
   }
 }

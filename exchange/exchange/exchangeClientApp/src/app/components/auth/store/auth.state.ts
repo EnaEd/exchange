@@ -1,4 +1,5 @@
 import { UserModel } from './../../../Models/user.model';
+import { IBaseState } from 'src/app/store/app.state';
 export interface IAuthState {
   user: UserModel;
   isAuthenticate: boolean;
