@@ -1,3 +1,5 @@
+import { auth } from './../../../store/app.selector';
+import { state } from '@angular/animations';
 import {
   CheckIsUserExistSuccessAction,
   SignInSuccessAction,
@@ -6,6 +8,8 @@ import {
   RequestsSMSCodeSuccessfullAction,
   SignInErrorAction,
   LoggedSuccessAction,
+  SignOutAction,
+  AuthActionEnum,
 } from './auth.actions';
 import { createReducer, on, Action } from '@ngrx/store';
 import { initialAuthState, IAuthState } from './auth.state';
@@ -45,6 +49,10 @@ const reducer = createReducer(
     ...state,
     isAuthenticate: true,
   }))
+  // on(SignOutAction, (state, { payload }) => ({
+  //   ...state,
+  //   isAuthenticate: true,
+  // }))
 );
 export function authReducer(state: IAuthState | undefined, action: Action) {
   return reducer(state, action);

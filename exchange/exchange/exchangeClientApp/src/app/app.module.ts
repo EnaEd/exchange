@@ -4,7 +4,7 @@ import { VerifyCodeGuard } from './components/verify-otp-code/guards/verify-code
 import { AuthService } from './services/auth.service';
 import { HttpService } from './services/http.service';
 import { BaseGuard } from './components/base/guards/base.guard';
-import { appReducers } from './store/app.reducer';
+import { appReducers, clearReduser } from './store/app.reducer';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { VerifyOTPCodeComponent } from './components/verify-otp-code/verify-otp-code.component';
+import { DiscussComponent } from './components/discuss/discuss.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { VerifyOTPCodeComponent } from './components/verify-otp-code/verify-otp-
     DashboardComponent,
     BaseComponent,
     VerifyOTPCodeComponent,
+    DiscussComponent,
   ],
   imports: [
     AngularMaterialModule,
@@ -46,7 +48,7 @@ import { VerifyOTPCodeComponent } from './components/verify-otp-code/verify-otp-
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    StoreModule.forRoot(appReducers),
+    StoreModule.forRoot(appReducers, { metaReducers: [clearReduser] }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,

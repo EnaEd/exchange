@@ -74,7 +74,7 @@ export const SignUpErrorAction = createAction(
   props<{ payload: UserModel }>()
 );
 export const SignOutAction = createAction(
-  AuthActionEnum.SignOutError,
+  AuthActionEnum.SignOut,
   props<{ payload: UserModel }>()
 );
 export const SignOutSuccessAction = createAction(AuthActionEnum.SignOutSuccess);

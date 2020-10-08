@@ -1,3 +1,4 @@
+import { async } from '@angular/core/testing';
 import { BaseModel } from './../../../Models/base.model';
 import { UserModel } from './../../../Models/user.model';
 import { AuthService } from './../../../services/auth.service';
@@ -32,6 +33,5 @@ export class AuthEffects {
       )
     )
   );
-
   constructor(private actions$: Actions, private _authService: AuthService) {}
 }

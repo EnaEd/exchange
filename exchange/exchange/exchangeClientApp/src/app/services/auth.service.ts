@@ -1,3 +1,4 @@
+import { UserModel } from 'src/app/Models/user.model';
 import { VerifyOtpCodeRequestModel } from './../Models/RequestModels/verify-otp-code-request.model';
 import { environment } from './../../environments/environment.prod';
 import { SignInRequestModel } from './../Models/RequestModels/signIn-request.model';

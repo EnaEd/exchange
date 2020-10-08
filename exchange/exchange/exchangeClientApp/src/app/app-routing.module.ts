@@ -1,7 +1,8 @@
+import { UploadOfferComponent } from './components/upload-offer/upload-offer.component';
+import { DiscussComponent } from './components/discuss/discuss.component';
 import { VerifyCodeGuard } from './components/verify-otp-code/guards/verify-code.guard';
 import { BaseGuard } from './components/base/guards/base.guard';
 import { BaseComponent } from './components/base/base.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthComponent } from './components/auth/auth.component';
@@ -12,15 +13,14 @@ const routes: Routes = [
   {
     path: '',
     component: BaseComponent,
-    children: [{ path: '', component: HomeComponent }],
+    children: [
+      { path: '', component: HomeComponent },
+      { path: 'discuss', component: DiscussComponent },
+      { path: 'home', component: HomeComponent },
+      { path: 'upload', component: UploadOfferComponent },
+    ],
+    //canActivateChild: [BaseGuard],
     canActivate: [BaseGuard],
-  },
-  {
-    path: 'home',
-    component: BaseComponent,
-    canActivate: [BaseGuard],
-    canActivateChild: [BaseGuard],
-    children: [{ path: '', component: HomeComponent }],
   },
   { path: 'auth', component: AuthComponent },
   {
