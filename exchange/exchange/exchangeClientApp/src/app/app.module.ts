@@ -1,3 +1,6 @@
+import { CategoryBottomSheet } from './components/home/category-bottom-sheet';
+import { HomeEffects } from './components/home/store/home.effects';
+import { ExchangeService } from './services/exchange.service';
 import { AngularMaterialModule } from './modules/angular-material.module';
 import { VerifyOtpEffect } from './components/verify-otp-code/store/verivy-otp.effects';
 import { VerifyCodeGuard } from './components/verify-otp-code/guards/verify-code.guard';
@@ -38,6 +41,7 @@ import { DiscussComponent } from './components/discuss/discuss.component';
     BaseComponent,
     VerifyOTPCodeComponent,
     DiscussComponent,
+    CategoryBottomSheet,
   ],
   imports: [
     AngularMaterialModule,
@@ -53,11 +57,17 @@ import { DiscussComponent } from './components/discuss/discuss.component';
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([AuthEffects, VerifyOtpEffect]),
+    EffectsModule.forRoot([AuthEffects, VerifyOtpEffect, HomeEffects]),
     StoreRouterConnectingModule.forRoot(),
     FontAwesomeModule,
   ],
-  providers: [BaseGuard, AuthService, HttpService, VerifyCodeGuard],
+  providers: [
+    BaseGuard,
+    AuthService,
+    HttpService,
+    VerifyCodeGuard,
+    ExchangeService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

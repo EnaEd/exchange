@@ -1,1 +1,20 @@
-<p>home works!</p>
+<div>
+  <mat-drawer-container class="example-container">
+    <!-- Drawer content -->
+    <mat-drawer mode="side" opened>
+      <button
+        class="mat-raised-button"
+        color="secondary"
+        (click)="GetCategory()"
+      >
+        Get Offers
+      </button>
+      <br />
+      <button class="mat-raised-button" color="primary">Refresh</button>
+    </mat-drawer>
+    <!-- Main content -->
+    <mat-drawer-content>
+      <div>{{ (selectedCategory$ | async)?.category }}</div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>
