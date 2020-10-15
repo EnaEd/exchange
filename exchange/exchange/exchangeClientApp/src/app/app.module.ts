@@ -30,6 +30,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { VerifyOTPCodeComponent } from './components/verify-otp-code/verify-otp-code.component';
 import { DiscussComponent } from './components/discuss/discuss.component';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,12 @@ import { DiscussComponent } from './components/discuss/discuss.component';
     EffectsModule.forRoot([AuthEffects, VerifyOtpEffect, HomeEffects]),
     StoreRouterConnectingModule.forRoot(),
     FontAwesomeModule,
+    MatGoogleMapsAutocompleteModule,
+    AgmCoreModule.forRoot({
+      apiKey: `${environment.googleApiKey}`,
+      libraries: [`${environment.googlePlaceLib}`],
+      language: `${environment.googleResponseLanguage}`,
+    }),
   ],
   providers: [
     BaseGuard,

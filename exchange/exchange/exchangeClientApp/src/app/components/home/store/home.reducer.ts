@@ -19,7 +19,11 @@ const reducer = createReducer(
       ...state,
       offersToExchange: offersForExchange,
     })
-  )
+  ),
+  on(HomeActions.SetSelectedPlaceAction, (state, { place }) => ({
+    ...state,
+    selectedPlace: place,
+  }))
 );
 
 export function homeReducer(state: IHomeState | undefined, action: Action) {

@@ -1,3 +1,4 @@
+import { PlaceModel } from './../../../Models/place.model';
 import { OfferRequestModel } from './../../../Models/RequestModels/offer-request.model';
 import { OfferResponseModel } from './../../../Models/response-models/offer-response.model';
 import { CarteGoryExchangeResponseModel } from './../../../Models/response-models/category-exchange-response.model';
@@ -10,8 +11,13 @@ export enum HomeActionEnum {
   GetOfferByCategory = '[Home action] get offer by category',
   GetOfferByCategorySuccess = '[Home action] get offer by category success',
   GetOfferByCategoryError = '[Home action] get offer by category errror',
+  SetSelectedPlace = '[Home action] set selected place',
 }
 
+export const SetSelectedPlaceAction = createAction(
+  HomeActionEnum.SetSelectedPlace,
+  props<{ place: PlaceModel }>()
+);
 export const GetOfferByCategorySuccessAction = createAction(
   HomeActionEnum.GetOfferByCategorySuccess,
   props<{ offersForExchange: OfferResponseModel[] }>()
