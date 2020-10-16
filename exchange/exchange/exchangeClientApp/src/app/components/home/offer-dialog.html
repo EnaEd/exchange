@@ -3,21 +3,31 @@
 <mat-dialog-content>
   <mat-form-field appearance="outline">
     <mat-label>Course Description</mat-label>
-    <textarea
-      matInput
-      placeholder="Course Description"
-      formControlName="description"
-    ></textarea>
+    <textarea matInput placeholder="Course Description"></textarea>
+    <!-- formControlName="description" -->
   </mat-form-field>
   <br />
 
-  <picture>
-    <source
-      media="(min-width:0px)"
-      srcset="https://material.angular.io/assets/img/examples/shiba2.jpg"
+  <div layout-margin layout-padding>
+    <!-- <input class="ng-hide" id="input-file-id" multiple type="file" />
+    <label
+      for="input-file-id"
+      class="mat-button mat-raised mat-primary"
+    ></label> -->
+    <button mat-button color="primary" (click)="Upload()">
+      <mat-icon>file_upload</mat-icon>
+      Upload image
+    </button>
+    <br />
+    <input
+      type="file"
+      id="fileUpload"
+      name="fileUpload"
+      multiple="multiple"
+      accept="{{accept}}"
+      style="display: none"
     />
-    <img mat-card-image src="" alt="Photo of a Shiba Inu" />
-  </picture>
+  </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
