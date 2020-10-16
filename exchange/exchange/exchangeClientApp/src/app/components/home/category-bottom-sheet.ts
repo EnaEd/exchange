@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { PlaceModel } from './../../Models/place.model';
 import { userSelector } from './../auth/store/auth.selectors';
 import { UserModel } from 'src/app/Models/user.model';
@@ -6,6 +7,7 @@ import { CarteGoryExchangeResponseModel } from './../../Models/response-models/c
 import {
   categorySelector,
   selectedCategorySelector,
+  selectedPlaceSelector,
 } from './store/home.selectors';
 import { IAppState } from './../../store/app.state';
 import { Store, select } from '@ngrx/store';
@@ -32,10 +34,24 @@ export class CategoryBottomSheet implements OnInit {
   public latitude: number;
   public longitude: number;
   public selectedAddress: PlaceResult;
+  public selectedCategory: CarteGoryExchangeResponseModel;
   user$ = this._store.pipe(select(userSelector));
 
   category$ = this._store.pipe(select(categorySelector));
   selectedCategory$ = this._store.pipe(select(selectedCategorySelector));
+
+  place$ = this._store.pipe(select(selectedPlaceSelector)).subscribe((data) => {
+    if (data) {
+      let model = new OfferRequestModel();
+      this.selectedCategory$.subscribe((data) => (model.categoryId = data.id));
+      model.city = data.city;
+      model.country = data.country;
+      this._store.dispatch(
+        HomeActions.GetOfferByCategoryAction({ requestForOffer: model })
+      );
+    }
+  });
+
   constructor(
     private _titleService: Title,
     private _bottomSheet: MatBottomSheetRef<CategoryBottomSheet>,
@@ -74,7 +90,6 @@ export class CategoryBottomSheet implements OnInit {
     ).long_name;
     this._store.dispatch(HomeActions.SetSelectedPlaceAction({ place }));
     this._bottomSheet.dismiss();
-    event.preventDefault();
   }
 
   onLocationSelected(location: Location) {

@@ -1,3 +1,4 @@
+import { MatCarouselModule } from '@ngbmodule/material-carousel';
 import { NgModule } from '@angular/core';
 import { A11yModule } from '@angular/cdk/a11y';
 import { ClipboardModule } from '@angular/cdk/clipboard';
@@ -42,9 +43,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   exports: [
+    MatDialogModule,
+    MatCarouselModule,
     A11yModule,
     ClipboardModule,
     CdkStepperModule,

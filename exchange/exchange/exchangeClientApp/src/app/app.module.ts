@@ -32,18 +32,20 @@ import { VerifyOTPCodeComponent } from './components/verify-otp-code/verify-otp-
 import { DiscussComponent } from './components/discuss/discuss.component';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { AgmCoreModule } from '@agm/core';
+import { OfferDialog } from './components/home/offer-dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadOfferComponent,
     AuthComponent,
-    HomeComponent,
     DashboardComponent,
     BaseComponent,
+    HomeComponent,
     VerifyOTPCodeComponent,
     DiscussComponent,
     CategoryBottomSheet,
+    OfferDialog,
   ],
   imports: [
     AngularMaterialModule,
@@ -77,5 +79,6 @@ import { AgmCoreModule } from '@agm/core';
     ExchangeService,
   ],
   bootstrap: [AppComponent],
+  entryComponents: [OfferDialog],
 })
 export class AppModule {}
