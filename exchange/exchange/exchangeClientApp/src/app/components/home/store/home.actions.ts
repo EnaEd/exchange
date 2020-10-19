@@ -1,3 +1,5 @@
+import { UploadOfferRequestModel } from './../../../Models/RequestModels/upload-offer-request.model';
+import { FileUploadModel } from './../../../Models/file-upload.model';
 import { PlaceModel } from './../../../Models/place.model';
 import { OfferRequestModel } from './../../../Models/RequestModels/offer-request.model';
 import { OfferResponseModel } from './../../../Models/response-models/offer-response.model';
@@ -12,8 +14,27 @@ export enum HomeActionEnum {
   GetOfferByCategorySuccess = '[Home action] get offer by category success',
   GetOfferByCategoryError = '[Home action] get offer by category errror',
   SetSelectedPlace = '[Home action] set selected place',
+  GetFileForUpload = '[Hom action] get file for upload',
+  ClearFileForUpload = '[Home action] clear file for upload',
+  UploadOfferForDiscuss = '[Home action] upload offer for discuss',
+  UploadOfferForDiscussSuccess = '[Home action] upload offer for discuss success',
 }
 
+export const UploadOfferForDiscussSuccessAction = createAction(
+  HomeActionEnum.UploadOfferForDiscussSuccess,
+  props<{ payload: string }>()
+);
+export const UploadOfferForDiscussAction = createAction(
+  HomeActionEnum.UploadOfferForDiscuss,
+  props<{ payload: UploadOfferRequestModel }>()
+);
+export const ClearFileForUploadAction = createAction(
+  HomeActionEnum.ClearFileForUpload
+);
+export const GetFileForUploadAction = createAction(
+  HomeActionEnum.GetFileForUpload,
+  props<{ payload: FileUploadModel }>()
+);
 export const SetSelectedPlaceAction = createAction(
   HomeActionEnum.SetSelectedPlace,
   props<{ place: PlaceModel }>()

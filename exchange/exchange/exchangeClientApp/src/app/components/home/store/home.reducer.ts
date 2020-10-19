@@ -23,6 +23,14 @@ const reducer = createReducer(
   on(HomeActions.SetSelectedPlaceAction, (state, { place }) => ({
     ...state,
     selectedPlace: place,
+  })),
+  on(HomeActions.GetFileForUploadAction, (state, { payload }) => ({
+    ...state,
+    fileForUpload: payload,
+  })),
+  on(HomeActions.ClearFileForUploadAction, (state) => ({
+    ...state,
+    fileForUpload: null,
   }))
 );
 

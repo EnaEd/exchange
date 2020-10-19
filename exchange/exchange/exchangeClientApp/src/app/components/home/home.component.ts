@@ -5,6 +5,7 @@ import {
   categorySelector,
   selectedCategorySelector,
   offersToExchangeSelector,
+  fileUploadSelector,
 } from './store/home.selectors';
 import { GetCategoryAction } from './store/home.actions';
 import { IAppState } from 'src/app/store/app.state';
@@ -24,6 +25,7 @@ import {
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  fileForUpload$ = this._store.pipe(select(fileUploadSelector));
   offers$ = this._store.pipe(select(offersToExchangeSelector));
   category$ = this._store.pipe(select(categorySelector));
   selectedCategory$ = this._store

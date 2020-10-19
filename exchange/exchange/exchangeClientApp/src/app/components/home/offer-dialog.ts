@@ -1,6 +1,12 @@
+import { IAppState } from './../../store/app.state';
 import { FileUploadModel } from './../../Models/file-upload.model';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import {
   HttpRequest,
@@ -10,6 +16,8 @@ import {
 } from '@angular/common/http';
 import { tap, last, catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as HomeActions from './store/home.actions';
 
 @Component({
   selector: 'offerDialog',
@@ -23,80 +31,56 @@ export class OfferDialog {
   @Input() target = 'https://storage.googleapis.com/exchangemedia/';
   @Input() accept = 'image/*';
   @Output() complete = new EventEmitter<string>();
-  private file: FileUploadModel;
+  public currentFile: FileUploadModel;
   constructor(
+    private _store: Store<IAppState>,
     private _dialogRef: MatDialogRef<OfferDialog>,
     private _http: HttpClient
   ) {}
   public form: FormGroup = new FormGroup({
-    description: new FormControl(''),
+    description: new FormControl('', Validators.required),
   });
 
   Close() {
+    this._store.dispatch(HomeActions.ClearFileForUploadAction());
     this._dialogRef.close();
   }
-  Save() {}
+  AddOffer() {
+    if (this.currentFile) {
+      const reader = new FileReader();
+      reader.readAsDataURL(this.currentFile.data);
+      reader.onload = () => {
+        console.log(reader.result);
+      };
+    }
+    //TODO create upload offer request model for send to server
+    //this._store.dispatch()
+  }
 
   Upload() {
     const fileUpload = document.getElementById(
       'fileUpload'
     ) as HTMLInputElement;
     fileUpload.onchange = () => {
-      for (let index = 0; index < fileUpload.files.length; index++) {
-        const file = fileUpload.files[index];
-        this.file = {
-          data: file,
-          state: 'in',
-          inProgress: false,
-          progress: 0,
-          canRetry: false,
-          canCancel: true,
-        };
-      }
-      //   this.uploadFile(this.file);
+      const file = fileUpload.files[fileUpload.files.length - 1];
+      this.currentFile = {
+        data: file,
+        state: 'in',
+        inProgress: false,
+        progress: 0,
+        canRetry: false,
+        canCancel: true,
+      };
+
+      this._store.dispatch(
+        HomeActions.GetFileForUploadAction({ payload: this.currentFile })
+      );
     };
     fileUpload.click();
   }
 
-  private uploadFile(file: FileUploadModel) {
-    const fd = new FormData();
-    fd.append(this.param, file.data);
-
-    const req = new HttpRequest('POST', this.target, fd, {
-      reportProgress: true,
-    });
-
-    file.inProgress = true;
-    file.sub = this._http
-      .request(req)
-      .pipe(
-        map((event) => {
-          switch (event.type) {
-            case HttpEventType.UploadProgress:
-              file.progress = Math.round((event.loaded * 100) / event.total);
-              break;
-            case HttpEventType.Response:
-              return event;
-          }
-        }),
-        tap((message) => {}),
-        last(),
-        catchError((error: HttpErrorResponse) => {
-          file.inProgress = false;
-          file.canRetry = true;
-          return of(`${file.data.name} upload failed.`);
-        })
-      )
-      .subscribe((event: any) => {
-        console.log(event);
-
-        // if (typeof event === 'object') {
-        //   //this.removeFileFromArray(file);
-        //   //this.complete.emit(event.body);
-        // }
-      });
-  }
-  private removeFileFromArray(file: FileUploadModel) {
-    this.file = null;
+  deleteFile() {
+    this.currentFile = null;
+    this._store.dispatch(HomeActions.ClearFileForUploadAction());
   }
 }
