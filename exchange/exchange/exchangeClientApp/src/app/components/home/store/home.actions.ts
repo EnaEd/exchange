@@ -1,3 +1,4 @@
+import { ChatRequestModel } from './../../../Models/RequestModels/chat-request.model';
 import { UploadOfferRequestModel } from './../../../Models/RequestModels/upload-offer-request.model';
 import { FileUploadModel } from './../../../Models/file-upload.model';
 import { PlaceModel } from './../../../Models/place.model';
@@ -5,6 +6,7 @@ import { OfferRequestModel } from './../../../Models/RequestModels/offer-request
 import { OfferResponseModel } from './../../../Models/response-models/offer-response.model';
 import { CarteGoryExchangeResponseModel } from './../../../Models/response-models/category-exchange-response.model';
 import { createAction, props } from '@ngrx/store';
+import { ChatModel } from 'src/app/Models/chat.model';
 export enum HomeActionEnum {
   GetCategory = '[Home action] Get category',
   GetCategorySuccess = '[Home action] Get category success',
@@ -18,8 +20,23 @@ export enum HomeActionEnum {
   ClearFileForUpload = '[Home action] clear file for upload',
   UploadOfferForDiscuss = '[Home action] upload offer for discuss',
   UploadOfferForDiscussSuccess = '[Home action] upload offer for discuss success',
+  SetSelectedOfferToExchange = '[Home action] set selected offer to exchange',
+  CreateDiscuss = '[Home action] create chat room',
+  CreateDiscussSuccess = '[Home action] create chat room success',
 }
 
+export const CreateDiscussSuccess = createAction(
+  HomeActionEnum.CreateDiscussSuccess,
+  props<{ model: ChatModel }>()
+);
+export const CreateDiscuss = createAction(
+  HomeActionEnum.CreateDiscuss,
+  props<{ model: ChatRequestModel }>()
+);
+export const SetSelectedOfferToExchangeAction = createAction(
+  HomeActionEnum.SetSelectedOfferToExchange,
+  props<{ selectedOffer: OfferResponseModel }>()
+);
 export const UploadOfferForDiscussSuccessAction = createAction(
   HomeActionEnum.UploadOfferForDiscussSuccess,
   props<{ payload: string }>()

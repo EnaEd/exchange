@@ -1,4 +1,3 @@
-import { state } from '@angular/animations';
 import { initialHomeState, IHomeState } from './home.state';
 import { createReducer, Action, on } from '@ngrx/store';
 import * as HomeActions from './home.actions';
@@ -31,7 +30,14 @@ const reducer = createReducer(
   on(HomeActions.ClearFileForUploadAction, (state) => ({
     ...state,
     fileForUpload: null,
-  }))
+  })),
+  on(
+    HomeActions.SetSelectedOfferToExchangeAction,
+    (state, { selectedOffer }) => ({
+      ...state,
+      selectedOfferToExchange: selectedOffer,
+    })
+  )
 );
 
 export function homeReducer(state: IHomeState | undefined, action: Action) {

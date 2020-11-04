@@ -36,6 +36,7 @@ namespace Exchange.Web.BusinessLogic.Services
 
         public async Task<ChatModel> CreateChatAsync(ChatRequestModel model)
         {
+            //TODO EE: test valid model
             var mappedModel = _mapper.Map<ChatEntity>(model);
 
             ChatEntity response = await _chatRepository.CreateAsync(mappedModel);

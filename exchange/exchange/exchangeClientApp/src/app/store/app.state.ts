@@ -1,4 +1,8 @@
 import {
+  IDiscussState,
+  initialDiscussState,
+} from './../components/discuss/store/discuss.state';
+import {
   IHomeState,
   initialHomeState,
 } from './../components/home/store/home.state';
@@ -29,12 +33,14 @@ export interface IAppState {
   verifyOtp: IVerifyOtpState;
   base: IBaseState;
   home: IHomeState;
+  discuss: IDiscussState;
 }
 export const initialAppState: IAppState = {
   auth: initialAuthState,
   verifyOtp: initialVerifyOtpState,
   base: initialBaseState,
   home: initialHomeState,
+  discuss: initialDiscussState,
 };
 export function getInitialAppState(): IAppState {
   return initialAppState;

@@ -9,6 +9,7 @@ import {
 import { IAppState, initialBaseState, IBaseState } from './app.state';
 import { routerReducer } from '@ngrx/router-store';
 import { homeReducer } from '../components/home/store/home.reducer';
+import { discussReducer } from '../components/discuss/store/discuss.reducer';
 import { authReducer } from '../components/auth/store/auth.reducer';
 import { verifyOtpReducer } from '../components/verify-otp-code/store/verify-otp.reducers';
 import { AuthActionEnum } from '../components/auth/store/auth.actions';
@@ -45,4 +46,5 @@ export const appReducers: ActionReducerMap<IAppState, any> = {
   verifyOtp: verifyOtpReducer,
   base: baseReducer,
   home: homeReducer,
+  discuss: discussReducer,
 };

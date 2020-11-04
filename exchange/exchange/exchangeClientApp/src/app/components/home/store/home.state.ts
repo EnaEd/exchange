@@ -6,6 +6,7 @@ export interface IHomeState {
   category: CarteGoryExchangeResponseModel[];
   selectedCategory: CarteGoryExchangeResponseModel;
   offersToExchange: OfferResponseModel[];
+  selectedOfferToExchange: OfferResponseModel;
   selectedPlace: PlaceModel;
   fileForUpload: FileUploadModel;
 }
@@ -15,4 +16,5 @@ export const initialHomeState: IHomeState = {
   offersToExchange: null,
   selectedPlace: null,
   fileForUpload: null,
+  selectedOfferToExchange: null,
 };

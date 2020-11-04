@@ -1,3 +1,5 @@
+import { DiscussService } from './services/discuss.service';
+import { DiscussEffects } from './components/discuss/store/discuss.effects';
 import { CategoryBottomSheet } from './components/home/category-bottom-sheet';
 import { HomeEffects } from './components/home/store/home.effects';
 import { ExchangeService } from './services/exchange.service';
@@ -61,7 +63,12 @@ import { OfferDialog } from './components/home/offer-dialog';
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([AuthEffects, VerifyOtpEffect, HomeEffects]),
+    EffectsModule.forRoot([
+      AuthEffects,
+      VerifyOtpEffect,
+      HomeEffects,
+      DiscussEffects,
+    ]),
     StoreRouterConnectingModule.forRoot(),
     FontAwesomeModule,
     MatGoogleMapsAutocompleteModule,
@@ -77,6 +84,7 @@ import { OfferDialog } from './components/home/offer-dialog';
     HttpService,
     VerifyCodeGuard,
     ExchangeService,
+    DiscussService,
   ],
   bootstrap: [AppComponent],
   entryComponents: [OfferDialog],
