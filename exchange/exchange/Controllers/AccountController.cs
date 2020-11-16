@@ -28,7 +28,7 @@ namespace Exchange.Web.Presentation.Controllers
         [HttpPost(Constant.Route.CHECK_USER_EXISTS_ROUTE)]
         public async Task<IActionResult> CheckExistsUser([FromBody] PhoneRequestModel requestModel)
         {
-            var result = await _accountService.IsUserExistAsync(requestModel.PhoneNumber);
+            var result = await _accountService.IsUserExistAsync(requestModel.PhoneNumber,requestModel.CountryCode);
             return Ok(result);
         }
 

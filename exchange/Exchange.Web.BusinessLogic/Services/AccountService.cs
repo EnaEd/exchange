@@ -21,9 +21,9 @@ namespace Exchange.Web.BusinessLogic.Services
             _authyService = authyService;
         }
 
-        public async Task<UserModel> IsUserExistAsync(string phoneNumber)
+        public async Task<UserModel> IsUserExistAsync(string phoneNumber,string countryCode)
         {
-            var result = await _userService.IsUserExists(phoneNumber);
+            var result = await _userService.IsUserExists(phoneNumber,countryCode);
             if (result is null)
             {
                 return new UserModel
@@ -43,7 +43,7 @@ namespace Exchange.Web.BusinessLogic.Services
 
         public async Task<AuthyBaseModel> SignInUser(PhoneRequestModel model)
         {
-            var result = await IsUserExistAsync(model.PhoneNumber);
+            var result = await IsUserExistAsync(model.PhoneNumber,model.CountryCode);
             if (result is null)
             {
                 throw new UserException(new List<string> { Constant.ErrorInfo.USER_NOT_FOUND }, Shared.Enums.Enum.ErrorCode.NotFound);
@@ -76,7 +76,7 @@ namespace Exchange.Web.BusinessLogic.Services
 
         public async Task<UserModel> UpdateUserIfNeeded(UserModel model)
         {
-            var user = await _userService.GetOneAsync(model.Phone);
+            var user = await _userService.GetOneAsync(model.Phone,model.CountryCode);
             if (string.IsNullOrWhiteSpace(user.OneSignalId) ||
                 !user.OneSignalId.Equals(model.OneSignalId))
             {
@@ -93,6 +93,18 @@ namespace Exchange.Web.BusinessLogic.Services
                 throw new UserException(new List<string> { Constant.ErrorInfo.AUTHY_FAIL_SEND_OTP }, Shared.Enums.Enum.ErrorCode.BadRequest);
             }
             AuthyVerifyCodeResponseModel result = await _authyService.VerifyOTPCodeAsync(model.AuthyId, model.Token);
+
+            if (!result.Success)
+            {
+                throw new UserException(new List<string> { Constant.ErrorInfo.AUTHY_FAIL_VERIFY_OTP_CODE }, Shared.Enums.Enum.ErrorCode.BadRequest);
+            }
+
+            //need return user
+            result.User = await _userService.GetOneAsync(model.Phone,model.CountryCode);
+            if (result.User is null)
+            {
+                throw new UserException(new List<string> { Constant.ErrorInfo.USER_NOT_FOUND }, Shared.Enums.Enum.ErrorCode.BadRequest);
+            }
             return result;
         }
     }

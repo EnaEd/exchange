@@ -9,6 +9,7 @@ namespace Exchange.Web.DataAccess.Entities
         public string LastName { get; set; }
         public string Phone { get; set; }
         public string Country { get; set; }
+        public string CountryCode { get; set; }
         public string City { get; set; }
         public string OneSignalId { get; set; }
         public ICollection<PhotoEntity> Photos { get; set; } = new List<PhotoEntity>();

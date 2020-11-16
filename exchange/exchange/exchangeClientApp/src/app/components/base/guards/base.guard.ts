@@ -15,10 +15,10 @@ export class BaseGuard implements CanActivate {
 
   canActivate(): boolean {
     // TODO: Uncomment after complete app
-    // if (this.isLogged == false) {
-    //   this.router.navigateByUrl('/auth');
-    //   return false;
-    // }
+    if (this.isLogged == false) {
+      this.router.navigateByUrl('/auth');
+      return false;
+    }
     return true;
   }
 }

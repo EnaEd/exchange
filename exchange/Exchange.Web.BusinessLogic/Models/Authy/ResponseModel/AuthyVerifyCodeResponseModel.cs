@@ -4,5 +4,6 @@
     {
         public string Token { get; set; }
         public DeviceResponseModel Device { get; set; }
+        public UserModel User { get; set; }
     }
 }

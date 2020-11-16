@@ -40,7 +40,7 @@ namespace Exchange.Web.BusinessLogic.Services
 
         public async Task UploadOfferAsync(OfferRequestModel model)
         {
-            var res = await _userService.GetOneAsync(model.OfferOwner.Phone);
+            var res = await _userService.GetOneAsync(model.OfferOwner.Phone,model.OfferOwner.CountryCode);
             if (res is null)
             {
                 throw new UserException(new List<string> { Constant.ErrorInfo.USER_NOT_FOUND }, Enum.ErrorCode.BadRequest);

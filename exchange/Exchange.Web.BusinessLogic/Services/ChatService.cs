@@ -56,6 +56,8 @@ namespace Exchange.Web.BusinessLogic.Services
                 throw new UserException(new List<string> { Constant.ErrorInfo.FAIL_CREATE_CHATPARTY }, Enum.ErrorCode.BadRequest);
             }
 
+
+
             return _mapper.Map<ChatModel>(response);
 
         }
@@ -73,6 +75,7 @@ namespace Exchange.Web.BusinessLogic.Services
 
         public async Task<IEnumerable<ChatModel>> GetChatsByUserAsync(long userId)
         {
+            //TODO EE: create by on query
             var chatParties = await _chatPartyRepository.GetAllByUserIdAsync(userId);
             var chatIds = chatParties.Select(item => item.ChatId).ToList();
             var chats = await _chatRepository.GetAllAsync();

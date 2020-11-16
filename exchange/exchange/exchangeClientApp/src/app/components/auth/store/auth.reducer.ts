@@ -10,6 +10,8 @@ import {
   LoggedSuccessAction,
   SignOutAction,
   AuthActionEnum,
+  SaveUserPhoneAction,
+  SignInSuccessAndVerifed,
 } from './auth.actions';
 import { createReducer, on, Action } from '@ngrx/store';
 import { initialAuthState, IAuthState } from './auth.state';
@@ -48,6 +50,14 @@ const reducer = createReducer(
   on(LoggedSuccessAction, (state) => ({
     ...state,
     isAuthenticate: true,
+  })),
+  on(SaveUserPhoneAction, (state, { phone, countryCode }) => ({
+    ...state,
+    user: { ...state.user, countryCode, phone },
+  })),
+  on(SignInSuccessAndVerifed, (state, { user }) => ({
+    ...state,
+    user: user,
   }))
   // on(SignOutAction, (state, { payload }) => ({
   //   ...state,

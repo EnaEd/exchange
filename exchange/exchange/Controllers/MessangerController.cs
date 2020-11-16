@@ -2,6 +2,7 @@
 using Exchange.Web.BusinessLogic.Services.Interfaces;
 using Exchange.Web.Shared.Constants;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Exchange.Web.Presentation.Controllers
@@ -22,7 +23,7 @@ namespace Exchange.Web.Presentation.Controllers
         public async Task<IActionResult> CreateConversation([FromBody] ChatRequestModel model)
         {
             var response = await _chatService.CreateChatAsync(model);
-
+            await _chatHubService.SendOneToOne(model);
             return Ok(response);
         }
 
@@ -30,13 +31,14 @@ namespace Exchange.Web.Presentation.Controllers
         public async Task<IActionResult> CreateMessage([FromBody] ChatMessageModel model)
         {
             var response = await _chatService.CreateMessageAsync(model);
+
             return Ok(response);
         }
 
         [HttpPost(Constant.Route.MESSANGER_GET_CHATS)]
-        public async Task<IActionResult> GetChats([FromBody] string userId)
+        public async Task<IActionResult> GetChats([FromBody] long userId)
         {
-            var response = await _chatService.GetChatsByUserAsync(long.Parse(userId));
+            var response = await _chatService.GetChatsByUserAsync(userId);
             return Ok(response);
         }
 

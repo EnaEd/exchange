@@ -1,3 +1,5 @@
+import { SignalRService } from './../../services/signalR.service';
+import { Router } from '@angular/router';
 import { userSelector } from './../auth/store/auth.selectors';
 import { UserModel } from './../../Models/user.model';
 import { OfferResponseModel } from './../../Models/response-models/offer-response.model';
@@ -40,10 +42,14 @@ export class HomeComponent implements OnInit {
     .pipe(select(selectedCategorySelector))
     .subscribe((data) => {});
   constructor(
+    private _hubService: SignalRService,
     private dialog: MatDialog,
     private _store: Store<IAppState>,
-    private _bottomSheet: MatBottomSheet
-  ) {}
+    private _bottomSheet: MatBottomSheet,
+    private _router: Router
+  ) {
+    console.log('in construct');
+  }
 
   ngOnInit(): void {}
 
@@ -64,12 +70,16 @@ export class HomeComponent implements OnInit {
       offer.description.length > 10
         ? `${offer.description.substring(0, 10)}...`
         : `${offer.description}`;
+
     //TODO EE:delete this after test
     requestModel.createrId = 22;
     requestModel.prticipantIds = [22, 2];
+
     //TODO add this data after test
     // requestModel.createrId = this._user.id;
     //requestModel.prticipantIds = [this._user.id, offer.user.id];
+
     this._store.dispatch(HomeActions.CreateDiscuss({ model: requestModel }));
+    this._router.navigateByUrl('/discuss');
   }
 }

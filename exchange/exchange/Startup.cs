@@ -49,7 +49,9 @@ namespace Exchange.Web.Presentation
             c.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "My Api V1"));
 
             app.UseRouting();
-            app.UseCors(option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:4200"));
+
+            app.UseHttpsRedirection();
 
             app.UseEndpoints(endpoints =>
             {

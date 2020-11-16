@@ -1,3 +1,4 @@
+import { SignalRService } from './services/signalR.service';
 import { DiscussService } from './services/discuss.service';
 import { DiscussEffects } from './components/discuss/store/discuss.effects';
 import { CategoryBottomSheet } from './components/home/category-bottom-sheet';
@@ -85,6 +86,7 @@ import { OfferDialog } from './components/home/offer-dialog';
     VerifyCodeGuard,
     ExchangeService,
     DiscussService,
+    SignalRService,
   ],
   bootstrap: [AppComponent],
   entryComponents: [OfferDialog],

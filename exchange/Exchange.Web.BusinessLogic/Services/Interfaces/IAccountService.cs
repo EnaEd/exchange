@@ -9,7 +9,7 @@ namespace Exchange.Web.BusinessLogic.Services.Interfaces
     public interface IAccountService
     {
         public Task<UserModel> RegistrationAsync(UserModel model);
-        public Task<UserModel> IsUserExistAsync(string phoneNumber);
+        public Task<UserModel> IsUserExistAsync(string phoneNumber,string countryCode);
         public Task<UserModel> UpdateUserIfNeeded(UserModel model);
         public Task<AuthyBaseModel> SignInUser(PhoneRequestModel model);
         public Task<AuthyVerifyCodeResponseModel> VerifyOtpCodeAsync(VerifyCodeRequestModel model);

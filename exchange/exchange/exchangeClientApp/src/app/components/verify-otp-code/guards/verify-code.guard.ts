@@ -30,10 +30,10 @@ export class VerifyCodeGuard implements CanActivate {
     }
     //TODO EE:uncomment after logic complite
 
-    // this._toaster.warning('code was not send');
-    // this._router.navigateByUrl('/auth');
-    // return false;
-    console.log('in guard check otp');
-    return true;
+    this._toaster.warning('code was not send');
+    this._router.navigateByUrl('/auth');
+    return false;
+    // console.log('in guard check otp');
+    // return true;
   }
 }

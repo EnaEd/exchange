@@ -1,6 +1,7 @@
+import { UserModel } from './../../Models/user.model';
 import { isVerifiedSelector } from './store/verify-otp.selectors';
 import { erorrsSelector } from 'src/app/store/app.selector';
-import { authyIdSelector } from './../auth/store/auth.selectors';
+import { authyIdSelector, userSelector } from './../auth/store/auth.selectors';
 import { IAppState } from 'src/app/store/app.state';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -9,6 +10,7 @@ import { Store, select } from '@ngrx/store';
 import * as VerifyActions from './store/verify-otp.actions';
 import { VerifyOtpCodeRequestModel } from 'src/app/Models/RequestModels/verify-otp-code-request.model';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-verify-otp-code',
@@ -33,9 +35,9 @@ export class VerifyOTPCodeComponent implements OnInit {
   isVerified$ = this._store
     .pipe(select(isVerifiedSelector))
     .subscribe((data) => {
-      debugger;
       if (data) {
         this._router.navigateByUrl('/');
+        debugger;
       }
     });
   constructor(
@@ -46,9 +48,14 @@ export class VerifyOTPCodeComponent implements OnInit {
 
   ngOnInit(): void {}
   onSubmit(): void {
+    let user: UserModel;
+    debugger;
+    this._store.pipe(select(userSelector)).subscribe((data) => (user = data));
     let model = new VerifyOtpCodeRequestModel();
     model.authyId = this._authyId;
     model.token = this.otpCode.get('code').value;
+    model.phone = user.phone;
+    model.countryCode = user.countryCode;
     this._store.dispatch(VerifyActions.SendVerifyOtpCodeAction({ model }));
   }
 }

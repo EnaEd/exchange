@@ -1,1 +1,7 @@
-<p>discuss works!</p>
+<mat-nav-list>
+  <mat-list-item *ngFor="let room of chatRooms$ | async">
+    <button mat-list-item (click)="ToDiscuss()">
+      {{ room?.chatName }} {{ room.id }}
+    </button>
+  </mat-list-item>
+</mat-nav-list>

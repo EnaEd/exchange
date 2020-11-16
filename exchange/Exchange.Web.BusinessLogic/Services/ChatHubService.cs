@@ -1,5 +1,8 @@
 ﻿using Exchange.Web.BusinessLogic.Helpers;
+using Exchange.Web.BusinessLogic.Models;
 using Exchange.Web.BusinessLogic.Services.Interfaces;
+using Exchange.Web.DataAccess.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -10,9 +13,16 @@ namespace Exchange.Web.BusinessLogic.Services
 {
     public class ChatHubService : Hub, IChatHubService
     {
+        private IHubContext<ChatHubService> _context;
         private readonly static ConnectionMappingHelper<string> _connections =
            new ConnectionMappingHelper<string>();
+        private readonly UserManager<UserEntity> _userManager;
 
+        public ChatHubService(UserManager<UserEntity> userManager, IHubContext<ChatHubService> context)
+        {
+            _userManager = userManager;
+            _context = context;
+        }
 
         public override Task OnConnectedAsync()
         {
@@ -35,14 +45,15 @@ namespace Exchange.Web.BusinessLogic.Services
         {
             await Clients.All.SendAsync("Receive", userName, message);
         }
-        public async Task SendOneToOne(string callerIdentityEmail, string opponentIdentityEmail, string message)
+        public async Task SendOneToOne(ChatRequestModel model)
         {
+            var caller =await  _userManager.FindByIdAsync(model.PrticipantIds.First().ToString());
+            var opponent = await _userManager.FindByIdAsync(model.PrticipantIds.Last().ToString());
             //need map if user has more one connection
             List<string> connectionIds = new List<string>();
-            connectionIds = _connections.GetConnections(callerIdentityEmail).ToList();
-            connectionIds.AddRange(_connections.GetConnections(opponentIdentityEmail));
-
-            await Clients.Clients(connectionIds).SendAsync("Receive");
+            connectionIds = _connections.GetConnections(caller.Email).ToList();
+            connectionIds.Add(_connections.GetConnections(opponent.Email).FirstOrDefault());
+            await _context.Clients.Clients(connectionIds).SendAsync("Receive");
         }
 
     }

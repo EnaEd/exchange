@@ -31,7 +31,7 @@ namespace Exchange.Web.Presentation.Controllers
         [HttpPost(Constant.Route.GET_USER_ROUTE)]
         public async Task<IActionResult> GetUserByPhone([FromBody] PhoneRequestModel model)
         {
-            return Ok(await _userService.GetOneAsync(model.PhoneNumber));
+            return Ok(await _userService.GetOneAsync(model.PhoneNumber,model.CountryCode));
         }
 
     }

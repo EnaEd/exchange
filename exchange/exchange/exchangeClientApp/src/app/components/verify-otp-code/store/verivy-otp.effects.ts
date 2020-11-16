@@ -45,6 +45,10 @@ export class VerifyOtpEffect {
                   VerifyActions.VerifyOptCodeActionEnum
                     .SendVerifyOtpCodeSuccess,
                 model: data,
+              },
+              {
+                type: AuthActions.AuthActionEnum.SignInSuccessAndVerifed,
+                user: data.user,
               }
             )
           ),

@@ -48,6 +48,7 @@ export class AuthComponent implements OnInit {
 
   public phoneForm: FormGroup = new FormGroup({
     phone: new FormControl(''),
+    code: new FormControl(''),
   });
 
   constructor(
@@ -61,10 +62,9 @@ export class AuthComponent implements OnInit {
     console.log(this.phoneForm.get('phone').value);
     this.store.dispatch(
       AuthActions.SignInAction({
-        //todo add separate method to phone string
         model: {
-          countryCode: '+380',
-          phoneNumber: '936683441',
+          countryCode: this.phoneForm.get('code').value,
+          phoneNumber: this.phoneForm.get('phone').value,
         }, //this.phoneForm.get('phone').value,
       })
     );

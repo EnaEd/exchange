@@ -4,5 +4,7 @@
     {
         public int AuthyId { get; set; }
         public string Token { get; set; }
+        public string Phone { get; set; }
+        public string CountryCode { get; set; }
     }
 }
