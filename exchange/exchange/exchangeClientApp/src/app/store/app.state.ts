@@ -1,4 +1,8 @@
 import {
+  IUploadOfferState,
+  initialUploadOfferState,
+} from './../components/upload-offer/store/upload-offer.state';
+import {
   IDiscussState,
   initialDiscussState,
 } from './../components/discuss/store/discuss.state';
@@ -34,6 +38,7 @@ export interface IAppState {
   base: IBaseState;
   home: IHomeState;
   discuss: IDiscussState;
+  uploadOfffer: IUploadOfferState;
 }
 export const initialAppState: IAppState = {
   auth: initialAuthState,
@@ -41,6 +46,7 @@ export const initialAppState: IAppState = {
   base: initialBaseState,
   home: initialHomeState,
   discuss: initialDiscussState,
+  uploadOfffer: initialUploadOfferState,
 };
 export function getInitialAppState(): IAppState {
   return initialAppState;

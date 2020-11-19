@@ -7,7 +7,9 @@ export interface IAuthState {
   descriptionEvent: string;
   eventSuccess: boolean;
   authyId: number;
+  accessToken: string;
 }
+
 export const initialAuthState: IAuthState = {
   user: null,
   isAuthenticate: false,
@@ -15,4 +17,5 @@ export const initialAuthState: IAuthState = {
   descriptionEvent: null,
   eventSuccess: false,
   authyId: null,
+  accessToken: null,
 };

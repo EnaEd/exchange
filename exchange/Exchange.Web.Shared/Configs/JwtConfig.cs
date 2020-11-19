@@ -1,4 +1,8 @@
-﻿namespace Exchange.Web.Shared.Configs
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Exchange.Web.Shared.Configs
 {
     public class JwtConfig
     {

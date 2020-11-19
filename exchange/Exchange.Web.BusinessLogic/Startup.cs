@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Exchange.Web.BusinessLogic.Helpers.Interfaces;
 using Exchange.Web.BusinessLogic.MapperProfiles;
 using Exchange.Web.BusinessLogic.Services.Interfaces;
 using Microsoft.Extensions.Configuration;

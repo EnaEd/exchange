@@ -2,10 +2,12 @@
 using Exchange.Web.DataAccess.Entities;
 using Exchange.Web.DataAccess.Repositories.Interfaces;
 using Exchange.Web.Shared.Configs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Scrutor;
 
 namespace Exchange.Web.DataAccess
@@ -23,7 +25,9 @@ namespace Exchange.Web.DataAccess
                .AddDefaultTokenProviders()
                .AddEntityFrameworkStores<AppContextDb>();
 
-            services.AddAuthentication().AddIdentityCookies();
+           
+
+
 
 
             services.Scan(scan => scan

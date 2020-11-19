@@ -1,6 +1,6 @@
 import { SignalRService } from './../../services/signalR.service';
 import { Router } from '@angular/router';
-import { userSelector } from './../auth/store/auth.selectors';
+import { userSelector, tokenSelector } from './../auth/store/auth.selectors';
 import { UserModel } from './../../Models/user.model';
 import { OfferResponseModel } from './../../Models/response-models/offer-response.model';
 import { OfferDialog } from './offer-dialog';
@@ -14,7 +14,7 @@ import {
 } from './store/home.selectors';
 import * as HomeActions from './store/home.actions';
 import { IAppState } from 'src/app/store/app.state';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import {
@@ -24,6 +24,7 @@ import {
   MatDialogConfig,
 } from '@angular/material/dialog';
 import { ChatRequestModel } from 'src/app/Models/RequestModels/chat-request.model';
+import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 
 @Component({
   selector: 'app-home',
@@ -41,7 +42,15 @@ export class HomeComponent implements OnInit {
   selectedCategory$ = this._store
     .pipe(select(selectedCategorySelector))
     .subscribe((data) => {});
+
+  token$ = this._store.pipe(select(tokenSelector)).subscribe((data) => {
+    debugger;
+    if (data) {
+      this._storage.set('accessToken', data);
+    }
+  });
   constructor(
+    @Inject(LOCAL_STORAGE) private _storage: StorageService,
     private _hubService: SignalRService,
     private dialog: MatDialog,
     private _store: Store<IAppState>,

@@ -33,14 +33,14 @@ namespace Exchange.Web.BusinessLogic.Helpers
             {
                 throw new Exception();//TODO add custom exception
             }
-            var claims = new List<Claim>
+                var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
                 };
-            ClaimsIdentity claimsIdentity =
-            new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                ClaimsIdentity.DefaultRoleClaimType);
-            return claimsIdentity;
+                ClaimsIdentity claimsIdentity =
+                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
+                    ClaimsIdentity.DefaultRoleClaimType);
+                return claimsIdentity;
         }
 
         public SymmetricSecurityKey GetSymmetricSecurityKey()
@@ -53,7 +53,7 @@ namespace Exchange.Web.BusinessLogic.Helpers
             var identity = await GetIdentityAsync(model.Email);
 
             var now = DateTime.UtcNow;
-
+            
             var jwt = new JwtSecurityToken(
                     issuer: _configuration[$"{nameof(JwtConfig)}:{nameof(JwtConfig.Issuer)}"],
                     audience: _configuration[$"{nameof(JwtConfig)}:{nameof(JwtConfig.Audience)}"],
@@ -63,7 +63,7 @@ namespace Exchange.Web.BusinessLogic.Helpers
                     signingCredentials: new SigningCredentials(GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-
+           
             return encodedJwt;
         }
     }

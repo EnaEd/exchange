@@ -13,6 +13,7 @@ import { discussReducer } from '../components/discuss/store/discuss.reducer';
 import { authReducer } from '../components/auth/store/auth.reducer';
 import { verifyOtpReducer } from '../components/verify-otp-code/store/verify-otp.reducers';
 import { AuthActionEnum } from '../components/auth/store/auth.actions';
+import { uploadReducer } from '../components/upload-offer/store/upload-offer.reducer';
 
 const _reducer = createReducer(
   initialBaseState,
@@ -47,4 +48,5 @@ export const appReducers: ActionReducerMap<IAppState, any> = {
   base: baseReducer,
   home: homeReducer,
   discuss: discussReducer,
+  uploadOfffer: uploadReducer,
 };
