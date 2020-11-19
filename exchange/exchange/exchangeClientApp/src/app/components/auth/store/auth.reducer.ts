@@ -1,5 +1,4 @@
 import { auth } from './../../../store/app.selector';
-import { state } from '@angular/animations';
 import {
   CheckIsUserExistSuccessAction,
   SignInSuccessAction,
@@ -12,6 +11,7 @@ import {
   AuthActionEnum,
   SaveUserPhoneAction,
   SignInSuccessAndVerifed,
+  SignInGenerateTokenSuccessAction,
 } from './auth.actions';
 import { createReducer, on, Action } from '@ngrx/store';
 import { initialAuthState, IAuthState } from './auth.state';
@@ -58,6 +58,10 @@ const reducer = createReducer(
   on(SignInSuccessAndVerifed, (state, { user }) => ({
     ...state,
     user: user,
+  })),
+  on(SignInGenerateTokenSuccessAction, (state, { token }) => ({
+    ...state,
+    accessToken: token,
   }))
   // on(SignOutAction, (state, { payload }) => ({
   //   ...state,

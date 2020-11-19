@@ -49,6 +49,10 @@ export class VerifyOtpEffect {
               {
                 type: AuthActions.AuthActionEnum.SignInSuccessAndVerifed,
                 user: data.user,
+              },
+              {
+                type: AuthActions.AuthActionEnum.SignInGenerateTokenSuccess,
+                token: data.accessToken,
               }
             )
           ),

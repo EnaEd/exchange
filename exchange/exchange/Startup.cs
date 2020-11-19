@@ -1,11 +1,15 @@
-﻿using Exchange.Web.BusinessLogic.Services;
+﻿using Exchange.Web.BusinessLogic.Helpers.Interfaces;
+using Exchange.Web.BusinessLogic.Services;
 using Exchange.Web.Presentation.Extensions;
+using Exchange.Web.Shared.Configs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace Exchange.Web.Presentation
@@ -22,6 +26,24 @@ namespace Exchange.Web.Presentation
         public void ConfigureServices(IServiceCollection services)
         {
             BusinessLogic.Startup.Init(services, Configuration);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)//.AddIdentityCookies();
+               .AddJwtBearer(options =>
+               {
+                   options.RequireHttpsMetadata = false;
+                   options.TokenValidationParameters = new TokenValidationParameters
+                   {
+                       ValidateIssuer = true,
+                       ValidIssuer = Configuration[$"{nameof(JwtConfig)}:{nameof(JwtConfig.Issuer)}"],
+                       ValidateAudience = true,
+                       ValidAudience = Configuration[$"{nameof(JwtConfig)}:{nameof(JwtConfig.Audience)}"],
+                       ValidateLifetime = true,
+                       IssuerSigningKey = services.BuildServiceProvider().GetRequiredService<IJWTProvider>().GetSymmetricSecurityKey(),
+                   }
+
+               }
+               )
+
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddSignalR();

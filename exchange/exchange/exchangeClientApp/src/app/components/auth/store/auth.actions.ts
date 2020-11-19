@@ -23,8 +23,13 @@ export enum AuthActionEnum {
   SendSMSCode = '[Auth] send sms code',
   SendSMSCodeSuccess = '[Auth] send sms code success',
   RequestsSMSCodeSuccessfull = '[Auth] request sms code successfull',
+  SignInGenerateTokenSuccess = '[Auth] save access token ',
 }
 
+export const SignInGenerateTokenSuccessAction = createAction(
+  AuthActionEnum.SignInGenerateTokenSuccess,
+  props<{ token: string }>()
+);
 export const SignInSuccessAndVerifed = createAction(
   AuthActionEnum.SignInSuccessAndVerifed,
   props<{ user: UserModel }>()

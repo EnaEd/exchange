@@ -9,6 +9,12 @@ const isAuthenticate = (state: IAppState) => state.auth;
 const isUserExists = (state: IAppState) => state.auth;
 const error = (state: IAppState) => state.errors;
 const authyId = (state: IAppState) => state.auth;
+const accessToken = (state: IAppState) => state.auth;
+
+export const tokenSelector = createSelector(
+  accessToken,
+  (state) => state.accessToken
+);
 
 export const isUserExistsSelector = createSelector(
   isUserExists,

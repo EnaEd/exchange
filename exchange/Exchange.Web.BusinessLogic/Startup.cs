@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Exchange.Web.BusinessLogic.Helpers.Interfaces;
 using Exchange.Web.BusinessLogic.MapperProfiles;
 using Exchange.Web.BusinessLogic.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +32,14 @@ namespace Exchange.Web.BusinessLogic
 
             services.Scan(scan => scan
           .FromAssemblyOf<IUserService>()
+          .AddClasses()
+          .UsingRegistrationStrategy(RegistrationStrategy.Skip)
+          .AsMatchingInterface()
+          .AsImplementedInterfaces()//if not match interface like Interface<T>
+          .WithTransientLifetime());
+
+            services.Scan(scan => scan
+          .FromAssemblyOf<IJWTProvider>()
           .AddClasses()
           .UsingRegistrationStrategy(RegistrationStrategy.Skip)
           .AsMatchingInterface()
