@@ -36,6 +36,16 @@ namespace Exchange.Web.BusinessLogic
           .AsMatchingInterface()
           .AsImplementedInterfaces()//if not match interface like Interface<T>
           .WithTransientLifetime());
+
+
+
+            //  services.Scan(scan => scan
+            //.FromAssemblyOf<IJwtProvider>()
+            //.AddClasses()
+            //.UsingRegistrationStrategy(RegistrationStrategy.Skip)
+            //.AsMatchingInterface()
+            //.AsImplementedInterfaces()//if not match interface like Interface<T>
+            //.WithTransientLifetime());
         }
     }
 }

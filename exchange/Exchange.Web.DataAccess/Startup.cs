@@ -34,7 +34,7 @@ namespace Exchange.Web.DataAccess
            .AsImplementedInterfaces()//if not math interface like Interface<T>
            .WithTransientLifetime());
 
-            Initializer.DbInitializer.InitDb(services.BuildServiceProvider().GetRequiredService<IUserRepository<UserEntity>>(), configuration);
+            //Initializer.DbInitializer.InitDb(services.BuildServiceProvider().GetRequiredService<IUserRepository<UserEntity>>(), configuration);
         }
     }
 }

@@ -26,6 +26,8 @@ namespace Exchange.Web.BusinessLogic.Services
 
         public override Task OnConnectedAsync()
         {
+            var test = Context.GetHttpContext();
+            var test1 = test.Request.Cookies;
             string name = Context.User.Identity.Name;
             _connections.Add(name, Context.ConnectionId);
 
@@ -47,7 +49,7 @@ namespace Exchange.Web.BusinessLogic.Services
         }
         public async Task SendOneToOne(ChatRequestModel model)
         {
-            var caller =await  _userManager.FindByIdAsync(model.PrticipantIds.First().ToString());
+            var caller = await _userManager.FindByIdAsync(model.PrticipantIds.First().ToString());
             var opponent = await _userManager.FindByIdAsync(model.PrticipantIds.Last().ToString());
             //need map if user has more one connection
             List<string> connectionIds = new List<string>();

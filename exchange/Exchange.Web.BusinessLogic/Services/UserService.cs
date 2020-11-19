@@ -39,9 +39,9 @@ namespace Exchange.Web.BusinessLogic.Services
             return _mapper.Map<IEnumerable<UserModel>>(await _userRepository.GetAllAsync());
         }
 
-        public async Task<UserModel> GetOneAsync(string phoneNumber,string countryCode)
+        public async Task<UserModel> GetOneAsync(string phoneNumber, string countryCode)
         {
-            return _mapper.Map<UserModel>(await _userRepository.GetOneByPhoneNumberAsync(phoneNumber,countryCode));
+            return _mapper.Map<UserModel>(await _userRepository.GetOneByPhoneNumberAsync(phoneNumber, countryCode));
         }
 
         public async Task<UserModel> GetOneAsync(long id)
@@ -49,9 +49,9 @@ namespace Exchange.Web.BusinessLogic.Services
             return _mapper.Map<UserModel>(await _userRepository.GetOneByIdAsync(id));
         }
 
-        public async Task<UserModel> IsUserExists(string phoneNumber,string countryCode)
+        public async Task<UserModel> IsUserExists(string phoneNumber, string countryCode)
         {
-            var user = await _userRepository.GetOneByPhoneNumberAsync(phoneNumber,countryCode);
+            var user = await _userRepository.GetOneByPhoneNumberAsync(phoneNumber, countryCode);
             if (user is not null)
             {
                 var userModel = _mapper.Map<UserModel>(user);

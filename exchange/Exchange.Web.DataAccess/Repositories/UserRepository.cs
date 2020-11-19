@@ -57,9 +57,9 @@ namespace Exchange.Web.DataAccess.Repositories
             return await _userManager.FindByIdAsync(id.ToString());
         }
 
-        public async Task<UserEntity> GetOneByPhoneNumberAsync(string phoneNumber,string countryCode)
+        public async Task<UserEntity> GetOneByPhoneNumberAsync(string phoneNumber, string countryCode)
         {
-            return await _userManager.Users.FirstOrDefaultAsync(x => x.Phone == phoneNumber && x.CountryCode==countryCode);
+            return await _userManager.Users.FirstOrDefaultAsync(x => x.Phone == phoneNumber && x.CountryCode == countryCode);
         }
 
         public async Task<UserEntity> UpdateAsync(UserEntity entity)
